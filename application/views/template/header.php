@@ -249,6 +249,9 @@
       </section>
     </div>    
 
+<!-- jQuery 3 -->
+<script src="<?= base_url();?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+
 <!-- iCheck -->
 <script src="<?= base_url();?>assets/plugins/iCheck/icheck.min.js"></script>
 <!-- <script src="<?= base_url();?>assets/plugins/bootstrap-show-password/bootstrap-show-password.min.js"></script> -->
