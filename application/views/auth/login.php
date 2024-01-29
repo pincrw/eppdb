@@ -288,15 +288,15 @@
              span.className = ""
          }, 700);
      }
+     
+     var hari    = document.getElementById("days");
+     var jam     = document.getElementById("hours");
+     var menit   = document.getElementById("minutes");
+     var detik   = document.getElementById("seconds");
  
      function Countdown() {
    
          setInterval(function () {
- 
-            var hari    = document.getElementById("days");
-            var jam     = document.getElementById("hours");
-            var menit   = document.getElementById("minutes");
-            var detik   = document.getElementById("seconds");
                
             // var deadline    = new Date("june 29, 2020 00:00:00");
             var deadline    = new Date("<?php echo date('F d, Y 00:00:00', strtotime($infoppdb->tanggal_mulai_pendaftaran)) ?>");  
@@ -338,6 +338,6 @@
          }, 1000);
      }
  
-     Countdown();
+     if(hari) Countdown();
  
 </script>
