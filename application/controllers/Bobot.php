@@ -29,6 +29,8 @@ class Bobot extends CI_Controller
             'bobot_jarak' => set_value('bobot_jarak'),
             'bobot_nilai' => set_value('bobot_nilai'),
             'bobot_prestasi' => set_value('bobot_prestasi'),
+            'bobot_tes' => set_value('bobot_tes'),
+            'bobot_wawancara' => set_value('bobot_wawancara'),
         );
 
         $data['title'] = 'Bobot';
@@ -44,7 +46,8 @@ class Bobot extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Bobot_model->json();
     }
@@ -60,6 +63,8 @@ class Bobot extends CI_Controller
         	'bobot_jarak' => $row->bobot_jarak,
         	'bobot_nilai' => $row->bobot_nilai,
         	'bobot_prestasi' => $row->bobot_prestasi,
+            'bobot_tes' => $row->bobot_tes,
+            'bobot_wawancara' => $row->bobot_wawancara,
         );
 
         $data['title'] = 'Bobot';
@@ -87,6 +92,8 @@ class Bobot extends CI_Controller
     	    'bobot_jarak' => set_value('bobot_jarak'),
     	    'bobot_nilai' => set_value('bobot_nilai'),
     	    'bobot_prestasi' => set_value('bobot_prestasi'),
+            'bobot_tes' => set_value('bobot_tes'),
+            'bobot_wawancara' => set_value('bobot_wawancara'),
     	);
 
         $data['title'] = 'Bobot';
@@ -111,7 +118,9 @@ class Bobot extends CI_Controller
                 form_error('id_jalur').
                 form_error('bobot_jarak').
                 form_error('bobot_nilai').
-                form_error('bobot_prestasi')
+                form_error('bobot_prestasi').
+                form_error('bobot_tes').
+                form_error('bobot_wawancara')
             );
             redirect(site_url('bobot'));      
         } else {
@@ -120,12 +129,15 @@ class Bobot extends CI_Controller
         		'bobot_jarak' => $this->input->post('bobot_jarak',TRUE),
         		'bobot_nilai' => $this->input->post('bobot_nilai',TRUE),
         		'bobot_prestasi' => $this->input->post('bobot_prestasi',TRUE),
+                'bobot_tes' => $this->input->post('bobot_tes',TRUE),
+                'bobot_wawancara' => $this->input->post('bobot_wawancara',TRUE),
         	    );
 
             $this->Bobot_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data bobot jalur pendaftaran"); 
-            redirect(site_url('bobot'));}
+            redirect(site_url('bobot'));
+        }
     }
 
     public function update($id)
@@ -142,6 +154,8 @@ class Bobot extends CI_Controller
         	'bobot_jarak' => set_value('bobot_jarak', $row->bobot_jarak),
         	'bobot_nilai' => set_value('bobot_nilai', $row->bobot_nilai),
         	'bobot_prestasi' => set_value('bobot_prestasi', $row->bobot_prestasi),
+            'bobot_tes' => set_value('bobot_tes', $row->bobot_tes),
+            'bobot_wawancara' => set_value('bobot_wawancara', $row->bobot_wawancara),
         );
         
         $data['title'] = 'Bobot';
@@ -177,6 +191,16 @@ class Bobot extends CI_Controller
                     'required'      => 'Bobot Prestasi tidak boleh kosong ',
                     'numeric'       => 'Bobot Prestasi hanya angka '
             ));
+        $this->form_validation->set_rules('bobot_tes', 'bobot tes', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot tes tidak boleh kosong ',
+                    'numeric'       => 'Bobot tes hanya angka '
+            ));
+        $this->form_validation->set_rules('bobot_wawancara', 'bobot wawancara', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot wawancara tidak boleh kosong ',
+                    'numeric'       => 'Bobot wawancara hanya angka '
+            ));                    
 
         $this->form_validation->set_rules('id_bobot', 'id_bobot', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');        
@@ -189,10 +213,12 @@ class Bobot extends CI_Controller
         		'bobot_jarak' => $this->input->post('bobot_jarak',TRUE),
         		'bobot_nilai' => $this->input->post('bobot_nilai',TRUE),
         		'bobot_prestasi' => $this->input->post('bobot_prestasi',TRUE),
+                'bobot_tes' => $this->input->post('bobot_tes',TRUE),
+                'bobot_wawancara' => $this->input->post('bobot_wawancara',TRUE),
         	    );
             
             $this->Bobot_model->update($this->input->post('id_bobot', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data bobot jalur pendaftaran");             
             redirect(site_url('bobot'));
         }
@@ -203,52 +229,63 @@ class Bobot extends CI_Controller
         $row = $this->Bobot_model->get_by_id($id);
 
         if ($row->id_bobot=='1' or $row->id_bobot=='2' or $row->id_bobot=='3' or $row->id_bobot=='4') {
-            $this->session->set_flashdata('message', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message', 'Data gagal dihapus');
             redirect(site_url('bobot'));
         } else {   
             $this->Bobot_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data bobot jalur ".$row->jalur);             
             redirect(site_url('bobot'));
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Bobot_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Hapus multi data bobot jalur pendaftaran");            
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-    $this->form_validation->set_rules('id_jalur', 'id jalur', 'trim|required|is_unique[bobot.id_jalur]',
-        array(
-                'required'      => 'Jalur Pendaftaran tidak boleh kosong ',
-                'is_unique'     => 'Jalur Pendaftaran sudah ada '
-        ));
-    $this->form_validation->set_rules('bobot_jarak', 'bobot jarak', 'trim|required|numeric',
-        array(
-                'required'      => 'Bobot Jarak tidak boleh kosong ',
-                'numeric'       => 'Bobot Jarak hanya angka '
-        ));
-    $this->form_validation->set_rules('bobot_nilai', 'bobot nilai', 'trim|required|numeric',
-        array(
-                'required'      => 'Bobot Nilai tidak boleh kosong ',
-                'numeric'       => 'Bobot Nilai hanya angka '
-        ));
-    $this->form_validation->set_rules('bobot_prestasi', 'bobot prestasi', 'trim|required|numeric',
-        array(
-                'required'      => 'Bobot Prestasi tidak boleh kosong ',
-                'numeric'       => 'Bobot Prestasi hanya angka '
-        ));
+        $this->form_validation->set_rules('id_jalur', 'id jalur', 'trim|required|is_unique[bobot.id_jalur]',
+            array(
+                    'required'      => 'Jalur Pendaftaran tidak boleh kosong ',
+                    'is_unique'     => 'Jalur Pendaftaran sudah ada '
+            ));
+        $this->form_validation->set_rules('bobot_jarak', 'bobot jarak', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot Jarak tidak boleh kosong ',
+                    'numeric'       => 'Bobot Jarak hanya angka '
+            ));
+        $this->form_validation->set_rules('bobot_nilai', 'bobot nilai', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot Nilai tidak boleh kosong ',
+                    'numeric'       => 'Bobot Nilai hanya angka '
+            ));
+        $this->form_validation->set_rules('bobot_prestasi', 'bobot prestasi', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot Prestasi tidak boleh kosong ',
+                    'numeric'       => 'Bobot Prestasi hanya angka '
+            ));
+        $this->form_validation->set_rules('bobot_tes', 'bobot tes', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot tes tidak boleh kosong ',
+                    'numeric'       => 'Bobot tes hanya angka '
+            ));
+        $this->form_validation->set_rules('bobot_wawancara', 'bobot wawancara', 'trim|required|numeric',
+            array(
+                    'required'      => 'Bobot wawancara tidak boleh kosong ',
+                    'numeric'       => 'Bobot wawancara hanya angka '
+            ));      
 
-	$this->form_validation->set_rules('id_bobot', 'id_bobot', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
+    	$this->form_validation->set_rules('id_bobot', 'id_bobot', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
     }
 
     public function excel()
@@ -277,6 +314,8 @@ class Bobot extends CI_Controller
     	xlsWriteLabel($tablehead, $kolomhead++, "Bobot Jarak");
     	xlsWriteLabel($tablehead, $kolomhead++, "Bobot Nilai");
     	xlsWriteLabel($tablehead, $kolomhead++, "Bobot Prestasi");
+        xlsWriteLabel($tablehead, $kolomhead++, "Bobot Tes");
+        xlsWriteLabel($tablehead, $kolomhead++, "Bobot Wawancara");
 
 	foreach ($this->Bobot_model->get_all() as $data) {
         $kolombody = 0;
@@ -287,6 +326,8 @@ class Bobot extends CI_Controller
 	    xlsWriteNumber($tablebody, $kolombody++, $data->bobot_jarak);
 	    xlsWriteNumber($tablebody, $kolombody++, $data->bobot_nilai);
 	    xlsWriteNumber($tablebody, $kolombody++, $data->bobot_prestasi);
+        xlsWriteNumber($tablebody, $kolombody++, $data->bobot_tes);
+        xlsWriteNumber($tablebody, $kolombody++, $data->bobot_wawancara);
 
 	    $tablebody++;
         $nourut++;
@@ -308,7 +349,8 @@ class Bobot extends CI_Controller
         $this->load->view('bobot/Bobot_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'bobot_data' => $this->Bobot_model->get_all(),
             'start' => 0

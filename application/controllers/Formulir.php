@@ -43,23 +43,26 @@ class Formulir extends CI_Controller
         } else {
             $data = array(
 				// 'tahun_pelajaran' => $this->input->post('tahun_pelajaran',TRUE),
-				// 'jalur_pendaftaran' => $this->input->post('jalur_pendaftaran',TRUE),
-				// 'nama_peserta' => $this->input->post('nama_peserta',TRUE),
-				// 'jenis_kelamin' => $this->input->post('jenis_kelamin',TRUE),
-				// 'nisn' => $this->input->post('nisn',TRUE),
+				'jalur_pendaftaran' => $this->input->post('jalur_pendaftaran',TRUE),
+				'nama_peserta' => $this->input->post('nama_peserta',TRUE),
+				'jenis_kelamin' => $this->input->post('jenis_kelamin',TRUE),
+				'nisn' => $this->input->post('nisn',TRUE),
 				'nik' => $this->input->post('nik',TRUE),
-				// 'tempat_lahir' => $this->input->post('tempat_lahir',TRUE),
-				// 'tanggal_lahir' => $this->input->post('tanggal_lahir',TRUE),
+				'no_kk' => $this->input->post('no_kk',TRUE),
+				'tempat_lahir' => $this->input->post('tempat_lahir',TRUE),
+				'tanggal_lahir' => $this->input->post('tanggal_lahir',TRUE),
 				'no_registrasi_akta_lahir' => $this->input->post('no_registrasi_akta_lahir',TRUE),
-				// 'agama' => $this->input->post('agama',TRUE),
+				'agama' => $this->input->post('agama',TRUE),
 				'kewarganegaraan' => $this->input->post('kewarganegaraan',TRUE),
 				'berkebutuhan_khusus' => $this->input->post('berkebutuhan_khusus',TRUE),
-				// 'alamat' => $this->input->post('alamat',TRUE),
+				'alamat' => $this->input->post('alamat',TRUE),
 				'rt' => $this->input->post('rt',TRUE),
 				'rw' => $this->input->post('rw',TRUE),
 				'nama_dusun' => $this->input->post('nama_dusun',TRUE),
 				'nama_kelurahan' => $this->input->post('nama_kelurahan',TRUE),
 				'kecamatan' => $this->input->post('kecamatan',TRUE),
+				'kabupaten' => $this->input->post('kabupaten',TRUE),
+				'provinsi' => $this->input->post('provinsi',TRUE),
 				'kode_pos' => $this->input->post('kode_pos',TRUE),
 				'latitude' => $this->input->post('latitude',TRUE),
 				'longitude' => $this->input->post('longitude',TRUE),
@@ -73,42 +76,54 @@ class Formulir extends CI_Controller
 				'no_kip' => $this->input->post('no_kip',TRUE),
 				'nama_tertera_di_kip' => $this->input->post('nama_tertera_di_kip',TRUE),
 				'terima_fisik_kartu_kip' => $this->input->post('terima_fisik_kartu_kip',TRUE),
-				// 'nama_ayah' => $this->input->post('nama_ayah',TRUE),
+				'nama_ayah' => $this->input->post('nama_ayah',TRUE),
 				'nik_ayah' => $this->input->post('nik_ayah',TRUE),
-				'tahun_lahir_ayah' => $this->input->post('tahun_lahir_ayah',TRUE),
+				'tempat_lahir_ayah' => $this->input->post('tempat_lahir_ayah',TRUE),
+				'tanggal_lahir_ayah' => $this->input->post('tanggal_lahir_ayah',TRUE),
 				'pendidikan_ayah' => $this->input->post('pendidikan_ayah',TRUE),
 				'pekerjaan_ayah' => $this->input->post('pekerjaan_ayah',TRUE),
 				'penghasilan_bulanan_ayah' => $this->input->post('penghasilan_bulanan_ayah',TRUE),
 				'berkebutuhan_khusus_ayah' => $this->input->post('berkebutuhan_khusus_ayah',TRUE),
-				// 'nama_ibu' => $this->input->post('nama_ibu',TRUE),
+				'no_hp_ayah' => $this->input->post('no_hp_ayah',TRUE),
+				'nama_ibu' => $this->input->post('nama_ibu',TRUE),
 				'nik_ibu' => $this->input->post('nik_ibu',TRUE),
-				'tahun_lahir_ibu' => $this->input->post('tahun_lahir_ibu',TRUE),
+				'tempat_lahir_ibu' => $this->input->post('tempat_lahir_ibu',TRUE),
+				'tanggal_lahir_ibu' => $this->input->post('tanggal_lahir_ibu',TRUE),
 				'pendidikan_ibu' => $this->input->post('pendidikan_ibu',TRUE),
 				'pekerjaan_ibu' => $this->input->post('pekerjaan_ibu',TRUE),
 				'penghasilan_bulanan_ibu' => $this->input->post('penghasilan_bulanan_ibu',TRUE),
 				'berkebutuhan_khusus_ibu' => $this->input->post('berkebutuhan_khusus_ibu',TRUE),
+				'no_hp_ibu' => $this->input->post('no_hp_ibu',TRUE),
 				'nama_wali' => $this->input->post('nama_wali',TRUE),
 				'nik_wali' => $this->input->post('nik_wali',TRUE),
-				'tahun_lahir_wali' => $this->input->post('tahun_lahir_wali',TRUE),
+				'tempat_lahir_wali' => $this->input->post('tempat_lahir_wali',TRUE),				
+				'tanggal_lahir_wali' => $this->input->post('tanggal_lahir_wali',TRUE),
 				'pendidikan_wali' => $this->input->post('pendidikan_wali',TRUE),
 				'pekerjaan_wali' => $this->input->post('pekerjaan_wali',TRUE),
 				'penghasilan_bulanan_wali' => $this->input->post('penghasilan_bulanan_wali',TRUE),
+				'no_hp_wali' => $this->input->post('no_hp_wali',TRUE),
 				'no_telepon_rumah' => $this->input->post('no_telepon_rumah',TRUE),
-				// 'nomor_hp' => $this->input->post('nomor_hp',TRUE),
+				'nomor_hp' => $this->input->post('nomor_hp',TRUE),
 				'email' => $this->input->post('email',TRUE),
-				'jenis_ekstrakurikuler' => $this->input->post('jenis_ekstrakurikuler',TRUE),
+				'hobi' => $this->input->post('hobi',TRUE),
 				'tinggi_badan' => $this->input->post('tinggi_badan',TRUE),
 				'berat_badan' => $this->input->post('berat_badan',TRUE),
-				// 'jarak_ke_sekolah' => $this->input->post('jarak_ke_sekolah',TRUE),
+				'lingkar_kepala' => $this->input->post('lingkar_kepala',TRUE),
+				'jarak_ke_sekolah' => $this->input->post('jarak_ke_sekolah',TRUE),
+				'waktu_tempuh' => $this->input->post('waktu_tempuh',TRUE),
 				'jumlah_saudara_kandung' => $this->input->post('jumlah_saudara_kandung',TRUE),
 				'jurusan' => $this->input->post('jurusan',TRUE),
-				// 'asal_sekolah' => $this->input->post('asal_sekolah',TRUE),
+				'asal_sekolah' => $this->input->post('asal_sekolah',TRUE),
+				'akreditasi' => $this->input->post('akreditasi',TRUE),
 				'no_peserta_ujian' => $this->input->post('no_peserta_ujian',TRUE),
 				'no_seri_ijazah' => $this->input->post('no_seri_ijazah',TRUE),
 				'no_seri_skhu' => $this->input->post('no_seri_skhu',TRUE),
+				'tahun_lulus' => $this->input->post('tahun_lulus',TRUE),
 				'nilai_usbn' => $this->input->post('nilai_usbn',TRUE),
 				'nilai_rapor' => $this->input->post('nilai_rapor',TRUE),
 				'nilai_unbk_unkp' => $this->input->post('nilai_unbk_unkp',TRUE),
+				'nilai_raporsemester' => $this->input->post('nilai_raporsemester',TRUE),
+				'jml_mapel' => $this->input->post('jml_mapel',TRUE),
 				'ketentuan' => $this->input->post('ketentuan',TRUE),
 				'foto' => $this->input->post('foto',TRUE),
 				'akte_kelahiran' => $this->input->post('akte_kelahiran',TRUE),
@@ -126,11 +141,16 @@ class Formulir extends CI_Controller
 				'ktp_ortu' => $this->input->post('ktp_ortu',TRUE),	
 				'kartu_bantuan' => $this->input->post('kartu_bantuan',TRUE),
 				'sptjm' => $this->input->post('sptjm',TRUE),	
-				'sp' => $this->input->post('sp',TRUE),									
+				'sp' => $this->input->post('sp',TRUE),	
+				'prestasi_akademik_nonakademik' => $this->input->post('prestasi_akademik_nonakademik',TRUE),	
+				'wawancara' => $this->input->post('wawancara',TRUE),
+				'pilihan_sekolah_lain' => $this->input->post('pilihan_sekolah_lain',TRUE),	
+				'biaya' => $this->input->post('biaya',TRUE),	
+				'kartu_tes' => $this->input->post('kartu_tes',TRUE),					
 	    	);
 
             $this->Formulir_model->update($this->input->post('id_formulir', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update inputan formulir pendaftaran");             
             redirect(site_url('formulir'));
         }
@@ -138,102 +158,120 @@ class Formulir extends CI_Controller
 
     public function _rules()
     {
-	$this->form_validation->set_rules('tahun_pelajaran', 'tahun pelajaran', 'trim');
-	$this->form_validation->set_rules('jalur_pendaftaran', 'jalur pendaftaran', 'trim');
-	$this->form_validation->set_rules('nama_peserta', 'nama peserta', 'trim');
-	$this->form_validation->set_rules('jenis_kelamin', 'jenis kelamin', 'trim');
-	$this->form_validation->set_rules('nisn', 'nisn', 'trim');
-	$this->form_validation->set_rules('nik', 'nik', 'trim');
-	$this->form_validation->set_rules('tempat_lahir', 'tempat lahir', 'trim');
-	$this->form_validation->set_rules('tanggal_lahir', 'tanggal lahir', 'trim');
-	$this->form_validation->set_rules('no_registrasi_akta_lahir', 'no registrasi akta lahir', 'trim');
-	$this->form_validation->set_rules('agama', 'agama', 'trim');
-	$this->form_validation->set_rules('kewarganegaraan', 'kewarganegaraan', 'trim');
-	$this->form_validation->set_rules('berkebutuhan_khusus', 'berkebutuhan khusus', 'trim');
-	$this->form_validation->set_rules('alamat', 'alamat', 'trim');
-	$this->form_validation->set_rules('rt', 'rt', 'trim');
-	$this->form_validation->set_rules('rw', 'rw', 'trim');
-	$this->form_validation->set_rules('nama_dusun', 'nama dusun', 'trim');
-	$this->form_validation->set_rules('nama_kelurahan', 'nama kelurahan', 'trim');
-	$this->form_validation->set_rules('kecamatan', 'kecamatan', 'trim');
-	$this->form_validation->set_rules('kode_pos', 'kode pos', 'trim');
-	$this->form_validation->set_rules('latitude', 'latitude', 'trim');
-	$this->form_validation->set_rules('longitude', 'longitude', 'trim');
-	$this->form_validation->set_rules('tempat_tinggal', 'tempat tinggal', 'trim');
-	$this->form_validation->set_rules('moda_transportasi', 'moda transportasi', 'trim');
-	$this->form_validation->set_rules('no_kks', 'no kks', 'trim');
-	$this->form_validation->set_rules('anak_ke', 'anak ke', 'trim');
-	$this->form_validation->set_rules('penerima_kps_pkh', 'penerima kps pkh', 'trim');
-	$this->form_validation->set_rules('no_kps_pkh', 'no kps pkh', 'trim');
-	$this->form_validation->set_rules('penerima_kip', 'penerima kip', 'trim');
-	$this->form_validation->set_rules('no_kip', 'no kip', 'trim');
-	$this->form_validation->set_rules('nama_tertera_di_kip', 'nama tertera di kip', 'trim');
-	$this->form_validation->set_rules('terima_fisik_kartu_kip', 'terima fisik kartu kip', 'trim');
-	$this->form_validation->set_rules('nama_ayah', 'nama ayah', 'trim');
-	$this->form_validation->set_rules('nik_ayah', 'nik ayah', 'trim');
-	$this->form_validation->set_rules('tahun_lahir_ayah', 'tahun lahir ayah', 'trim');
-	$this->form_validation->set_rules('pendidikan_ayah', 'pendidikan ayah', 'trim');
-	$this->form_validation->set_rules('pekerjaan_ayah', 'pekerjaan ayah', 'trim');
-	$this->form_validation->set_rules('penghasilan_bulanan_ayah', 'penghasilan bulanan ayah', 'trim');
-	$this->form_validation->set_rules('berkebutuhan_khusus_ayah', 'berkebutuhan khusus ayah', 'trim');
-	$this->form_validation->set_rules('nama_ibu', 'nama ibu', 'trim');
-	$this->form_validation->set_rules('nik_ibu', 'nik ibu', 'trim');
-	$this->form_validation->set_rules('tahun_lahir_ibu', 'tahun lahir ibu', 'trim');
-	$this->form_validation->set_rules('pendidikan_ibu', 'pendidikan ibu', 'trim');
-	$this->form_validation->set_rules('pekerjaan_ibu', 'pekerjaan ibu', 'trim');
-	$this->form_validation->set_rules('penghasilan_bulanan_ibu', 'penghasilan bulanan ibu', 'trim');
-	$this->form_validation->set_rules('berkebutuhan_khusus_ibu', 'berkebutuhan khusus ibu', 'trim');
-	$this->form_validation->set_rules('nama_wali', 'nama wali', 'trim');
-	$this->form_validation->set_rules('nik_wali', 'nik wali', 'trim');
-	$this->form_validation->set_rules('tahun_lahir_wali', 'tahun lahir wali', 'trim');
-	$this->form_validation->set_rules('pendidikan_wali', 'pendidikan wali', 'trim');
-	$this->form_validation->set_rules('pekerjaan_wali', 'pekerjaan wali', 'trim');
-	$this->form_validation->set_rules('penghasilan_bulanan_wali', 'penghasilan bulanan wali', 'trim');
-	$this->form_validation->set_rules('no_telepon_rumah', 'no telepon rumah', 'trim');
-	$this->form_validation->set_rules('nomor_hp', 'nomor hp', 'trim');
-	$this->form_validation->set_rules('email', 'email', 'trim');
-	$this->form_validation->set_rules('jenis_ekstrakurikuler', 'jenis ekstrakurikuler', 'trim');
-	$this->form_validation->set_rules('tinggi_badan', 'tinggi badan', 'trim');
-	$this->form_validation->set_rules('berat_badan', 'berat badan', 'trim');
-	$this->form_validation->set_rules('jarak_ke_sekolah', 'jarak ke sekolah', 'trim');
-	$this->form_validation->set_rules('jumlah_saudara_kandung', 'jumlah saudara kandung', 'trim');
-	$this->form_validation->set_rules('jurusan', 'jurusan', 'trim');
-	$this->form_validation->set_rules('asal_sekolah', 'asal sekolah', 'trim');
-	$this->form_validation->set_rules('no_peserta_ujian', 'no peserta ujian', 'trim');
-	$this->form_validation->set_rules('no_seri_ijazah', 'no seri ijazah', 'trim');
-	$this->form_validation->set_rules('no_seri_skhu', 'no seri skhu', 'trim');
-	$this->form_validation->set_rules('nilai_usbn', 'nilai usbn', 'trim');
-	$this->form_validation->set_rules('nilai_rapor', 'nilai rapor', 'trim');
-	$this->form_validation->set_rules('nilai_unbk_unkp', 'nilai unbk/unkp', 'trim');
-	$this->form_validation->set_rules('ketentuan', 'ketentuan', 'trim');
-	$this->form_validation->set_rules('foto', 'foto', 'trim');
-	$this->form_validation->set_rules('akte_kelahiran', 'akte_kelahiran', 'trim');
-	$this->form_validation->set_rules('kartu_keluarga', 'kartu_keluarga', 'trim');
-	$this->form_validation->set_rules('skl_skhu', 'skl_skhu', 'trim');
-	$this->form_validation->set_rules('skd', 'skd', 'trim');	
-	$this->form_validation->set_rules('berkaslain', 'berkaslain', 'trim');
-	$this->form_validation->set_rules('tipe', 'tipe', 'trim');
-	$this->form_validation->set_rules('kode_daring', 'kode daring', 'trim');
-	$this->form_validation->set_rules('kode_luring', 'kode luring', 'trim');
-	$this->form_validation->set_rules('kode_formulir', 'kode formulir', 'trim');
-	$this->form_validation->set_rules('foto_full', 'foto_full', 'trim');
-	$this->form_validation->set_rules('rapor', 'rapor', 'trim');	
-	$this->form_validation->set_rules('sktm', 'sktm', 'trim');
-	$this->form_validation->set_rules('ktp_ortu', 'ktp_ortu', 'trim');
-	$this->form_validation->set_rules('kartu_bantuan', 'kartu_bantuan', 'trim');
-	$this->form_validation->set_rules('sptjm', 'sptjm', 'trim');
-	$this->form_validation->set_rules('sp', 'sp', 'trim');	
+		$this->form_validation->set_rules('tahun_pelajaran', 'tahun pelajaran', 'trim');
+		$this->form_validation->set_rules('jalur_pendaftaran', 'jalur pendaftaran', 'trim');
+		$this->form_validation->set_rules('nama_peserta', 'nama peserta', 'trim');
+		$this->form_validation->set_rules('jenis_kelamin', 'jenis kelamin', 'trim');
+		$this->form_validation->set_rules('nisn', 'nisn', 'trim');
+		$this->form_validation->set_rules('nik', 'nik', 'trim');
+		$this->form_validation->set_rules('no_kk', 'no_kk', 'trim');
+		$this->form_validation->set_rules('tempat_lahir', 'tempat lahir', 'trim');
+		$this->form_validation->set_rules('tanggal_lahir', 'tanggal lahir', 'trim');
+		$this->form_validation->set_rules('no_registrasi_akta_lahir', 'no registrasi akta lahir', 'trim');
+		$this->form_validation->set_rules('agama', 'agama', 'trim');
+		$this->form_validation->set_rules('kewarganegaraan', 'kewarganegaraan', 'trim');
+		$this->form_validation->set_rules('berkebutuhan_khusus', 'berkebutuhan khusus', 'trim');
+		$this->form_validation->set_rules('alamat', 'alamat', 'trim');
+		$this->form_validation->set_rules('rt', 'rt', 'trim');
+		$this->form_validation->set_rules('rw', 'rw', 'trim');
+		$this->form_validation->set_rules('nama_dusun', 'nama dusun', 'trim');
+		$this->form_validation->set_rules('nama_kelurahan', 'nama kelurahan', 'trim');
+		$this->form_validation->set_rules('kecamatan', 'kecamatan', 'trim');
+		$this->form_validation->set_rules('kabupaten', 'kabupaten', 'trim');
+		$this->form_validation->set_rules('provinsi', 'provinsi', 'trim');
+		$this->form_validation->set_rules('kode_pos', 'kode pos', 'trim');
+		$this->form_validation->set_rules('latitude', 'latitude', 'trim');
+		$this->form_validation->set_rules('longitude', 'longitude', 'trim');
+		$this->form_validation->set_rules('tempat_tinggal', 'tempat tinggal', 'trim');
+		$this->form_validation->set_rules('moda_transportasi', 'moda transportasi', 'trim');
+		$this->form_validation->set_rules('no_kks', 'no kks', 'trim');
+		$this->form_validation->set_rules('anak_ke', 'anak ke', 'trim');
+		$this->form_validation->set_rules('penerima_kps_pkh', 'penerima kps pkh', 'trim');
+		$this->form_validation->set_rules('no_kps_pkh', 'no kps pkh', 'trim');
+		$this->form_validation->set_rules('penerima_kip', 'penerima kip', 'trim');
+		$this->form_validation->set_rules('no_kip', 'no kip', 'trim');
+		$this->form_validation->set_rules('nama_tertera_di_kip', 'nama tertera di kip', 'trim');
+		$this->form_validation->set_rules('terima_fisik_kartu_kip', 'terima fisik kartu kip', 'trim');
+		$this->form_validation->set_rules('nama_ayah', 'nama ayah', 'trim');
+		$this->form_validation->set_rules('nik_ayah', 'nik ayah', 'trim');
+		$this->form_validation->set_rules('tempat_lahir_ayah', 'tempat lahir ayah', 'trim');
+		$this->form_validation->set_rules('tanggal_lahir_ayah', 'tanggal lahir ayah', 'trim');
+		$this->form_validation->set_rules('pendidikan_ayah', 'pendidikan ayah', 'trim');
+		$this->form_validation->set_rules('pekerjaan_ayah', 'pekerjaan ayah', 'trim');
+		$this->form_validation->set_rules('penghasilan_bulanan_ayah', 'penghasilan bulanan ayah', 'trim');
+		$this->form_validation->set_rules('berkebutuhan_khusus_ayah', 'berkebutuhan khusus ayah', 'trim');
+		$this->form_validation->set_rules('no_hp_ayah', 'nomor hp ayah', 'trim');
+		$this->form_validation->set_rules('nama_ibu', 'nama ibu', 'trim');
+		$this->form_validation->set_rules('nik_ibu', 'nik ibu', 'trim');
+		$this->form_validation->set_rules('tempat_lahir_ayah', 'tempat lahir ayah', 'trim');
+		$this->form_validation->set_rules('tanggal_lahir_ibu', 'tanggal lahir ibu', 'trim');
+		$this->form_validation->set_rules('pendidikan_ibu', 'pendidikan ibu', 'trim');
+		$this->form_validation->set_rules('pekerjaan_ibu', 'pekerjaan ibu', 'trim');
+		$this->form_validation->set_rules('penghasilan_bulanan_ibu', 'penghasilan bulanan ibu', 'trim');
+		$this->form_validation->set_rules('berkebutuhan_khusus_ibu', 'berkebutuhan khusus ibu', 'trim');
+		$this->form_validation->set_rules('no_hp_ibu', 'nomor hp ibu', 'trim');
+		$this->form_validation->set_rules('nama_wali', 'nama wali', 'trim');
+		$this->form_validation->set_rules('nik_wali', 'nik wali', 'trim');
+		$this->form_validation->set_rules('tempat_lahir_ayah', 'tempat lahir ayah', 'trim');
+		$this->form_validation->set_rules('tanggal_lahir_wali', 'tanggal lahir wali', 'trim');
+		$this->form_validation->set_rules('pendidikan_wali', 'pendidikan wali', 'trim');
+		$this->form_validation->set_rules('pekerjaan_wali', 'pekerjaan wali', 'trim');
+		$this->form_validation->set_rules('penghasilan_bulanan_wali', 'penghasilan bulanan wali', 'trim');
+		$this->form_validation->set_rules('no_hp_wali', 'nomor hp wali', 'trim');
+		$this->form_validation->set_rules('no_telepon_rumah', 'no telepon rumah', 'trim');
+		$this->form_validation->set_rules('nomor_hp', 'nomor hp', 'trim');
+		$this->form_validation->set_rules('email', 'email', 'trim');
+		$this->form_validation->set_rules('hobi', 'hobi', 'trim');
+		$this->form_validation->set_rules('tinggi_badan', 'tinggi badan', 'trim');
+		$this->form_validation->set_rules('berat_badan', 'berat badan', 'trim');
+		$this->form_validation->set_rules('lingkar_kepala', 'lingkar_kepala', 'trim');
+		$this->form_validation->set_rules('jarak_ke_sekolah', 'jarak ke sekolah', 'trim');
+		$this->form_validation->set_rules('waktu_tempuh', 'waktu_tempuh', 'trim');
+		$this->form_validation->set_rules('jumlah_saudara_kandung', 'jumlah saudara kandung', 'trim');
+		$this->form_validation->set_rules('jurusan', 'jurusan', 'trim');
+		$this->form_validation->set_rules('asal_sekolah', 'asal sekolah', 'trim');
+		$this->form_validation->set_rules('akreditasi', 'akreditasi', 'trim');
+		$this->form_validation->set_rules('no_peserta_ujian', 'no peserta ujian', 'trim');
+		$this->form_validation->set_rules('no_seri_ijazah', 'no seri ijazah', 'trim');
+		$this->form_validation->set_rules('no_seri_skhu', 'no seri skhu', 'trim');
+		$this->form_validation->set_rules('tahun_lulus', 'tahun lulus', 'trim');
+		$this->form_validation->set_rules('nilai_usbn', 'nilai usbn', 'trim');
+		$this->form_validation->set_rules('nilai_rapor', 'nilai rapor', 'trim');
+		$this->form_validation->set_rules('nilai_unbk_unkp', 'nilai unbk/unkp', 'trim');
+		$this->form_validation->set_rules('nilai_raporsemester', 'nilai rapor per semester', 'trim');
+		$this->form_validation->set_rules('jml_mapel', 'jumlah mapel yang di minta', 'trim');
+		$this->form_validation->set_rules('ketentuan', 'ketentuan', 'trim');
+		$this->form_validation->set_rules('foto', 'foto', 'trim');
+		$this->form_validation->set_rules('akte_kelahiran', 'akte kelahiran', 'trim');
+		$this->form_validation->set_rules('kartu_keluarga', 'kartu keluarga', 'trim');
+		$this->form_validation->set_rules('skl_skhu', 'skl_skhu', 'trim');
+		$this->form_validation->set_rules('skd', 'skd', 'trim');	
+		$this->form_validation->set_rules('berkaslain', 'berkaslain', 'trim');
+		$this->form_validation->set_rules('tipe', 'tipe', 'trim');
+		$this->form_validation->set_rules('kode_daring', 'kode daring', 'trim');
+		$this->form_validation->set_rules('kode_luring', 'kode luring', 'trim');
+		$this->form_validation->set_rules('kode_formulir', 'kode formulir', 'trim');
+		$this->form_validation->set_rules('foto_full', 'foto_full', 'trim');
+		$this->form_validation->set_rules('rapor', 'rapor', 'trim');	
+		$this->form_validation->set_rules('sktm', 'sktm', 'trim');
+		$this->form_validation->set_rules('ktp_ortu', 'ktp_ortu', 'trim');
+		$this->form_validation->set_rules('kartu_bantuan', 'kartu_bantuan', 'trim');
+		$this->form_validation->set_rules('sptjm', 'sptjm', 'trim');
+		$this->form_validation->set_rules('sp', 'sp', 'trim');	
+		$this->form_validation->set_rules('prestasi_akademik_nonakademik', 'prestasi akademik/nonakademik', 'trim');	
+		$this->form_validation->set_rules('wawancara', 'wawancara', 'trim');
+		$this->form_validation->set_rules('pilihan_sekolah_lain', 'Pilihan sekolah lain', 'trim');	
+		$this->form_validation->set_rules('biaya', 'biaya', 'trim');
+		$this->form_validation->set_rules('kartu_tes', 'kartu tes', 'trim');
 
-	$this->form_validation->set_rules('id_formulir', 'id_formulir', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+		$this->form_validation->set_rules('id_formulir', 'id_formulir', 'trim');
+		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
-  	public function cetak(){
-        // $id_peserta = $id;
-        // $data['berkas']=$this->Berkas_model->get_foto($id_peserta); 
-        // $data['prestasipeserta']=$this->Prestasipeserta_model->get_all_prestasi($id_peserta);
+  	public function cetak()
+  	{
         $data['pengaturan'] = $this->Pengaturan_model->get_by_id_1(); 
-        $data['pengumuman'] = $this->Pengumuman_model->get_by_formulir(); 
+        $data['pengumuman'] = $this->Pengumuman_model->get_by_formulirPD(); 
         $data['tp'] =  $this->Tahunpelajaran_model->get_tahun_aktif();
         $data['jalur'] =  $this->Jalur_model->get_all();
 
@@ -244,7 +282,6 @@ class Formulir extends CI_Controller
 		$html = $this->load->view('formulir/Print_formulir', $data,true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output('formulir.pdf','I');        
-
     }
 
 }

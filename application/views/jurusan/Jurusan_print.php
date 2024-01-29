@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tittle</title>
+    <title>Data Jurusan</title>
     <style type="text/css" media="print">
     @page {
         margin: 0;  /* this affects the margin in the printer settings */
@@ -32,6 +32,7 @@
             <th>Bidang Keahlian</th>
 		    <th>Nama Jurusan</th>
             <th>Kuota</th>
+            <th>Status</th>
 		</tr>
         <?php
             foreach ($jurusan_data as $jurusan)
@@ -41,6 +42,7 @@
             <td><?php echo $jurusan->bidang_keahlian ?></td>   
 		    <td><?php echo $jurusan->nama_jurusan ?></td>	
             <td><?php echo $jurusan->kuota_jurusan ?></td>   
+            <td><?php echo $jurusan->status_jurusan ?></td>
         </tr>
         <?php } ?>
     </table>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Formulir PD</title>
+    <title>Formulir Pendaftaran</title>
     <style type="text/css" media="print">
     @page {
-        margin-top: 30;  /* this affects the margin in the printer settings */
+        margin-top: 10;  /* this affects the margin in the printer settings */
     	margin-bottom: 180;
     	margin-left: 50;
     	margin-right: 50;
@@ -13,7 +13,7 @@
         border-collapse: collapse;
         border-spacing: 0;       
         width: 100%;
-        font-size: 16px;
+        font-size: 14px;
     }
     table th{
         -webkit-print-color-adjust:exact;
@@ -66,18 +66,18 @@
 			<td width="150">No. Pendaftaran</td>	    
 		    <td width="10">: </td>
 		    <?php if ($formulir->kode_formulir=="Ya") { ?>
-			    <td width="200" style="border-bottom: 1px dotted"><strong><?php echo $formulir->kode_luring ?>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-L</strong></td>
+			    <td width="200" style="border-bottom: 1px dotted"><strong><?php echo $formulir->kode_luring ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-L</strong></td>
 			    <td width="200"></td>
-			    <td style="text-align: center;border-top: solid;border-bottom: solid;border-left: solid;border-right: solid">FPD-L</td>
+			    <td style="text-align: center;border-top: solid;border-bottom: solid;border-left: solid;border-right: solid">FPD-L <?php echo $tp->ket ?></td>
 			<?php } else { ?>
-			    <td width="200" style="border-bottom: 1px dotted"><strong><?php echo $formulir->kode_luring ?>-</strong></td>
+			    <td width="200" style="border-bottom: 1px dotted"><strong><?php echo $formulir->kode_luring ?></strong></td>
 			    <td width="200"></td>
-			    <td style="text-align: center;border-top: solid;border-bottom: solid;border-left: solid;border-right: solid">FPD</td>
+			    <td style="text-align: center;border-top: solid;border-bottom: solid;border-left: solid;border-right: solid">FPD <?php echo $tp->ket ?></td>
 			<?php } ?>
         </tr>                                                            
     </table>
     <?php $th = $tp->tahun_pelajaran + 1; ?>
-	<h3 style="text-align: center">FORMULIR PENERIMAAN PESERTA DIDIK BARU<br>
+	<h3 style="text-align: center">FORMULIR PENDAFTARAN PESERTA DIDIK BARU<br>
 	TAHUN PELAJARAN <?php echo $tp->tahun_pelajaran ?>/<?php echo $th ?></h3>	
     <table class="word-table" style="margin-bottom: 10px">	 	 		   
 		<tr>		    
@@ -90,18 +90,27 @@
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted">Laki-laki/Perempuan</td>
 		</tr>
+	<?php if ($formulir->nisn=='Ya'){ ?>		
 		<tr>    
 		    <td>NISN</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
+	<?php } ?>		
 	<?php if ($formulir->nik=='Ya'){ ?>
 		<tr>
 		    <td>NIK</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
-	<?php } ?>		
+	<?php } ?>
+	<?php if ($formulir->no_kk=='Ya'){ ?>
+		<tr>
+		    <td>No Kartu Keluarga</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>			
 		<tr>
 		    <td>Tempat Tanggal Lahir</td>
 		    <td>: </td>
@@ -154,7 +163,7 @@
 	<?php } ?>		
 	<?php if ($formulir->nama_kelurahan=='Ya'){ ?>		
 		<tr>
-		    <td>Nama Kelurahan/Desa</td>
+		    <td>Nama Kelurahan</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -165,7 +174,21 @@
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
-	<?php } ?>	
+	<?php } ?>
+	<?php if ($formulir->kabupaten=='Ya'){ ?>				
+		<tr>
+		    <td>Kabupaten/Kota</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>
+	<?php if ($formulir->provinsi=='Ya'){ ?>				
+		<tr>
+		    <td>Provinsi</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>					
 	<?php if ($formulir->kode_pos=='Ya'){ ?>			
 		<tr>
 		    <td>Kode Pos</td>
@@ -173,20 +196,20 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
-	<?php if ($formulir->latitude=='Ya'){ ?>				
+	<?php if ($formulir->latitude=='Ya' and $formulir->longitude=='Ya'){ ?>				
 		<tr>
-		    <td>Latitude</td>
+		    <td>Latitude/Longitude</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>	
-	<?php if ($formulir->longitude=='Ya'){ ?>			
+<!-- 	<?php if ($formulir->longitude=='Ya'){ ?>			
 		<tr>		    
 		    <td>Longitude</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
-	<?php } ?>	
+	<?php } ?> -->	
 	<?php if ($formulir->tempat_tinggal=='Ya'){ ?>			
 		<tr>
 		    <td>Tempat Tinggal</td>
@@ -265,7 +288,7 @@
 		    <td style="border-bottom: 1px dotted">Ya/Tidak</td>
 		</tr>
 	<?php } ?>
-	<?php if ($formulir->jenis_ekstrakurikuler=='Ya'){ ?>		
+	<?php if ($formulir->hobi=='Ya'){ ?>		
 		<tr>    
 		    <td>Hobi</td>
 		    <td>: </td>
@@ -284,10 +307,17 @@
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
-	<?php } ?>		
-	<?php if ($formulir->tahun_lahir_ayah=='Ya'){ ?>		
+	<?php } ?>
+	<?php if ($formulir->tempat_lahir_ayah=='Ya'){ ?>		
 		<tr>    
-		    <td>Tahun lahir Ayah</td>
+		    <td>Tempat lahir Ayah</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>			
+	<?php if ($formulir->tanggal_lahir_ayah=='Ya'){ ?>		
+		<tr>    
+		    <td>Tanggal lahir Ayah</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -320,6 +350,13 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
+	<?php if ($formulir->no_hp_ayah=='Ya'){ ?>		
+		<tr>    
+		    <td>No. Handphone Ayah</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
 				
 		<tr>    
 		    <td>Nama Ibu</td>
@@ -333,9 +370,16 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
-	<?php if ($formulir->tahun_lahir_ibu=='Ya'){ ?>		
+	<?php if ($formulir->tempat_lahir_ibu=='Ya'){ ?>		
 		<tr>    
-		    <td>Tahun lahir Ibu</td>
+		    <td>Tempat lahir Ibu</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
+	<?php if ($formulir->tanggal_lahir_ibu=='Ya'){ ?>		
+		<tr>    
+		    <td>Tanggal lahir Ibu</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -368,6 +412,15 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
+	<?php if ($formulir->no_hp_ibu=='Ya'){ ?>		
+		<tr>    
+		    <td>No. Handphone Ibu</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>
+
+
 	<?php if ($formulir->nama_wali=='Ya'){ ?>			
 		<tr>
 		    <td>Nama Wali</td>
@@ -382,13 +435,20 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
-	<?php if ($formulir->tahun_lahir_wali=='Ya'){ ?>		
+	<?php if ($formulir->tempat_lahir_wali=='Ya'){ ?>		
 		<tr>
-		    <td>Tahun lahir Wali</td>
+		    <td>Tempat lahir Wali</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
+	<?php if ($formulir->tanggal_lahir_wali=='Ya'){ ?>		
+		<tr>
+		    <td>Tanggal lahir Wali</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
 	<?php if ($formulir->pendidikan_wali=='Ya'){ ?>		
 		<tr> 
 		    <td>Pendidikan Wali</td>
@@ -410,6 +470,13 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
+	<?php if ($formulir->no_hp_wali=='Ya'){ ?>		
+		<tr>    
+		    <td>No. Handphone Wali</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
 
 	<?php if ($formulir->no_telepon_rumah=='Ya'){ ?>					
 		<tr>   
@@ -447,11 +514,25 @@
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
 	<?php } ?>
+	<?php if ($formulir->lingkar_kepala=='Ya'){ ?>
+		<tr>
+		    <td>Lingkar Kepala</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
 		<tr> 		 
 		    <td>Jarak ke sekolah</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
+	<?php if ($formulir->waktu_tempuh=='Ya'){ ?>
+		<tr>
+		    <td>Waktu Tempuh</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>		
 	<?php if ($formulir->jumlah_saudara_kandung=='Ya'){ ?>			
 		<tr> 	    
 		    <td>Jumlah saudara kandung</td>
@@ -471,14 +552,9 @@
 			</td>				    
 		</tr>
 
-	<?php if ($pengaturan->jenjang=='SMP/MTs'){ ?>
+	<?php if ($formulir->pilihan_sekolah_lain=='Ya'){ ?>		
 		<tr>    
-		    <td>Sekolah Pilihan 1</td>
-		    <td>: </td>
-		    <td style="border-bottom: 1px dotted"><?php echo $pengaturan->nama_sekolah ?></td>
-		</tr>		
-		<tr>    
-		    <td>Sekolah Pilihan 2</td>
+		    <td>Sekolah pilihan lain</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -501,9 +577,16 @@
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
+	<?php if ($formulir->akreditasi=='Ya'){ ?>		
+		<tr>		    
+		    <td>Akreditasi</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>			
 	<?php if ($formulir->no_peserta_ujian=='Ya'){ ?>		
 		<tr>		    
-		    <td>No. Peserta Ujian Nasional</td>
+		    <td>No. Peserta Ujian</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -522,6 +605,13 @@
 		    <td style="border-bottom: 1px dotted"></td>	
 		</tr>
 	<?php } ?>	
+	<?php if ($formulir->tahun_lulus=='Ya'){ ?>		
+		<tr>    
+		    <td>Tahun lulus</td>
+		    <td>: </td>
+		    <td style="border-bottom: 1px dotted"></td>
+		</tr>
+	<?php } ?>	
 			
 	<?php if ($formulir->nilai_rapor=='Ya'){ ?>		
 		<tr>		 
@@ -532,7 +622,7 @@
 	<?php } ?>		
 	<?php if ($formulir->nilai_usbn=='Ya'){ ?>		
 		<tr>		 
-		    <td>Nilai Rata-rata USBN</td>
+		    <td>Nilai Rata-rata US</td>
 		    <td>: </td>
 		    <td style="border-bottom: 1px dotted"></td>
 		</tr>
@@ -545,8 +635,42 @@
 		</tr>
 	<?php } ?>	
     </table>
+
+    <?php if ($formulir->nilai_raporsemester=='Ya'){ ?>		
+	    <table border="1" class="empat">
+	    	<tr>
+	            <th rowspan="2" width="44px">No</th>
+	            <th rowspan="2">Mata Pelajaran</th>
+		        <th colspan="5">Nilai Semester</th>
+		        <th rowspan="2">Jumlah</th>
+		        <th rowspan="2">Rerata</th>
+	        </tr>
+	    	<tr>
+		        <th>1</th>
+	            <th>2</th>
+	            <th>3</th>
+	            <th>4</th>
+	            <th>5</th>
+	        </tr>  
+	        <?php 
+            $no = 1;
+            for($i=0; $i < $formulir->jml_mapel; $i++) { ?>      
+	    	<tr>
+	            <td style="text-align: center"><?= $no++ ?></td>
+	            <td></td>
+		        <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr> 
+	        <?php } ?>   
+	    </table><br>
+	<?php } ?>
  
-    <table border="1">
+    <table border="1" class="empat">
     	<tr>
             <th>No</th>
             <th>Jenis</th>
@@ -602,7 +726,7 @@
 			<td></td>  			
         </tr> 
 		<tr>
-			<td><br><br><br></td>
+			<td><br><br><br><br></td>
 			<td></td>  	    
 			<td></td>
 			<td></td> 
@@ -640,7 +764,7 @@
 		<tr>	
 			<td></td> 
 			<td></td>   
-		    <td style="border-bottom: 1px solid">Petugas Pendaftar<br><br><br><br><br></td>
+		    <td style="border-bottom: 1px solid">Petugas Pendaftar<br><br><br><br><br><br></td>
 		    <td></td> 
         </tr>  
 		<tr>

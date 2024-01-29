@@ -31,7 +31,8 @@ class Menu_type extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Menu_type_model->json();
     }
@@ -158,7 +159,8 @@ class Menu_type extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $data = $_POST['msg_'];
         $dataid = explode(',', $data);
         foreach ($dataid as $key => $value) {
@@ -167,18 +169,21 @@ class Menu_type extends CI_Controller
         }
         echo true;
     }
-    public function printdoc(){
+    
+    public function printdoc()
+    {
         $data = array(
             'menu_type_data' => $this->Menu_type_model->get_all(),
             'start' => 0
         );
         $this->load->view('menu_type/menu_type_print', $data);
     }
+
     public function _rules()
     {
-	$this->form_validation->set_rules('type', 'type', 'trim|required');
-	$this->form_validation->set_rules('id_menu_type', 'id_menu_type', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('type', 'type', 'trim|required');
+    	$this->form_validation->set_rules('id_menu_type', 'id_menu_type', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
 

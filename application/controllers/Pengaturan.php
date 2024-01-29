@@ -14,6 +14,7 @@ class Pengaturan extends CI_Controller
         $this->load->model('Pengaturan_model');
         $this->load->model('Users_model');
         $this->load->model('Users_groups_model');
+        $this->load->model('Mail_model');        
         $this->load->library('form_validation');       
     }
 
@@ -26,7 +27,8 @@ class Pengaturan extends CI_Controller
         ];
 
         $data['code_js'] = 'pengaturan/codejs';
-        $data['pengaturan'] = $this->Pengaturan_model->get_by_id_1();   
+        $data['pengaturan'] = $this->Pengaturan_model->get_by_id_1();  
+        $data['mail'] = $this->Mail_model->get_by_id_1();  
         $data['page'] = 'pengaturan/Pengaturan';
         $this->load->view('template/backend', $data);
     }
@@ -49,16 +51,21 @@ class Pengaturan extends CI_Controller
                 form_error('kelurahan').
                 form_error('kecamatan').
                 form_error('kabupaten').
+                form_error('provinsi').
                 form_error('kode_pos').
                 form_error('no_telepon').
                 form_error('website').
                 form_error('email').
                 form_error('latitude').
                 form_error('longitude').
+                form_error('maptype').
+                form_error('radius').
                 form_error('gis').
                 form_error('apikey').
                 form_error('hstempel').
-                form_error('httd')                
+                form_error('httd').
+                form_error('intergramid').
+                form_error('maps')                  
             );            
             redirect(site_url('pengaturan'));
         } else { 
@@ -75,12 +82,15 @@ class Pengaturan extends CI_Controller
                 'kelurahan' => $this->input->post('kelurahan',TRUE),                
         		'kecamatan' => $this->input->post('kecamatan',TRUE),
         		'kabupaten' => $this->input->post('kabupaten',TRUE),
+                'provinsi' => $this->input->post('provinsi',TRUE),
         		'kode_pos' => $this->input->post('kode_pos',TRUE),
         		'no_telepon' => $this->input->post('no_telepon',TRUE),
         		'website' => $this->input->post('website',TRUE),
         		'email' => $this->input->post('email',TRUE),
                 'latitude' => $this->input->post('latitude',TRUE),
                 'longitude' => $this->input->post('longitude',TRUE),
+                'maptype' => $this->input->post('maptype',TRUE),
+                'radius' => $this->input->post('radius',TRUE),
                 'gis' => $this->input->post('gis',TRUE), 
                 'apikey' => $this->input->post('apikey',TRUE),                 
                 'status_pendaftaran' => $this->input->post('status_pendaftaran',TRUE),
@@ -90,6 +100,8 @@ class Pengaturan extends CI_Controller
                 'httd' => $this->input->post('httd',TRUE),  
                 'sstempel' => $this->input->post('sstempel',TRUE),
                 'sttd' => $this->input->post('sttd',TRUE),    
+                'intergramid' => $this->input->post('intergramid',TRUE),
+                'maps' => $this->input->post('maps',TRUE),
     	    );
 
             $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
@@ -108,7 +120,7 @@ class Pengaturan extends CI_Controller
                         $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
                     } else {
                         $this->input->post('old_logo');
-                        $this->session->set_flashdata('message', 'Upload logo Gagal');
+                        $this->session->set_flashdata('message', 'Upload logo gagal');
                         redirect(site_url('pengaturan'));
                     }                  
                 } else {
@@ -129,7 +141,7 @@ class Pengaturan extends CI_Controller
                         $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
                     } else {
                         $this->input->post('old_bglogin');
-                        $this->session->set_flashdata('message', 'Upload bglogin Gagal');
+                        $this->session->set_flashdata('message', 'Upload bglogin gagal');
                         redirect(site_url('pengaturan'));
                     }                  
                 } else {
@@ -150,7 +162,7 @@ class Pengaturan extends CI_Controller
                         $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
                     } else {
                         $this->input->post('old_stempel');
-                        $this->session->set_flashdata('message', 'Upload Stempel Gagal');
+                        $this->session->set_flashdata('message', 'Upload stempel gagal');
                         redirect(site_url('pengaturan'));
                     }                  
                 } else {
@@ -171,7 +183,7 @@ class Pengaturan extends CI_Controller
                         $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
                     } else {
                         $this->input->post('old_ttd');
-                        $this->session->set_flashdata('message', 'Upload ttd Gagal');
+                        $this->session->set_flashdata('message', 'Upload ttd gagal');
                         redirect(site_url('pengaturan'));
                     }
                 } else {
@@ -192,7 +204,7 @@ class Pengaturan extends CI_Controller
                         $this->Pengaturan_model->update($this->input->post('id_identitas', TRUE), $data);
                     } else {
                         $this->input->post('old_header');
-                        $this->session->set_flashdata('message', 'Upload header Gagal');
+                        $this->session->set_flashdata('message', 'Upload header gagal');
                         redirect(site_url('pengaturan'));
                     } 
                 } else {
@@ -205,7 +217,7 @@ class Pengaturan extends CI_Controller
                     }                                         
                 }  
                 
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data pengaturan");             
             redirect(site_url('pengaturan'));
         }
@@ -261,6 +273,10 @@ class Pengaturan extends CI_Controller
         array(
                 'required'      => 'Kabupaten tidak boleh kosong '
         ));
+        $this->form_validation->set_rules('provinsi', 'provinsi', 'trim|required',
+        array(
+                'required'      => 'Provinsi tidak boleh kosong '
+        ));        
     	$this->form_validation->set_rules('kode_pos', 'kode pos', 'trim|required|numeric',
         array(
                 'required'      => 'Kode Pos tidak boleh kosong ',
@@ -275,11 +291,21 @@ class Pengaturan extends CI_Controller
     	$this->form_validation->set_rules('email', 'email', 'trim|valid_email|required');
         $this->form_validation->set_rules('latitude', 'latitude', 'trim|required');
         $this->form_validation->set_rules('longitude', 'longitude', 'trim|required');
+        $this->form_validation->set_rules('maptype', 'maptype', 'trim|required');
+        $this->form_validation->set_rules('radius', 'radius', 'trim|numeric|required');
         $this->form_validation->set_rules('gis', 'gis', 'trim');
         $this->form_validation->set_rules('apikey', 'apikey', 'trim|required',
         array(
                 'required'      => 'apiKey tidak boleh kosong '
-        ));        
+        ));   
+        $this->form_validation->set_rules('intergramid', 'intergramid', 'trim|required',
+        array(
+                'required'      => 'intergramid tidak boleh kosong '
+        ));  
+        $this->form_validation->set_rules('maps', 'maps', 'trim|required',
+        array(
+                'required'      => 'map tidak boleh kosong '
+        ));                            
         $this->form_validation->set_rules('logo', 'logo', 'trim');
         $this->form_validation->set_rules('bglogin', 'bglogin', 'trim');
         $this->form_validation->set_rules('stempel', 'stempel', 'trim');
@@ -310,9 +336,9 @@ class Pengaturan extends CI_Controller
         $this->load->dbutil();
 
         $aturan = array(
-                'tables'     => array('berkas','bobot','formulir','identitas','jalur','jarak','jurusan','log','pengumuman','peserta','prestasi','prestasipeserta','sekolah','tahunpelajaran','groups_menu','login_attempts','menu','menu_type','users_groups'),
+                'tables'     => array('berkas','biaya','bobot','formulir','groups','groups_menu','identitas','jalur','jarak','jawaban_wawancara','jurusan','log','login_attempts','mail','menu','menu_type','pembayaran','pengumuman','peserta','prestasi','prestasipeserta','raporsemester','sekolah','tahunpelajaran','tesdanwawancara','users','users_groups','wawancara'),
                 // Array table yang akan dibackup
-                'ignore'     => array('groups','users'),
+                // 'ignore'     => array('groups','users'),
                 // Daftar table yang tidak akan dibackup
                 'format'     => 'zip',
                 // gzip, zip, txt format filenya
@@ -328,7 +354,7 @@ class Pengaturan extends CI_Controller
  
         $backup =& $this->dbutil->backup($aturan);
  
-        $nama_database = 'backup-on-'. date("Y-m-d-H-i-s") .'.zip';
+        $nama_database = 'dbppdb-'. date("Y-m-d-H-i-s") .'.zip';
         $simpan = '/backup'.$nama_database;
  
         $this->load->helper('file');
@@ -350,7 +376,7 @@ class Pengaturan extends CI_Controller
 
             if(!$this->upload->do_upload("file")){
                 $error = array('error' => $this->upload->display_errors());
-                $this->session->set_flashdata('message', 'Data Gagal diupload');
+                $this->session->set_flashdata('message', 'Data gagal diupload');
                 redirect(site_url('pengaturan'));         
                 // echo "Gagal Upload";
                 var_dump($error);
@@ -384,32 +410,59 @@ class Pengaturan extends CI_Controller
 
     public function deletedata()
     {
-
-            $user = $this->ion_auth->user()->row(); 
-            $password = $_POST['password'];            
-            if (!password_verify($password, $user->password)) {
-                $this->session->set_flashdata('message', 'Password salah');
-                redirect(site_url('pengaturan'));  
-            } else {   
-                if (!empty($_POST['data'])) {
-                    $data = $_POST['data'];
-                    if ($data <> '') {
-                        foreach ($data as $table) {
-                            if ($table) {
-                                $this->db->TRUNCATE($table);
-                                helper_log("delete", "Menghapus data tabel ".$table);
-                            }
+        $user = $this->ion_auth->user()->row(); 
+        $password = $_POST['password'];            
+        if (!password_verify($password, $user->password)) {
+            $this->session->set_flashdata('message', 'Password salah');
+            redirect(site_url('pengaturan'));  
+        } else {   
+            if (!empty($_POST['data'])) {
+                $data = $_POST['data'];
+                if ($data <> '') {
+                    foreach ($data as $table) {
+                        if ($table) {
+                            $this->db->TRUNCATE($table);
+                            helper_log("delete", "Menghapus data tabel ".$table);
                         }
-                            $this->session->set_flashdata('message', 'Data berhasil dikosongkan'); 
-                            redirect(site_url('pengaturan'));   
                     }
-                } else {
-                    $this->session->set_flashdata('message', 'Tidak ada data terpilih');
-                    redirect(site_url('pengaturan'));               
+                        $this->session->set_flashdata('message', 'Data berhasil dikosongkan'); 
+                        redirect(site_url('pengaturan'));   
                 }
-            }    
+            } else {
+                $this->session->set_flashdata('message', 'Tidak ada data terpilih');
+                redirect(site_url('pengaturan'));               
+            }
+        }    
+    } 
 
-    }      
+    public function deletefile()
+    {
+        $folders = array(
+            'assets/uploads/attachment',
+            'assets/uploads/files/pendaftaran',
+            'assets/uploads/files/wawancara',
+            'assets/uploads/files/kartutes',
+            'assets/uploads/files/suratketerangan',
+            'assets/uploads/files/daftarulang',
+            'assets/uploads/image/grcode'
+        );        
+
+        $success_count = 0; // Counter untuk menghitung jumlah file yang berhasil dihapus
+
+        foreach ($folders as $folder) {
+            $files = glob($folder . '/*'); // Mengambil semua file dalam folder
+            foreach ($files as $file_path) {
+                if (is_file($file_path)) { // Pastikan bahwa yang dihapus hanya file
+                    unlink($file_path);
+                    $success_count++;
+                }
+            }
+        }
+
+        helper_log("delete", "Menghapus semua file");
+        $this->session->set_flashdata('message', $success_count . ' file berhasil dihapus.'); 
+        redirect(site_url('pengaturan')); 
+    }       
 
 }
 

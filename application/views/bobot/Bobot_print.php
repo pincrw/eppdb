@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tittle</title>
+    <title>Data Bobot</title>
     <style type="text/css" media="print">
     @page {
         margin: 0;  /* this affects the margin in the printer settings */
@@ -32,7 +32,9 @@
     		<th>Jalur</th>
     		<th>Bobot Jarak</th>
     		<th>Bobot Nilai</th>
-    		<th>Bobot Prestasi</th>		
+    		<th>Bobot Prestasi</th>	
+            <th>Bobot Tes</th>
+            <th>Bobot Wawancara</th>             	
         </tr>
         <?php
             foreach ($bobot_data as $bobot)
@@ -43,6 +45,8 @@
 		    <td><?php echo $bobot->bobot_jarak ?></td>
 		    <td><?php echo $bobot->bobot_nilai ?></td>
 		    <td><?php echo $bobot->bobot_prestasi ?></td>	
+            <td><?php echo $bobot->bobot_tes ?></td>
+            <td><?php echo $bobot->bobot_wawancara ?></td>            
         </tr>
         <?php } ?>
     </table>

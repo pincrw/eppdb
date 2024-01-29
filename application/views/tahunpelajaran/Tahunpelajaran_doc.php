@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>codeigniter crud generator</title>
+        <title>Tahun Pelajaran</title>
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <style>
             .word-table {
@@ -29,7 +29,7 @@
         		<th>Tanggal Pengumuman</th>
         		<th>Tanggal Mulai Daftar Ulang</th>
         		<th>Tanggal Selesai Daftar Ulang</th>
-        		<th>Status Tahun</th>
+        		<th>Status</th>
 		    </tr>
             <?php
             foreach ($tahunpelajaran_data as $tahunpelajaran)
@@ -46,6 +46,7 @@
     		    <td><?php echo $tahunpelajaran->tanggal_mulai_daftar_ulang ?></td>
     		    <td><?php echo $tahunpelajaran->tanggal_selesai_daftar_ulang ?></td>
     		    <td><?php echo $tahunpelajaran->status_tahun ?></td>	
+                <td><?php echo $tahunpelajaran->ket ?></td>
             </tr>
             <?php } ?>
         </table>

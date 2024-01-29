@@ -40,7 +40,8 @@ class Jalur extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Jalur_model->json();
     }
@@ -113,7 +114,7 @@ class Jalur extends CI_Controller
 	    );
 
         $this->Jalur_model->insert($data);
-        $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+        $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
         helper_log("add", "Menambah data jalur ".$data['jalur']); 
         redirect(site_url('jalur'));
         }
@@ -178,7 +179,7 @@ class Jalur extends CI_Controller
 	    );
 
         $this->Jalur_model->update($this->input->post('id_jalur', TRUE), $data);
-        $this->session->set_flashdata('message', 'Data Berhasil diubah');
+        $this->session->set_flashdata('message', 'Data berhasil diubah');
         helper_log("edit", "Update data jalur ".$data['jalur']);         
         redirect(site_url('jalur'));
         }
@@ -189,46 +190,47 @@ class Jalur extends CI_Controller
         $row = $this->Jalur_model->get_by_id($id);
 
         if ($row->id_jalur=='1' or $row->id_jalur=='2' or $row->id_jalur=='3' or $row->id_jalur=='4') {
-            $this->session->set_flashdata('message', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message', 'Data gagal dihapus');
             redirect(site_url('jalur'));
         } else {   
             $this->Jalur_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data jalur ".$row->jalur);             
             redirect(site_url('jalur'));
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Jalur_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data jalur pendaftaran");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('jalur', 'jalur', 'trim|required|is_unique[jalur.jalur]',
-        array(
-                'required'      => 'Jalur Pendaftaran tidak boleh kosong ',
-                'is_unique'     => 'Jalur Pendaftaran sudah ada '                
-        ));
-	$this->form_validation->set_rules('persentase', 'persentase', 'trim|required|numeric',
-        array(
-                'required'      => 'Persentase tidak boleh kosong ',
-                'numeric'       => 'Persentase hanya angka '
-        ));
-    $this->form_validation->set_rules('status_jalur', 'status jalur', 'trim|required',
-        array(
-                'required'      => 'Status Jalur tidak boleh kosong '          
-        ));
+    	$this->form_validation->set_rules('jalur', 'jalur', 'trim|required|is_unique[jalur.jalur]',
+            array(
+                    'required'      => 'Jalur Pendaftaran tidak boleh kosong ',
+                    'is_unique'     => 'Jalur Pendaftaran sudah ada '                
+            ));
+    	$this->form_validation->set_rules('persentase', 'persentase', 'trim|required|numeric',
+            array(
+                    'required'      => 'Persentase tidak boleh kosong ',
+                    'numeric'       => 'Persentase hanya angka '
+            ));
+        $this->form_validation->set_rules('status_jalur', 'status jalur', 'trim|required',
+            array(
+                    'required'      => 'Status Jalur tidak boleh kosong '          
+            ));
 
-	$this->form_validation->set_rules('id_jalur', 'id_jalur', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
+    	$this->form_validation->set_rules('id_jalur', 'id_jalur', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
     }
 
     public function excel()
@@ -286,7 +288,8 @@ class Jalur extends CI_Controller
         $this->load->view('jalur/Jalur_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'jalur_data' => $this->Jalur_model->get_all(),
             'start' => 0

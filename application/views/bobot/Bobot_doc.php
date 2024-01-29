@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>codeigniter crud generator</title>
+        <title>Data Bobot</title>
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <style>
             .word-table {
@@ -34,7 +34,9 @@
 		        <td><?php echo $bobot->jalur ?></td>
 		        <td><?php echo $bobot->bobot_jarak ?></td>
 		        <td><?php echo $bobot->bobot_nilai ?></td>
-		        <td><?php echo $bobot->bobot_prestasi ?></td>	
+		        <td><?php echo $bobot->bobot_prestasi ?></td>
+                <td><?php echo $bobot->bobot_tes ?></td>
+                <td><?php echo $bobot->bobot_wawancara ?></td>                	
             </tr>
             <?php } ?>
         </table>

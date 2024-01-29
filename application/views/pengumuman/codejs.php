@@ -83,13 +83,23 @@ CKEDITOR.inline('editable');
                         $('td:eq(1)', row).html(index);
                         var stt = data.type;
                         if (stt=="Member"){
-                            $('td:eq(2)', row).html('<span class="label label-success">MEMBER</span>');
+                            $('td:eq(2)', row).html('<span class="label label-success">Member</span>');
                         } else if (stt=="Publik"){
-                            $('td:eq(2)', row).html('<span class="label label-primary">PUBLIK</span>');
-                        } else if (stt=="Formulir"){
-                            $('td:eq(2)', row).html('<span class="label label-warning">FORMULIR</span>');
+                            $('td:eq(2)', row).html('<span class="label label-primary">Publik</span>');
+                        } else if (stt=="FormulirPD"){
+                            $('td:eq(2)', row).html('<span class="label label-warning">Formulir PD</span>');
+                        } else if (stt=="FormulirDU"){
+                            $('td:eq(2)', row).html('<span class="label bg-maroon">Formulir DU</span>');  
+                        } else if (stt=="FormulirW"){
+                            $('td:eq(2)', row).html('<span class="label bg-blue">Formulir W</span>');                                  
                         } else if (stt=="SKL"){
                             $('td:eq(2)', row).html('<span class="label label-info">SKL</span>');
+                        } else if (stt=="Rapor"){
+                            $('td:eq(2)', row).html('<span class="label bg-purple">Rapor</span>');
+                        } else if (stt=="Pembayaran"){
+                            $('td:eq(2)', row).html('<span class="label bg-purple">Pembayaran</span>');
+                        } else if (stt=="KartuTes"){
+                            $('td:eq(2)', row).html('<span class="label bg-maroon">Kartu Tes</span>');
                         }
                     }
                 });

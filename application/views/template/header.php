@@ -44,21 +44,29 @@
   
   <link rel="stylesheet" href="<?= base_url('assets/plugins/alertify/css/alertify.css'); ?>">
   <link rel="stylesheet" href="<?= base_url('assets/bower_components/bootstrap-select/css/bootstrap-select.css'); ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/dist/css/tamacms/custom.css'); ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/dist/css/nenemo/custom.css'); ?>">
   <!-- jQuery 3 -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- jQuery -->
+  <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.js');?>"></script>   
+  <script src="<?= base_url('assets/bower_components/jquery/dist/jquery.min.js');?>"></script>    
   <!-- iCheck -->
   <link rel="stylesheet" href="<?= base_url('assets/plugins/iCheck/square/purple.css'); ?>">
-  
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="<?= base_url('assets/bower_components/leaflet/leaflet.css'); ?>"> 
+
   <style type="text/css">
     .pagination>li>a,
     .pagination>li>span {
       padding: 3px 10px !important;
     }
+    #map { height: 480px; }
   </style>
 </head>
 
-<body class="sidebar-mini hold-transition fixed skin-purple sidebar-collapse"> <!-- open atau collapse -->
+<!-- <body class="sidebar-mini hold-transition fixed skin-purple sidebar-collapse"> open atau collapse --> 
+<body class="skin-purple sidebar-mini fixed sidebar-mini-expand-feature" style="height: auto; min-height: 100%;">  
   <!-- Site wrapper -->
   <div class="wrapper">
 
@@ -83,7 +91,7 @@
         </a>
 
         <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav">                   
             <?php
             $user = $this->ion_auth->user()->row();
             ?>
@@ -93,10 +101,10 @@
                 <?php 
                 if (file_exists('assets/uploads/image/user/'.$user->image)) { ?>  
                   <img class="user-image" src="<?php echo base_url('assets/uploads/image/user/'.$user->image) ?>">
-                  <span class="hidden-xs"><?= $user->first_name; ?> <?= $user->last_name; ?></span>
+                  <span class="hidden-xs"><?= $user->full_name; ?></span>
                 <?php } else { ?>
                   <img class="user-image" src="<?php echo base_url('assets/uploads/image/user/avatar.jpg') ?>">                  
-                  <span class="hidden-xs"><?= $user->first_name; ?> <?= $user->last_name; ?></span>
+                  <span class="hidden-xs"><?= $user->full_name; ?></span>
                 <?php } ?>  
               </a>
               <ul class="dropdown-menu">
@@ -106,12 +114,12 @@
                     if (file_exists('assets/uploads/image/user/'.$user->image)) { ?>                   
                       <img class="img-circle" src="<?php echo base_url('assets/uploads/image/user/'.$user->image) ?>">    
                       <p>
-                        <?= $user->first_name; ?> <?= $user->last_name; ?>
+                        <?= $user->full_name; ?>
                       </p>
                   <?php } else { ?>
                       <img class="img-circle" src="<?php echo base_url('assets/uploads/image/user/avatar.jpg') ?>">                     
                       <p>
-                        <?= $user->first_name; ?> <?= $user->last_name; ?>
+                        <?= $user->full_name; ?>
                       </p>
                   <?php } ?>  
                 </li>
@@ -130,7 +138,6 @@
             <li>
               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
             </li>
-
           </ul>
         </div>
       </nav>
@@ -150,7 +157,7 @@
               <img class="img-circle" src="<?php echo base_url('assets/uploads/image/user/'.$user->image) ?>">
             </div>
             <div class="pull-left info">
-              <p><?= $user->first_name; ?> <?= $user->last_name; ?></p>
+              <p><?= $user->full_name; ?></p>
               <a href="<?= base_url(); ?>profile"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           <?php } else { ?>
@@ -158,7 +165,7 @@
               <img class="img-circle" src="<?php echo base_url('assets/uploads/image/user/avatar.jpg') ?>">
             </div>
             <div class="pull-left info">
-              <p><?= $user->first_name; ?> <?= $user->last_name; ?></p>
+              <p><?= $user->full_name; ?></p>
               <a href="<?= base_url(); ?>profile"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           <?php } ?>  
@@ -224,7 +231,6 @@
               <?php endif ?>
             <?php endforeach ?>
           <?php endif ?>
-
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -242,7 +248,6 @@
         </h1>
         <?php $this->layout->breadcrumb($crumb) ?>
       </section>
-
       <!-- Main content -->
       <section class="content">
         <?php $this->load->view($page); ?>

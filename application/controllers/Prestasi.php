@@ -41,7 +41,8 @@ class Prestasi extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Prestasi_model->json();
     }
@@ -110,7 +111,7 @@ class Prestasi extends CI_Controller
         		'skor_prestasi' => $this->input->post('skor_prestasi',TRUE),
     	    );
             $this->Prestasi_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data prestasi ".$data['tingkat']);             
             redirect(site_url('prestasi'));}
     }
@@ -159,7 +160,7 @@ class Prestasi extends CI_Controller
         		'skor_prestasi' => $this->input->post('skor_prestasi',TRUE),
     	    );
             $this->Prestasi_model->update($this->input->post('id_prestasi', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data prestasi ".$data['tingkat']);             
             redirect(site_url('prestasi'));
         }
@@ -171,7 +172,7 @@ class Prestasi extends CI_Controller
 
         if ($row) {
             $this->Prestasi_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data prestasi ".$row->tingkat);             
             redirect(site_url('prestasi'));
         } else {
@@ -180,26 +181,27 @@ class Prestasi extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Prestasi_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data prestasi");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('tingkat', 'tingkat', 'trim|required');
-	$this->form_validation->set_rules('kategori', 'kategori', 'trim|required');
-	$this->form_validation->set_rules('juara', 'juara', 'trim|required');
-	$this->form_validation->set_rules('skor_prestasi', 'skor prestasi', 'trim|required|numeric');
+    	$this->form_validation->set_rules('tingkat', 'tingkat', 'trim|required');
+    	$this->form_validation->set_rules('kategori', 'kategori', 'trim|required');
+    	$this->form_validation->set_rules('juara', 'juara', 'trim|required');
+    	$this->form_validation->set_rules('skor_prestasi', 'skor prestasi', 'trim|required|numeric');
 
-	$this->form_validation->set_rules('id_prestasi', 'id_prestasi', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('id_prestasi', 'id_prestasi', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
@@ -259,13 +261,66 @@ class Prestasi extends CI_Controller
         $this->load->view('prestasi/Prestasi_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'prestasi_data' => $this->Prestasi_model->get_all(),
             'start' => 0
         );
         $this->load->view('prestasi/Prestasi_print', $data);
     }
+
+    public function upload()
+    {
+
+        $file_mimes = array('text/x-comma-separated-values',
+            'text/comma-separated-values',
+            'application/octet-stream',
+            'application/vnd.ms-excel',
+            'application/x-csv',
+            'text/x-csv',
+            'text/csv',
+            'application/csv',
+            'application/excel',
+            'application/vnd.msexcel',
+            'text/plain',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+
+        if(isset($_FILES['file']['name']) && in_array($_FILES['file']['type'], $file_mimes)) {
+         
+            $arr_file = explode('.', $_FILES['file']['name']);
+            $extension = end($arr_file);
+         
+            if ('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } elseif('xls' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();                
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+         
+            $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+             
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            $this->db->TRUNCATE('prestasi');
+            for($i = 1;$i < count($sheetData);$i++)
+            {
+                $tingkat = $sheetData[$i]['1'];
+                $kategori = $sheetData[$i]['2'];
+                $juara = $sheetData[$i]['3'];
+                $skor_prestasi = $sheetData[$i]['4'];
+
+                $this->db->query("insert into prestasi (id_prestasi,tingkat,kategori,juara,skor_prestasi) values ('','$tingkat','$kategori','$juara',$skor_prestasi')");
+            }
+                $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
+                helper_log("add", "Import data prestasi");                 
+                redirect(site_url('prestasi'));
+        } else {
+                $this->session->set_flashdata('message', 'Data tidak sesuai');               
+                redirect(site_url('prestasi'));            
+        }
+    }    
 
 }
 

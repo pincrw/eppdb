@@ -43,7 +43,7 @@
                 </div>
         	    <div class="form-group">
                     <label for="varchar">Tahun <span style="color:red;">*</span> <?php echo form_error('tahun') ?></label>
-                    <input type="text" class="form-control" name="tahun" id="tahun" placeholder="Tahun" value="<?php echo $tahun; ?>" required/>
+                    <input type="text" class="form-control" name="tahun" id="tahun" placeholder="Tahun" value="<?php echo $tahun; ?>" onkeypress="return Angkasaja(event)" required/>
                 </div>
         	    <div class="form-group">
                     <label for="varchar">Penyelenggara <span style="color:red;">*</span> <?php echo form_error('penyelenggara') ?></label>
@@ -81,3 +81,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function Angkasaja(evt) 
+    {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+        return true;
+    }
+</script> 

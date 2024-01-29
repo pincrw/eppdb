@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SKL PD</title>
+    <title>Surat Keterangan</title>
     <style type="text/css" media="print">
     @page {
         margin-top: 30;  /* this affects the margin in the printer settings */
@@ -37,12 +37,13 @@
     .ttd {
         position: absolute;
         left: 490px;
-        top: 580px;
+        top: 595px;
+/*        top: 615px;*/
     }  
     .stempel {
         position: absolute;
-        left: 450px;
-        top: 570px;
+        left: 430px;
+        top: 575px;
     }        	
     </style>
 </head>
@@ -87,10 +88,7 @@
     <br>
  	<table>    
 		<tr>	
-			<td colspan="3" style="text-align: center"><strong>PENGUMUMAN</strong></td>	    
-        </tr> 
-		<tr>	    
-		    <td colspan="3" style="text-align: center"><strong>KEPALA <?php echo strtoupper($pengaturan->nama_sekolah) ?></strong></td>
+			<td colspan="3" style="text-align: center"><strong>SURAT KETERANGAN</strong></td>	    
         </tr> 
 		<tr>	    
 		    <td colspan="3" style="text-align: center">
@@ -120,14 +118,12 @@
     </table>
     <table class="word-table" style="margin-bottom: 10px">	
     	<tr>
-            <td colspan="5">Diumumkan kepada para peserta seleksi masuk <?php echo strtoupper($pengaturan->nama_sekolah) ?> :</td>
+            <td colspan="5" style="text-align: justify">Berdasarkan keputusan kepala <?php echo strtoupper($pengaturan->nama_sekolah) ?> tanggal <?php echo format_indo(date('Y-m-d', strtotime($peserta->tanggal_pengumuman))) ?> tentang hasil seleksi calon peserta didik baru tahun pelajaran <?php echo $peserta->tahun_pelajaran ?>/<?php echo $tp ?> menerangkan bahwa :</td>
         </tr> 
     	<tr>
             <td width="30px"></td>
             <td width="150px">Nama</td>
-	        <td>: <strong><?php echo strtoupper($peserta->nama_peserta) ?></strong></td>
-            <td></td>
-            <td></td>
+	        <td colspan="3">: <strong><?php echo strtoupper($peserta->nama_peserta) ?></strong></td>
         </tr> 
     	<tr>
             <td></td>
@@ -139,43 +135,25 @@
     	<tr>
             <td></td>
             <td>Asal Sekolah</td>
-	        <td>: <?php echo strtoupper($peserta->asal_sekolah) ?></td>
-            <td></td>
-            <td></td>
+	        <td colspan="3">: <?php echo strtoupper($peserta->asal_sekolah) ?></td>
         </tr> 
-        <?php $tp = $peserta->tahun_pelajaran + 1; ?>  
     	<tr>
             <td></td>
             <td>Dinyatakan</td>
-	        <td>: <strong><?php echo strtoupper($peserta->status_hasil) ?></strong></td>
-            <td></td>
-            <td></td>
+	        <td colspan="3">: <strong><?php echo strtoupper($peserta->status_hasil) ?></strong></td>
         </tr>
-        <?php if ($pengaturan->jenjang=="SMA/MA" || $pengaturan->jenjang=="SMK") { ?>
+        <?php if ($formulir->jurusan=='Ya') { ?>
     	<tr>
             <td></td>
-            <td>Kompetensi Keahlian</td>
-	        <td>: <?php echo strtoupper($peserta->nama_jurusan) ?></td>
-            <td></td>
-            <td></td>
+            <td>Program</td>
+	        <td colspan="3">: <?php echo ucwords($peserta->nama_jurusan) ?></td>
         </tr>
         <?php } ?>          
     	<tr>
-            <td colspan="5"><br>selanjutnya kepada para peserta yang dinyatakan <strong>DI TERIMA</strong> untuk melakukan <strong>REGISTRASI ULANG</strong> dengan ketentuan sebagai berikut :</td>
+            <td colspan="5" style="text-align: justify"><br>selanjutnya kepada calon peserta didik yang dinyatakan <strong>DI TERIMA</strong> untuk melakukan <strong>DAFTAR ULANG</strong> sesuai dengan ketentuan.</td>
         </tr>
-    	<tr>
-            <td></td>
-            <td>Tanggal</td>
-	        <td>: <?php echo date('d F Y', strtotime($peserta->tanggal_mulai_daftar_ulang)) ?> s.d <?php echo date('d F Y', strtotime($peserta->tanggal_selesai_daftar_ulang)) ?></td>
-            <td></td>
-            <td></td>
-        </tr>
-    	<tr>
-            <td></td>
-            <td>Waktu</td>
-	        <td>: Pukul 08.00 s.d 12.00 </td>
-            <td></td>
-            <td></td>
+        <tr>
+            <td colspan="5"><br>Demikian surat keterangan ini dibuat, untuk digunakan seperlunya.</td>
         </tr>                                                  
     </table>
 	<br>
@@ -188,12 +166,12 @@
 			<td width="150px"></td>
 			<td rowspan="3" width="100px" style="text-align: center"></td>  
 			<td width="40px"></td>	    
-		    <td><?php echo ucwords($pengaturan->kecamatan) ?>, <?php echo date('d F Y', strtotime($peserta->tanggal_pengumuman)) ?></td>
+		    <td><?php echo ucwords($pengaturan->kecamatan) ?>, <?php echo format_indo(date('Y-m-d', strtotime($peserta->tanggal_pengumuman))) ?></td>
         </tr> 
 		<tr>	
 			<td></td> 
 			<td></td>   
-		    <td>Kepala Sekolah,<br><br><br><br><br>
+		    <td>Kepala Sekolah,<br><br><br><br><br><br><br>
             </td>
         </tr>   
 		<tr>
@@ -209,7 +187,7 @@
 		    <td>NIP. <?php echo $pengaturan->nip ?></td>
         </tr>           
 		<tr>
-			<td colspan="5" style="font-size: 13px"><br><br>
+			<td colspan="5" style="font-size: 13px"><br>
 			<?php foreach ($pengumuman as $text) { ?>				
 				<?php echo $text->text ?>
 			<?php } ?>				

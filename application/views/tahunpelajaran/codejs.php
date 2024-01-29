@@ -7,25 +7,46 @@
     $('.select2').select2();
 //Date picker
     $('#tanggal_mulai_pendaftaran').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_selesai_pendaftaran').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_mulai_seleksi').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_selesai_seleksi').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_pengumuman').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_mulai_daftar_ulang').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
     $('#tanggal_selesai_daftar_ulang').datepicker({
-      autoclose: true
+        autoclose: true,
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        defaultViewDate: new Date(<?php echo date('Y'); ?>, 1, 1)
     })
 </script>
 
@@ -81,6 +102,7 @@
                             // {"data": "tanggal_mulai_daftar_ulang"},
                             // {"data": "tanggal_selesai_daftar_ulang"},
                             {"data": "status_tahun","className" : "text-center"},
+                            {"data": "ket"},
                         {
                             "data" : "action",
                             "orderable": false,

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>codeigniter crud generator</title>
+        <title>Data Jurusan</title>
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <style>
             .word-table {
@@ -22,6 +22,7 @@
                 <th>No</th>
 		        <th>Nama Jurusan</th>
                 <th>Kuota</th>
+                <th>Status</th>
 		    </tr>
             <?php
                 foreach ($jurusan_data as $jurusan)
@@ -30,7 +31,8 @@
 		        <td><?php echo ++$start ?></td>
                 <td><?php echo $jurusan->bidang_keahlian ?></td>
 		        <td><?php echo $jurusan->nama_jurusan ?></td>
-                <td><?php echo $jurusan->kuota_jurusan ?></td>   	
+                <td><?php echo $jurusan->kuota_jurusan ?></td> 
+                <td><?php echo $jurusan->status_jurusan ?></td>  	
             </tr>
             <?php } ?>
         </table>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>codeigniter crud generator</title>
+        <title>Data Sekolah</title>
         <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap.min.css') ?>"/>
         <style>
             .word-table {

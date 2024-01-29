@@ -976,8 +976,8 @@ class Ion_auth_model extends CI_Model
 
 		// Users table.
 		$data = array(
-			// $this->identity_column => $identity,
-			// 'username' => $identity,
+			$this->identity_column => $identity,
+			'username' => $identity,
 			'password' => $password,
 			'email' => $email,
 			'ip_address' => $ip_address,
@@ -2646,7 +2646,7 @@ class Ion_auth_model extends CI_Model
 	 * Registrasi
 	 *
 	 */
-	public function Registrasi($username, $identity, $password, $email, $additional_data = array(), $groups = array())
+	public function Registrasi($identity, $password, $email, $additional_data = array(), $groups = array())
 	{
 		$this->trigger_events('pre_register');
 
@@ -2681,8 +2681,8 @@ class Ion_auth_model extends CI_Model
 
 		// Users table.
 		$data = array(
-		$this->identity_column => $identity,
-			'username' => $username,	
+			$this->identity_column => $identity,
+			'username' => $identity,	
 			'password' => $password,
 			'email' => $email,
 			'ip_address' => $ip_address,

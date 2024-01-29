@@ -14,17 +14,25 @@
             <div class="box-body">
             <form action="<?php echo $action; ?>" method="post">
                 <div class="form-group">
-                    <label for="varchar">Bidang Keahlian <span style="color:red;">*</span> <?php echo form_error('bidang_keahlian') ?></label>
-                    <input type="text" class="form-control" name="bidang_keahlian" id="bidang_keahlian" placeholder="Bidang Keahlian" value="<?php echo $bidang_keahlian; ?>" required/>
+                    <label for="varchar">Bidang/Program <span style="color:red;">*</span> <?php echo form_error('bidang_keahlian') ?></label>
+                    <input type="text" class="form-control" name="bidang_keahlian" id="bidang_keahlian" placeholder="Bidang Keahlian/Program" value="<?php echo $bidang_keahlian; ?>" required/>
                 </div>                
         	    <div class="form-group">
-                    <label for="varchar">Nama Jurusan <span style="color:red;">*</span> <?php echo form_error('nama_jurusan') ?></label>
-                    <input type="text" class="form-control" name="nama_jurusan" id="nama_jurusan" placeholder="Nama Jurusan" value="<?php echo $nama_jurusan; ?>" required/>
+                    <label for="varchar">Nama Jurusan/Program <span style="color:red;">*</span> <?php echo form_error('nama_jurusan') ?></label>
+                    <input type="text" class="form-control" name="nama_jurusan" id="nama_jurusan" placeholder="Nama Jurusan/Program" value="<?php echo $nama_jurusan; ?>" required/>
                 </div>
                 <div class="form-group">
-                    <label for="varchar">Kuota Jurusan <span style="color:red;">*</span> <?php echo form_error('kuota_jurusan') ?></label>
-                    <input type="text" class="form-control" name="kuota_jurusan" id="kuota_jurusan" placeholder="Kuota Jurusan" value="<?php echo $kuota_jurusan; ?>" required/>
-                </div>                
+                    <label for="varchar">Kuota Jurusan/Program <span style="color:red;">*</span> <?php echo form_error('kuota_jurusan') ?></label>
+                    <input type="text" class="form-control" name="kuota_jurusan" id="kuota_jurusan" placeholder="Kuota Jurusan/Program" value="<?php echo $kuota_jurusan; ?>" required/>
+                </div>
+                <div class="form-group">
+                    <label for="enum">Status Jurusan/Program <span style="color:red;">*</span></label>
+                    <select type="text" class="form-control" name="status_jurusan" id="status_jurusan" placeholder="Status Jurusan/Program" value="" required/>
+                        <option value="<?php echo $status_jurusan; ?>"><?php echo $status_jurusan; ?></option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>                                
         	    <input type="hidden" name="id_jurusan" value="<?php echo $id_jurusan; ?>" /> 
         	    <button type="submit" class="<?= $this->config->item('botton')?>"><?php echo $button ?></button>
         	    <a href="<?php echo site_url('jurusan') ?>" class="btn btn-default btn-flat">Batal</a>

@@ -23,7 +23,8 @@ class Users extends CI_Controller
         $this->lang->load('auth');
     }
 
-    public function index(){
+    public function index()
+    {
         // set the flash data error message if there is one
         $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         //list the users
@@ -45,7 +46,8 @@ class Users extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Users_model->json();
     }
@@ -68,8 +70,7 @@ class Users extends CI_Controller
     		'created_on' => $row->created_on,
     		'last_login' => $row->last_login,
     		'active' => $row->active,
-    		'first_name' => $row->first_name,
-    		'last_name' => $row->last_name,
+    		'full_name' => $row->full_name,
     		'company' => $row->company,
     		'phone' => $row->phone,
 	    );
@@ -107,8 +108,7 @@ class Users extends CI_Controller
     	    'created_on' => set_value('created_on'),
     	    'last_login' => set_value('last_login'),
     	    'active' => set_value('active'),
-    	    'first_name' => set_value('first_name'),
-    	    'last_name' => set_value('last_name'),
+    	    'full_name' => set_value('full_name'),
     	    'company' => set_value('company'),
     	    'phone' => set_value('phone'),
 	    );
@@ -144,14 +144,13 @@ class Users extends CI_Controller
     		'created_on' => $this->input->post('created_on',TRUE),
     		'last_login' => $this->input->post('last_login',TRUE),
     		'active' => $this->input->post('active',TRUE),
-    		'first_name' => $this->input->post('first_name',TRUE),
-    		'last_name' => $this->input->post('last_name',TRUE),
+    		'full_name' => $this->input->post('full_name',TRUE),
     		'company' => $this->input->post('company',TRUE),
     		'phone' => $this->input->post('phone',TRUE),
 	    );
 
             $this->Users_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data pengguna ".$data['username']);             
             redirect(site_url('users'));
         }
@@ -178,8 +177,7 @@ class Users extends CI_Controller
     		'created_on' => set_value('created_on', $row->created_on),
     		'last_login' => set_value('last_login', $row->last_login),
     		'active' => set_value('active', $row->active),
-    		'first_name' => set_value('first_name', $row->first_name),
-    		'last_name' => set_value('last_name', $row->last_name),
+    		'full_name' => set_value('full_name', $row->full_name),
     		'company' => set_value('company', $row->company),
     		'phone' => set_value('phone', $row->phone),
 	    );
@@ -219,14 +217,13 @@ class Users extends CI_Controller
     		'created_on' => $this->input->post('created_on',TRUE),
     		'last_login' => $this->input->post('last_login',TRUE),
     		'active' => $this->input->post('active',TRUE),
-    		'first_name' => $this->input->post('first_name',TRUE),
-    		'last_name' => $this->input->post('last_name',TRUE),
+    		'full_name' => $this->input->post('full_name',TRUE),
     		'company' => $this->input->post('company',TRUE),
     		'phone' => $this->input->post('phone',TRUE),
 	    );
 
             $this->Users_model->update($this->input->post('id', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data pengguna ".$data['username']);             
             redirect(site_url('users'));
         }
@@ -243,7 +240,7 @@ class Users extends CI_Controller
             redirect(site_url('users'));
         } else {
             $this->ion_auth->delete_user($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data pengguna ".$row->username);                 
             redirect(site_url('users'));
         }
@@ -255,7 +252,7 @@ class Users extends CI_Controller
 
         if ($row) {
             $this->Users_model->delete_allmember();
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus semua data pengguna member");                 
             redirect(site_url('users'));
         } else {
@@ -264,17 +261,19 @@ class Users extends CI_Controller
         }
     }    
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $data = $_POST['msg_'];
         $dataid = explode(',', $data);
         foreach ($dataid as $key => $value) {
             $this->Users_model->delete($value);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');             
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');             
         }
         echo true;
     }    
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'users_data' => $this->Users_model->get_all(),
             'start' => 0
@@ -284,24 +283,23 @@ class Users extends CI_Controller
 
     public function _rules()
     {
-	$this->form_validation->set_rules('ip_address', 'ip address', 'trim|required');
-	$this->form_validation->set_rules('username', 'username', 'trim|required');
-	$this->form_validation->set_rules('password', 'password', 'trim|required');
-	$this->form_validation->set_rules('salt', 'salt', 'trim|required');
-	$this->form_validation->set_rules('email', 'email', 'trim|required');
-	$this->form_validation->set_rules('activation_code', 'activation code', 'trim|required');
-	$this->form_validation->set_rules('forgotten_password_code', 'forgotten password code', 'trim|required');
-	$this->form_validation->set_rules('forgotten_password_time', 'forgotten password time', 'trim|required');
-	$this->form_validation->set_rules('remember_code', 'remember code', 'trim|required');
-	$this->form_validation->set_rules('created_on', 'created on', 'trim|required');
-	$this->form_validation->set_rules('last_login', 'last login', 'trim|required');
-	$this->form_validation->set_rules('active', 'active', 'trim|required');
-	$this->form_validation->set_rules('first_name', 'first name', 'trim|required');
-	$this->form_validation->set_rules('last_name', 'last name', 'trim|required');
-	$this->form_validation->set_rules('company', 'company', 'trim|required');
-	$this->form_validation->set_rules('phone', 'phone', 'trim|required');
-	$this->form_validation->set_rules('id', 'id', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('ip_address', 'ip address', 'trim|required');
+    	$this->form_validation->set_rules('username', 'username', 'trim|required');
+    	$this->form_validation->set_rules('password', 'password', 'trim|required');
+    	$this->form_validation->set_rules('salt', 'salt', 'trim|required');
+    	$this->form_validation->set_rules('email', 'email', 'trim|required');
+    	$this->form_validation->set_rules('activation_code', 'activation code', 'trim|required');
+    	$this->form_validation->set_rules('forgotten_password_code', 'forgotten password code', 'trim|required');
+    	$this->form_validation->set_rules('forgotten_password_time', 'forgotten password time', 'trim|required');
+    	$this->form_validation->set_rules('remember_code', 'remember code', 'trim|required');
+    	$this->form_validation->set_rules('created_on', 'created on', 'trim|required');
+    	$this->form_validation->set_rules('last_login', 'last login', 'trim|required');
+    	$this->form_validation->set_rules('active', 'active', 'trim|required');
+    	$this->form_validation->set_rules('full_name', 'first name', 'trim|required');
+    	$this->form_validation->set_rules('company', 'company', 'trim|required');
+    	$this->form_validation->set_rules('phone', 'phone', 'trim|required');
+    	$this->form_validation->set_rules('id', 'id', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
 

@@ -1,76 +1,89 @@
 <!-- chart -->
 <script src="<?= base_url();?>assets/bower_components/chart.js/Chart.js"></script>
+<!-- leaflet -->
+<script src="<?= base_url();?>assets/bower_components/leaflet/leaflet.js"></script>
 
 <script type="text/javascript">
+$('#myModalDev').modal('show');
+$('#myModalCatatan').modal('show'); 
+$('#myModalStatushasil').modal('show');     
+$('#myModalDUlang').modal('show'); 
 
-$('#myModalInfoBerkas').modal('show');    
+// start leaflet map ------------------------------
+var map = L.map('map').setView([<?= $pengaturan->latitude ?>,<?= $pengaturan->longitude ?>], 14);
+var base_url="<?=base_url()?>";
 
-//- chart -
-  $(function(){
-    var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Sept', 'Oct', 'Nov', 'Dec'],
-      datasets: [
-        {
-          label               : 'Electronics',
-          fillColor           : 'rgba(210, 214, 222, 1)',
-          strokeColor         : 'rgba(210, 214, 222, 1)',
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 44, 30, 70, 60, 20, 90]
-        },
-        {
-          label               : 'Digital Goods',
-          fillColor           : 'rgba(0, 92, 231,1.0)',
-          strokeColor         : 'rgba(9, 92, 231,1.0)',
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(0, 92, 231,1.0)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90, 10, 48, 90, 50, 30]
-        }
-      ]
-    }
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas                   = $('#barChart').get(0).getContext('2d')
-    var barChart                         = new Chart(barChartCanvas)
-    var barChartData                     = areaChartData
-    barChartData.datasets[1].fillColor   = '#6c5ce7'
-    barChartData.datasets[1].strokeColor = '#6c5ce7'
-    barChartData.datasets[1].pointColor  = '#00a65a'
-    var barChartOptions                  = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-      scaleBeginAtZero        : true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines      : true,
-      //String - Colour of the grid lines
-      scaleGridLineColor      : 'rgba(0,0,0,.05)',
-      //Number - Width of the grid lines
-      scaleGridLineWidth      : 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines  : true,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke           : true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth          : 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing         : 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing       : 1,
-      //String - A legend template
-      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-      //Boolean - whether to make the chart responsive
-      responsive              : true,
-      maintainAspectRatio     : true
-    }
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-    barChartOptions.datasetFill = false
-    barChart.Bar(barChartData, barChartOptions)
-  });
+// menampilkan marker sekolah
+L.marker([<?= $pengaturan->latitude ?>,<?= $pengaturan->longitude ?>]).addTo(map)
+    .bindPopup('<?= $pengaturan->nama_sekolah ?><br> NPSN <?= $pengaturan->npsn ?>')
+    .openPopup();
 
+// menampilkan marker peserta --------------------------
+var pesertaMarker;
+
+$.getJSON(base_url+"dashboard/peserta_json", function(data){
+    $.each(data, function(i, field){
+
+    var lat=parseFloat(data[i].latitude);
+    var long=parseFloat(data[i].longitude);
+    var icon_peserta = L.icon({
+        iconUrl: base_url+'assets/icon/person.png',
+        iconSize: [30,30]
+    })
+
+/* Menghitung jarak antar 2 koordinat dengan satuan km - untuk satuan km dibagi 1000
+      Untuk satuan meter tidak perlu dibagi 1000 */
+    var lokasisekolah = [<?= $pengaturan->latitude ?>,<?= $pengaturan->longitude ?>];  
+    var jarak = (L.latLng([lat,long]).distanceTo(lokasisekolah)).toFixed(2);
+
+    pesertaMarker = L.marker([lat,long],{icon:icon_peserta}).addTo(map)
+        .bindPopup(data[i].nama_peserta+"<br>No. "+data[i].no_pendaftaran+"<br>Jarak "+data[i].jarak+"<br>Jarak sistem "+jarak+" meter");  
+
+    // Membuat garis antara koordinat lokasi peserta dengan sekolah
+    // var line = [[lat,long],lokasisekolah];
+    // var polyline = L.polyline(line, {
+    //     color: 'purple',
+    //     weight: 3,
+    //     opacity: 0.7,
+    //     });
+    // polyline.addTo(map);
+
+    }); 
+});
+
+// circle radius ---------------------------------------
+var circle = L.circle([<?= $pengaturan->latitude ?>,<?= $pengaturan->longitude ?>], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: <?= $pengaturan->radius ?>
+}).addTo(map); 
+
+// menampilkan koordinat saat map di klik -------------
+var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("Koordinat " + e.latlng.toString())
+        .openOn(map);
+}
+
+map.on('click', onMapClick);
+// end leaflet map ------------------------------         
 </script>     
+
+<!-- iCheck -->
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-purple',
+      radioClass: 'icheckbox_flat-green',
+      increaseArea: '20%' /* optional */
+    });
+  });
+</script>

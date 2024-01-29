@@ -6,16 +6,17 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="list-group">
-          <?php foreach ($menu_type as $value): ?>
+          <?php foreach ($menu_type as $value): 
+            $id=$value->id_menu_type; ?>
             <?php
               $url = urldecode(str_replace(' ', '-', strtolower($value->type)));
               $active = '';
               if ($url == $this->uri->segment(3))
                 $active = ' active ';
             ?>
-            <?php if ($value->id_menu_type != 1): ?>
+<!--             <?php if ($value->id_menu_type != 1): ?>
               <a href="<?php echo site_url('cms/menu_type/'.$url.'/delete/'.$value->id_menu_type) ?>" title="Delete menu type" class="btn btn-xs btn-danger btn-flat" style="margin-bottom: 10px;"><i class="fa fa-trash"></i> Delete</a>
-            <?php endif ?>
+            <?php endif ?> -->
             <a href="<?php echo site_url('cms/menu/'.$url) ?>" class="list-group-item <?php echo $active ?>"><?php echo $value->type ?></a>
             <br>
           <?php endforeach ?>
@@ -23,6 +24,10 @@
         <div class="form-group">
           <a href="<?php echo site_url('menu_type') ?>" class="<?= $this->config->item('botton')?> btn-block"><i class="fa fa-plus-circle"></i> &nbsp;Manage Menu Type</a>
         </div>
+        <div class="callout callout-info"> 
+          <li>pengaturan menu dapat dilakukan dengan cara drag and drop</li>
+          <li>setiap menu dapat di atur hak aksesnya</li> 
+        </div>         
       </div>
     </div>
   </div>

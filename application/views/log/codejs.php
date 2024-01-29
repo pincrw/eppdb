@@ -42,6 +42,7 @@
                             "orderable": false
                         },{"data": "log_time"},
                             {"data": "log_user"},
+                            {"data": "full_name"},
                             {"data": "log_ket"},
                         {
                             "data" : "action",

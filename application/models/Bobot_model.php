@@ -16,8 +16,9 @@ class Bobot_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,jalur');
+    function json() 
+    {
+        $this->datatables->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,bobot_tes,bobot_wawancara,jalur');
         $this->datatables->from('bobot');
         //add this line for join
         $this->datatables->join('jalur', 'bobot.id_jalur = jalur.id_jalur');
@@ -31,7 +32,7 @@ class Bobot_model extends CI_Model
     // get all
     function get_all()
     {
-        $this->db->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,jalur');
+        $this->db->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,bobot_tes,bobot_wawancara,jalur');
         $this->db->join('jalur', $this->table.".id_jalur = jalur.id_jalur");           
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
@@ -40,31 +41,37 @@ class Bobot_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,jalur');
+        $this->db->select('id_bobot,jalur.id_jalur,bobot_jarak,bobot_nilai,bobot_prestasi,bobot_tes,bobot_wawancara,jalur');
         $this->db->join('jalur', $this->table.".id_jalur = jalur.id_jalur");    
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_bobot', $q);
     	$this->db->or_like('id_jalur', $q);
     	$this->db->or_like('bobot_jarak', $q);
     	$this->db->or_like('bobot_nilai', $q);
     	$this->db->or_like('bobot_prestasi', $q);
+        $this->db->or_like('bobot_tes', $q);
+        $this->db->or_like('bobot_wawancara', $q);
     	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_bobot', $q);
     	$this->db->or_like('id_jalur', $q);
     	$this->db->or_like('bobot_jarak', $q);
     	$this->db->or_like('bobot_nilai', $q);
     	$this->db->or_like('bobot_prestasi', $q);
+        $this->db->or_like('bobot_tes', $q);
+        $this->db->or_like('bobot_wawancara', $q);
     	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
@@ -90,7 +97,8 @@ class Bobot_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

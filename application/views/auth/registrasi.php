@@ -38,7 +38,7 @@
     padding-top: 0;
   }
   .login-logo{
-    padding-top: 5%;
+    padding-top: 0;
   }
   .logo {
     position: absolute;
@@ -59,8 +59,10 @@
   </div>
   <div class="col-md-4 col-xs-12 kanan">
     <div class="login-logo">
+        <center><img class='img img-responsive' style='max-width:200px;' src="<?= base_url('assets/dist/img/'.$pengaturan->logo) ?>" width='50px'></center>
         <h1><strong><?= $this->config->item('sitename')?></strong></h1>
-        <h5>version <?= $this->config->item('version')?></h>
+        <h5><strong><?= $pengaturan->nama_sekolah ?></strong></h5>
+        <h5>version <?= $this->config->item('version')?></h5>
     </div>
     <div class="container-login ">
       <p class="login-box-msg"><?php echo lang('create_user_subheading');?></p>
@@ -70,40 +72,44 @@
         <div id="infoMessage" class="callout callout-danger"><?php echo validation_errors();?></div>
       <?php } ?>
       <?php echo form_open("auth/proses_registrasi");?>
-        <!--
+        
         <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_fname_label') ?></label>
-          <input type="text" id="first_name" data-toggle="first_name" name="first_name"  class="form-control" placeholder="<?php echo lang('create_user_fname_label') ?>" value="<?php echo set_value('first_name');?>"  autofocus required />
+          <!-- <label><?php echo lang('create_user_fname_label1') ?> <span style="color:red;">*</span></label> -->
+          <input type="text" id="full_name" data-toggle="full_name" name="full_name"  class="form-control" placeholder="<?php echo lang('create_user_fname_label1') ?>" value="<?php echo set_value('full_name');?>"  autofocus required />
         </div>               
+
         <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_lname_label') ?></label>
-          <input type="text" id="last_name" data-toggle="last_name" name="last_name"  class="form-control" placeholder="<?php echo lang('create_user_lname_label') ?>" value="<?php echo set_value('last_name');?>" autofocus required />
+          <!-- <label><?php echo lang('create_user_phone_label') ?> <span style="color:red;">*</span></label> -->
+          <input type="text" id="phone" data-toggle="phone" name="phone"  class="form-control" placeholder="<?php echo lang('create_user_phone_label') ?>" value="<?php echo set_value('phone');?>"  autofocus required />
+        </div>  
+
+      <?php if ($this->config->item('identity', 'ion_auth') !== 'email') { ?>                
+        <div class="form-group has-feedback">
+          <!-- <label><?php echo lang('create_user_username_label1') ?> <span style="color:red;">*</span></label> -->
+          <input type="text" id="identity" data-toggle="identity" name="identity" class="form-control" placeholder="<?php echo lang('create_user_username_label1') ?>" value="<?php echo set_value('identity');?>" autofocus required />
         </div>
-        -->        
+      <?php } else { ?>  
         <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_username_label') ?> <span style="color:red;">*</span></label>
-          <input type="text" id="username" data-toggle="username" name="username" class="form-control" placeholder="<?php echo lang('create_user_username_label') ?>" value="<?php echo set_value('username');?>" autofocus required />
-        </div>
-<!--  hapus tanda komentar untuk input email
-        <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_email_label') ?> <span style="color:red;">*</span></label>
+          <!-- <label><?php echo lang('create_user_email_label') ?> <span style="color:red;">*</span></label> -->
           <input type="email" id="email" data-toggle="email" name="email"  class="form-control" placeholder="<?php echo lang('create_user_email_label') ?>" value="<?php echo set_value('email');?>" autofocus required />
-        </div>
-ini jg di hapus -->
+        </div>    
+      <?php } ?>
+
         <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_password_label') ?> <span style="color:red;">*</span></label>
+          <!-- <label><?php echo lang('create_user_password_label') ?> <span style="color:red;">*</span></label> -->
           <input type="password" id="password" data-toggle="password" name="password" class="form-control" placeholder="<?php echo lang('create_user_password_label') ?>" value="<?php echo set_value('password');?>" required />
         </div>
+
         <div class="form-group has-feedback">
-          <label><?php echo lang('create_user_password_confirm_label') ?> <span style="color:red;">*</span></label>
+          <!-- <label><?php echo lang('create_user_password_confirm_label') ?> <span style="color:red;">*</span></label> -->
           <input type="password" id="password_confirm" data-toggle="password_confirm" name="password_confirm" class="form-control" placeholder="<?php echo lang('create_user_password_confirm_label') ?>" value="<?php echo set_value('password_confirm');?>" required />
         </div>
 
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-6 col-md-8">
            <a href="login" >Login Page</a><br/>
           </div><!-- /.col -->
-          <div class="col-xs-6">
+          <div class="col-xs-6 col-md-4">
             <input type="submit" class="<?= $this->config->item('botton')?> btn-block" id="loginBtn" value="<?php echo lang('create_user_submit_btn') ?>" />
           </div><!-- /.col -->
         </div>
@@ -129,5 +135,21 @@ ini jg di hapus -->
     });
   });
 </script>
+
+<!-- live chat telegram -->
+<script>
+window.intergramId="<?php echo $pengaturan->intergramid ?>";
+window.intergramCustomizations={
+  titleClosed:'Chat Admin',
+  titleOpen:'Sedang Chat...',
+  introMessage:'Halo selamat datang, ada yang bisa kami bantu',
+  autoResponse:'Silahkan tunggu',
+  autoNoResponse:'Pesan anda akan kami jawab, silahkan tunggu',
+  maincolor:"#1a73c8",
+  alwaysUseFloatingButton: false
+};
+</script>
+<script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
+<!-- end chat -->
 </body>
 </html>  

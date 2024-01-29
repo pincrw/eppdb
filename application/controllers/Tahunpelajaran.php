@@ -33,6 +33,7 @@ class Tahunpelajaran extends CI_Controller
             'tanggal_mulai_daftar_ulang' => set_value('tanggal_mulai_daftar_ulang'),
             'tanggal_selesai_daftar_ulang' => set_value('tanggal_selesai_daftar_ulang'),
             'status_tahun' => set_value('status_tahun'),
+            'ket' => set_value('ket'),
         );
 
         $data['title'] = 'Tahun Pelajaran';
@@ -47,7 +48,8 @@ class Tahunpelajaran extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Tahunpelajaran_model->json();
     }
@@ -56,29 +58,30 @@ class Tahunpelajaran extends CI_Controller
     {
         $row = $this->Tahunpelajaran_model->get_by_id($id);
         if ($row) {
-        $data = array(
-    		'id_tahun' => $row->id_tahun,
-    		'tahun_pelajaran' => $row->tahun_pelajaran,
-    		'kuota' => $row->kuota,
-    		'tanggal_mulai_pendaftaran' => $row->tanggal_mulai_pendaftaran,
-    		'tanggal_selesai_pendaftaran' => $row->tanggal_selesai_pendaftaran,
-    		'tanggal_mulai_seleksi' => $row->tanggal_mulai_seleksi,
-    		'tanggal_selesai_seleksi' => $row->tanggal_selesai_seleksi,
-    		'tanggal_pengumuman' => $row->tanggal_pengumuman,
-    		'tanggal_mulai_daftar_ulang' => $row->tanggal_mulai_daftar_ulang,
-    		'tanggal_selesai_daftar_ulang' => $row->tanggal_selesai_daftar_ulang,
-    		'status_tahun' => $row->status_tahun,
-	    );
+            $data = array(
+        		'id_tahun' => $row->id_tahun,
+        		'tahun_pelajaran' => $row->tahun_pelajaran,
+        		'kuota' => $row->kuota,
+        		'tanggal_mulai_pendaftaran' => $row->tanggal_mulai_pendaftaran,
+        		'tanggal_selesai_pendaftaran' => $row->tanggal_selesai_pendaftaran,
+        		'tanggal_mulai_seleksi' => $row->tanggal_mulai_seleksi,
+        		'tanggal_selesai_seleksi' => $row->tanggal_selesai_seleksi,
+        		'tanggal_pengumuman' => $row->tanggal_pengumuman,
+        		'tanggal_mulai_daftar_ulang' => $row->tanggal_mulai_daftar_ulang,
+        		'tanggal_selesai_daftar_ulang' => $row->tanggal_selesai_daftar_ulang,
+        		'status_tahun' => $row->status_tahun,
+                'ket' => $row->ket,
+    	    );
 
-        $data['title'] = 'Tahun Pelajaran';
-        $data['subtitle'] = '';
-        $data['crumb'] = [
-            'Dashboard' => '',
-        ];
+            $data['title'] = 'Tahun Pelajaran';
+            $data['subtitle'] = '';
+            $data['crumb'] = [
+                'Dashboard' => '',
+            ];
 
-        $data['pengaturan']=$this->Pengaturan_model->get_by_id_1(); 
-        $data['page'] = 'tahunpelajaran/Tahunpelajaran_read';
-        $this->load->view('template/backend', $data);
+            $data['pengaturan']=$this->Pengaturan_model->get_by_id_1(); 
+            $data['page'] = 'tahunpelajaran/Tahunpelajaran_read';
+            $this->load->view('template/backend', $data);
         } else {
             $this->session->set_flashdata('message', 'Data tidak ditemukan');
             redirect(site_url('tahunpelajaran'));
@@ -101,6 +104,7 @@ class Tahunpelajaran extends CI_Controller
     	    'tanggal_mulai_daftar_ulang' => set_value('tanggal_mulai_daftar_ulang'),
     	    'tanggal_selesai_daftar_ulang' => set_value('tanggal_selesai_daftar_ulang'),
     	    'status_tahun' => set_value('status_tahun'),
+            'ket' => set_value('ket'),
 	    );
         
         $data['title'] = 'Tahun Pelajaran';
@@ -120,7 +124,7 @@ class Tahunpelajaran extends CI_Controller
         $this->_rules();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->create();
+            // $this->create();
             $this->session->set_flashdata('message', 
                 form_error('tahun_pelajaran').
                 form_error('kuota').
@@ -135,23 +139,37 @@ class Tahunpelajaran extends CI_Controller
             );
             redirect(site_url('tahunpelajaran'));              
         } else {
-        $data = array(
-    		'tahun_pelajaran' => $this->input->post('tahun_pelajaran',TRUE),
-    		'kuota' => $this->input->post('kuota',TRUE),
-            'tanggal_mulai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_pendaftaran',TRUE))),
-            'tanggal_selesai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_pendaftaran',TRUE))),
-            'tanggal_mulai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_seleksi',TRUE))),
-            'tanggal_selesai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_seleksi',TRUE))),
-            'tanggal_pengumuman' => date('Y-m-d', strtotime($this->input->post('tanggal_pengumuman',TRUE))),
-            'tanggal_mulai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_daftar_ulang',TRUE))),
-            'tanggal_selesai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_daftar_ulang',TRUE))),
-            'status_tahun' => $this->input->post('status_tahun',TRUE),
-	    );
+            $data = array(
+        		'tahun_pelajaran' => $this->input->post('tahun_pelajaran',TRUE),
+        		'kuota' => $this->input->post('kuota',TRUE),
+                'tanggal_mulai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_pendaftaran',TRUE))),
+                'tanggal_selesai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_pendaftaran',TRUE))),
+                'tanggal_mulai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_seleksi',TRUE))),
+                'tanggal_selesai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_seleksi',TRUE))),
+                'tanggal_pengumuman' => date('Y-m-d', strtotime($this->input->post('tanggal_pengumuman',TRUE))),
+                'tanggal_mulai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_daftar_ulang',TRUE))),
+                'tanggal_selesai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_daftar_ulang',TRUE))),
+                'status_tahun' => $this->input->post('status_tahun',TRUE),
+                'ket' => $this->input->post('ket',TRUE),
+    	    );
 
-        $this->Tahunpelajaran_model->insert($data);
-        $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
-        helper_log("add", "Menambah data tahun pelajaran ".$data['tahun_pelajaran']);         
-        redirect(site_url('tahunpelajaran'));
+            $status = $this->Tahunpelajaran_model->get_tahun_aktif();
+            if ($status) {
+                $aktif = $status->status_tahun;
+                if ($data['status_tahun']==$aktif) {
+                    $this->session->set_flashdata('message', 'Status aktif sudah ada, gagal disimpan');
+                } else {
+                    $this->Tahunpelajaran_model->insert($data);
+                    $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
+                    helper_log("add", "Menambah data tahun pelajaran ".$data['tahun_pelajaran']);                     
+                }
+            } else {
+                $this->Tahunpelajaran_model->insert($data);
+                $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
+                helper_log("add", "Menambah data tahun pelajaran ".$data['tahun_pelajaran']);                  
+            }            
+   
+            redirect(site_url('tahunpelajaran'));
         }
     }
 
@@ -160,32 +178,33 @@ class Tahunpelajaran extends CI_Controller
         $row = $this->Tahunpelajaran_model->get_by_id($id);
 
         if ($row) {
-        $data = array(
-            'button' => 'Ubah',
-            'action' => site_url('tahunpelajaran/update_action'),
-            'id_tahun' => set_value('id_tahun', $row->id_tahun),
-            'tahun_pelajaran' => set_value('tahun_pelajaran', $row->tahun_pelajaran),
-            'kuota' => set_value('kuota', $row->kuota),
-            'tanggal_mulai_pendaftaran' => set_value('tanggal_mulai_pendaftaran', $row->tanggal_mulai_pendaftaran),
-            'tanggal_selesai_pendaftaran' => set_value('tanggal_selesai_pendaftaran', $row->tanggal_selesai_pendaftaran),
-            'tanggal_mulai_seleksi' => set_value('tanggal_mulai_seleksi', $row->tanggal_mulai_seleksi),
-            'tanggal_selesai_seleksi' => set_value('tanggal_selesai_seleksi', $row->tanggal_selesai_seleksi),
-            'tanggal_pengumuman' => set_value('tanggal_pengumuman', $row->tanggal_pengumuman),
-            'tanggal_mulai_daftar_ulang' => set_value('tanggal_mulai_daftar_ulang', $row->tanggal_mulai_daftar_ulang),
-            'tanggal_selesai_daftar_ulang' => set_value('tanggal_selesai_daftar_ulang', $row->tanggal_selesai_daftar_ulang),
-            'status_tahun' => set_value('status_tahun', $row->status_tahun),
-        );
-            
-        $data['title'] = 'Tahun Pelajaran';
-        $data['subtitle'] = '';
-        $data['crumb'] = [
-            'Dashboard' => '',
-        ];
+            $data = array(
+                'button' => 'Ubah',
+                'action' => site_url('tahunpelajaran/update_action'),
+                'id_tahun' => set_value('id_tahun', $row->id_tahun),
+                'tahun_pelajaran' => set_value('tahun_pelajaran', $row->tahun_pelajaran),
+                'kuota' => set_value('kuota', $row->kuota),
+                'tanggal_mulai_pendaftaran' => set_value('tanggal_mulai_pendaftaran', $row->tanggal_mulai_pendaftaran),
+                'tanggal_selesai_pendaftaran' => set_value('tanggal_selesai_pendaftaran', $row->tanggal_selesai_pendaftaran),
+                'tanggal_mulai_seleksi' => set_value('tanggal_mulai_seleksi', $row->tanggal_mulai_seleksi),
+                'tanggal_selesai_seleksi' => set_value('tanggal_selesai_seleksi', $row->tanggal_selesai_seleksi),
+                'tanggal_pengumuman' => set_value('tanggal_pengumuman', $row->tanggal_pengumuman),
+                'tanggal_mulai_daftar_ulang' => set_value('tanggal_mulai_daftar_ulang', $row->tanggal_mulai_daftar_ulang),
+                'tanggal_selesai_daftar_ulang' => set_value('tanggal_selesai_daftar_ulang', $row->tanggal_selesai_daftar_ulang),
+                'status_tahun' => set_value('status_tahun', $row->status_tahun),
+                'ket' => set_value('status_tahun', $row->ket),
+            );
+                
+            $data['title'] = 'Tahun Pelajaran';
+            $data['subtitle'] = '';
+            $data['crumb'] = [
+                'Dashboard' => '',
+            ];
 
-        $data['code_js'] = 'tahunpelajaran/codejs';
-        $data['pengaturan']=$this->Pengaturan_model->get_by_id_1(); 
-        $data['page'] = 'tahunpelajaran/Tahunpelajaran_form';
-        $this->load->view('template/backend', $data);
+            $data['code_js'] = 'tahunpelajaran/codejs';
+            $data['pengaturan']=$this->Pengaturan_model->get_by_id_1(); 
+            $data['page'] = 'tahunpelajaran/Tahunpelajaran_form';
+            $this->load->view('template/backend', $data);
         } else {
             $this->session->set_flashdata('message', 'Data tidak ditemukan');
             redirect(site_url('tahunpelajaran'));
@@ -199,22 +218,36 @@ class Tahunpelajaran extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('id_tahun', TRUE));
         } else {
-        $data = array(
-    		'tahun_pelajaran' => $this->input->post('tahun_pelajaran',TRUE),
-    		'kuota' => $this->input->post('kuota',TRUE),
-            'tanggal_mulai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_pendaftaran',TRUE))),
-            'tanggal_selesai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_pendaftaran',TRUE))),
-            'tanggal_mulai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_seleksi',TRUE))),
-            'tanggal_selesai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_seleksi',TRUE))),
-            'tanggal_pengumuman' => date('Y-m-d', strtotime($this->input->post('tanggal_pengumuman',TRUE))),
-            'tanggal_mulai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_daftar_ulang',TRUE))),
-            'tanggal_selesai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_daftar_ulang',TRUE))),
-            'status_tahun' => $this->input->post('status_tahun',TRUE),
-	    );
+            $data = array(
+        		'tahun_pelajaran' => $this->input->post('tahun_pelajaran',TRUE),
+        		'kuota' => $this->input->post('kuota',TRUE),
+                'tanggal_mulai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_pendaftaran',TRUE))),
+                'tanggal_selesai_pendaftaran' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_pendaftaran',TRUE))),
+                'tanggal_mulai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_seleksi',TRUE))),
+                'tanggal_selesai_seleksi' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_seleksi',TRUE))),
+                'tanggal_pengumuman' => date('Y-m-d', strtotime($this->input->post('tanggal_pengumuman',TRUE))),
+                'tanggal_mulai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_mulai_daftar_ulang',TRUE))),
+                'tanggal_selesai_daftar_ulang' => date('Y-m-d', strtotime($this->input->post('tanggal_selesai_daftar_ulang',TRUE))),
+                'status_tahun' => $this->input->post('status_tahun',TRUE),
+                'ket' => $this->input->post('ket',TRUE),
+    	    );
 
-            $this->Tahunpelajaran_model->update($this->input->post('id_tahun', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
-            helper_log("edit", "Update data tahun pelajaran ".$data['tahun_pelajaran']);             
+            $status = $this->Tahunpelajaran_model->get_tahun_aktif();
+            if ($status) {
+                $aktif = $status->status_tahun;
+                if ($data['status_tahun']==$aktif) {
+                    $this->session->set_flashdata('message', 'Status aktif sudah ada, gagal diubah');
+                } else {
+                    $this->Tahunpelajaran_model->update($this->input->post('id_tahun', TRUE), $data);
+                    $this->session->set_flashdata('message', 'Data berhasil diubah');
+                    helper_log("edit", "Update data tahun pelajaran ".$data['tahun_pelajaran']);                     
+                }
+            } else {
+                $this->Tahunpelajaran_model->update($this->input->post('id_tahun', TRUE), $data);
+                $this->session->set_flashdata('message', 'Data berhasil diubah');
+                helper_log("edit", "Update data tahun pelajaran ".$data['tahun_pelajaran']);                  
+            }
+
             redirect(site_url('tahunpelajaran'));
         }
     }
@@ -225,7 +258,7 @@ class Tahunpelajaran extends CI_Controller
 
         if ($row) {
             $this->Tahunpelajaran_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data tahun pelajaran ".$row->tahun_pelajaran);             
             redirect(site_url('tahunpelajaran'));
         } else {
@@ -234,65 +267,67 @@ class Tahunpelajaran extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Tahunpelajaran_model->deletebulk();
-        if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+        if ($delete) {
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data tahun pelajaran");             
-        }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+        } else {
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('tahun_pelajaran', 'tahun pelajaran', 'trim|required|numeric|exact_length[4]',
-        array(
-                'required'      => 'Tahun Pelajaran tidak boleh kosong ',
-                'numeric'       => 'Tahun Pelajaran hanya angka ',
-                'exact_length[4]' => 'Tahun Pelajaran '
-        ));
-	$this->form_validation->set_rules('kuota', 'kuota', 'trim|required|numeric',
-        array(
-                'required'      => 'Kuota tidak boleh kosong ',
-                'numeric'       => 'Kuota hanya angka '
-        ));
-	$this->form_validation->set_rules('tanggal_mulai_pendaftaran', 'tanggal mulai pendaftaran', 'trim|required',
-        array(
-                'required'      => 'Mulai Pendafataran tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_selesai_pendaftaran', 'tanggal selesai pendaftaran', 'trim|required',
-        array(
-                'required'      => 'Selesai Pendafataran tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_mulai_seleksi', 'tanggal mulai seleksi', 'trim|required',
-        array(
-                'required'      => 'Mulai Seleksi tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_selesai_seleksi', 'tanggal selesai seleksi', 'trim|required',
-        array(
-                'required'      => 'Selesai tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_pengumuman', 'tanggal pengumuman', 'trim|required',
-        array(
-                'required'      => 'Tanggal Pengumuman tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_mulai_daftar_ulang', 'tanggal mulai daftar ulang', 'trim|required',
-        array(
-                'required'      => 'Mulai Daftar Ulang tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('tanggal_selesai_daftar_ulang', 'tanggal selesai daftar ulang', 'trim|required',
-        array(
-                'required'      => 'Selesai Daftar Ulang tidak boleh kosong '
-        ));
-	$this->form_validation->set_rules('status_tahun', 'status tahun', 'trim|required',
-        array(
-                'required'      => 'Status Tahun tidak boleh kosong '
-        ));
+    	$this->form_validation->set_rules('tahun_pelajaran', 'tahun pelajaran', 'trim|required|numeric|exact_length[4]',
+            array(
+                    'required'      => 'Tahun Pelajaran tidak boleh kosong ',
+                    'numeric'       => 'Tahun Pelajaran hanya angka ',
+                    'exact_length[4]' => 'Tahun Pelajaran '
+            ));
+    	$this->form_validation->set_rules('kuota', 'kuota', 'trim|required|numeric',
+            array(
+                    'required'      => 'Kuota tidak boleh kosong ',
+                    'numeric'       => 'Kuota hanya angka '
+            ));
+    	$this->form_validation->set_rules('tanggal_mulai_pendaftaran', 'tanggal mulai pendaftaran', 'trim|required',
+            array(
+                    'required'      => 'Mulai Pendafataran tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_selesai_pendaftaran', 'tanggal selesai pendaftaran', 'trim|required',
+            array(
+                    'required'      => 'Selesai Pendafataran tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_mulai_seleksi', 'tanggal mulai seleksi', 'trim|required',
+            array(
+                    'required'      => 'Mulai Seleksi tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_selesai_seleksi', 'tanggal selesai seleksi', 'trim|required',
+            array(
+                    'required'      => 'Selesai tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_pengumuman', 'tanggal pengumuman', 'trim|required',
+            array(
+                    'required'      => 'Tanggal Pengumuman tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_mulai_daftar_ulang', 'tanggal mulai daftar ulang', 'trim|required',
+            array(
+                    'required'      => 'Mulai Daftar Ulang tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('tanggal_selesai_daftar_ulang', 'tanggal selesai daftar ulang', 'trim|required',
+            array(
+                    'required'      => 'Selesai Daftar Ulang tidak boleh kosong '
+            ));
+    	$this->form_validation->set_rules('status_tahun', 'status', 'trim|required',
+            array(
+                    'required'      => 'Status Tahun tidak boleh kosong '
+            ));
+        $this->form_validation->set_rules('ket', 'Keterangan', 'trim');
 
-	$this->form_validation->set_rules('id_tahun', 'id_tahun', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('id_tahun', 'id_tahun', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
@@ -326,7 +361,8 @@ class Tahunpelajaran extends CI_Controller
     	xlsWriteLabel($tablehead, $kolomhead++, "Tanggal Pengumuman");
     	xlsWriteLabel($tablehead, $kolomhead++, "Tanggal Mulai Daftar Ulang");
     	xlsWriteLabel($tablehead, $kolomhead++, "Tanggal Selesai Daftar Ulang");
-    	xlsWriteLabel($tablehead, $kolomhead++, "Status Tahun");
+    	xlsWriteLabel($tablehead, $kolomhead++, "Status");
+        xlsWriteLabel($tablehead, $kolomhead++, "ket");
 
 	foreach ($this->Tahunpelajaran_model->get_all() as $data) {
         $kolombody = 0;
@@ -343,6 +379,7 @@ class Tahunpelajaran extends CI_Controller
 	    xlsWriteLabel($tablebody, $kolombody++, $data->tanggal_mulai_daftar_ulang);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->tanggal_selesai_daftar_ulang);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->status_tahun);
+        xlsWriteLabel($tablebody, $kolombody++, $data->ket);
 
 	    $tablebody++;
             $nourut++;
@@ -364,7 +401,8 @@ class Tahunpelajaran extends CI_Controller
         $this->load->view('tahunpelajaran/Tahunpelajaran_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'tahunpelajaran_data' => $this->Tahunpelajaran_model->get_all(),
             'start' => 0

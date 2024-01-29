@@ -41,6 +41,14 @@
                     <label for="int">Bobot Prestasi <span style="color:red;">*</span> <?php echo form_error('bobot_prestasi') ?></label>
                     <input type="text" class="form-control" name="bobot_prestasi" id="bobot_prestasi" placeholder="Bobot Prestasi" value="<?php echo $bobot_prestasi; ?>" required/>
                 </div>
+                <div class="form-group">
+                    <label for="int">Bobot Tes <span style="color:red;">*</span> <?php echo form_error('bobot_tes') ?></label>
+                    <input type="text" class="form-control" name="bobot_tes" id="bobot_tes" placeholder="Bobot Tes" value="<?php echo $bobot_tes; ?>" required/>
+                </div>  
+                <div class="form-group">
+                    <label for="int">Bobot Wawancara <span style="color:red;">*</span> <?php echo form_error('bobot_wawancara') ?></label>
+                    <input type="text" class="form-control" name="bobot_wawancara" id="bobot_wawancara" placeholder="Bobot Wawancara" value="<?php echo $bobot_wawancara; ?>" required/>
+                </div>              
         	    <input type="hidden" name="id_bobot" value="<?php echo $id_bobot; ?>" /> 
         	    <button type="submit" class="<?= $this->config->item('botton')?>"><?php echo $button ?></button>
         	    <a href="<?php echo site_url('bobot') ?>" class="btn btn-default btn-flat">Batal</a>

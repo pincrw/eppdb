@@ -33,8 +33,9 @@
 						<!-- <th width=""><input type="checkbox" id="check-all"></th> -->
 						<th width="10px">No</th>
 						<th><?php echo lang('index_fname_th');?></th>
-						<th><?php echo lang('index_lname_th');?></th>
+						<th><?php echo lang('index_phone_th');?></th>
 						<th><?php echo lang('index_email_th');?></th>
+						<th><?php echo lang('index_username_th');?></th>
 						<th nowrap="nowrap"><?php echo lang('index_groups_th');?></th>
 						<th><?php echo lang('index_status_th');?></th>
 						<th width="80px"><?php echo lang('index_action_th');?></th>
@@ -48,9 +49,10 @@
 					<tr>
 						<!-- <td><input type="checkbox" class="check-item" name="id[]" value="<?php echo $user->id; ?>"></td> -->
 						<td><?php echo $no++;?></td>
-			            <td><?php echo htmlspecialchars($user->first_name,ENT_QUOTES,'UTF-8');?></td>
-			            <td><?php echo htmlspecialchars($user->last_name,ENT_QUOTES,'UTF-8');?></td>
+			            <td><?php echo htmlspecialchars($user->full_name,ENT_QUOTES,'UTF-8');?></td>
+			            <td><?php echo htmlspecialchars($user->phone,ENT_QUOTES,'UTF-8');?></td>
 			            <td><?php echo htmlspecialchars($user->email,ENT_QUOTES,'UTF-8');?></td>
+			            <td><?php echo htmlspecialchars($user->username,ENT_QUOTES,'UTF-8');?></td>
 			            <td nowrap="nowrap">
 							<?php $myArray = array();?>
 							<?php foreach ($user->groups as $group):?>

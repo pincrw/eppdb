@@ -14,22 +14,33 @@
             <div class="box-body">
             <form action="<?php echo $action; ?>" method="post">
                 <div class="form-group">
-                    <label for="varchar">Bidang <span style="color:red;">*</span> <?php echo form_error('bidang_keahlian') ?></label>
-                    <input type="text" class="form-control" name="bidang_keahlian" id="bidang_keahlian" placeholder="Bidang Keahlian" value="<?php echo $bidang_keahlian; ?>" required/>
+                    <label for="varchar">Bidang/Program <span style="color:red;">*</span> <?php echo form_error('bidang_keahlian') ?></label>
+                    <input type="text" class="form-control" name="bidang_keahlian" id="bidang_keahlian" placeholder="Contoh : Tehnik/Unggulan/Reguler" value="<?= set_value('bidang_keahlian') ?>" required/>
                 </div>
                 <div class="form-group">
-                    <label for="varchar">Nama Jurusan <span style="color:red;">*</span> <?php echo form_error('nama_jurusan') ?></label>
-                    <input type="text" class="form-control" name="nama_jurusan" id="nama_jurusan" placeholder="Nama Jurusan" value="<?php echo $nama_jurusan; ?>" required/>
+                    <label for="varchar">Nama Jurusan/Program <span style="color:red;">*</span> <?php echo form_error('nama_jurusan') ?></label>
+                    <input type="text" class="form-control" name="nama_jurusan" id="nama_jurusan" placeholder="Contoh : TKJ/MIPA/Reguler/Kelas Tahfidz" value="<?= set_value('nama_jurusan') ?>" required/>
                 </div>
                 <div class="form-group">
-                    <label for="varchar">kuota Jurusan <span style="color:red;">*</span> <?php echo form_error('kuota_jurusan') ?></label>
-                    <input type="text" class="form-control" name="kuota_jurusan" id="kuota_jurusan" placeholder="Kuota Jurusan" value="<?php echo $kuota_jurusan; ?>" required/>
-                </div>                
+                    <label for="varchar">Kuota <span style="color:red;">*</span> <?php echo form_error('kuota_jurusan') ?></label>
+                    <input type="text" class="form-control" name="kuota_jurusan" id="kuota_jurusan" placeholder="Kuota yang akan diterima" value="<?= set_value('kuota_jurusan') ?>" required/>
+                </div>
+                <div class="form-group">
+                    <label for="enum">Status <span style="color:red;">*</span></label>
+                    <select type="text" class="form-control" name="status_jurusan" id="status_jurusan" value="" required/>
+                        <option value="<?= set_value('status_jurusan') ?>"><?= set_value('status_jurusan') ?></option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>                                 
                 <input type="hidden" name="id_jurusan" value="<?php echo $id_jurusan; ?>" /> 
                 <button type="submit" class="<?= $this->config->item('botton')?>"><?php echo $button ?></button>
                 <a href="<?php echo site_url('jurusan') ?>" class="btn btn-default btn-flat">Batal</a>
-            </form>
-            </div>
+            </form><br>
+            <div class="callout callout-info">
+                <li>form jurusan dapat digunakan sekolah yang memiliki pembagian kelas khusus selain SMK</li>
+            </div>                         
+            </div>            
         </div>
     </div>  
 
@@ -70,20 +81,21 @@
                                 <tr>
                                     <th width=""></th>
                                     <th width="10px">No</th>
-                                    <th>Bidang</th>
-    		                        <th>Nama Jurusan</th>
+                                    <th>Bidang/Program</th>
+    		                        <th>Nama Jurusan/Program</th>
                                     <th>Kuota</th>
+                                    <th>Status</th>
     		                        <th width="80px">Action</th>
                                 </tr>
                             </thead>	
                         </table>
                     </div>
                 </form>
-              <div class="callout callout-info">
-                <li>Jurusan umum jangan dirubah</li>
-                <li>Jurusan umum digunakan untuk jenjang yang tidak memiliki jurusan</li>
-                <li>Kuota jurusan umum diisi sama dengan kuota pada tahun penerimaan aktif</li>
-              </div> 
+                <div class="callout callout-info">
+                    <li>Jurusan umum jangan dirubah</li>
+                    <li>Jurusan umum digunakan untuk jenjang yang tidak memiliki jurusan</li>
+                    <li>Kuota jurusan umum diisi sama dengan kuota pada tahun penerimaan aktif</li>
+                </div> 
             </div>
         </div>
     </div>

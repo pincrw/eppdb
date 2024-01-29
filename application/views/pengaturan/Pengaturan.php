@@ -4,6 +4,7 @@
     <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-gear"></i>&nbsp; Pengaturan Umum</a></li>
     <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-database"></i>&nbsp; Backup & Restore</a></li>
     <li><a href="#tab_3" data-toggle="tab"><i class="fa fa-trash"></i>&nbsp; Hapus Data</a></li>
+    <li><a href="#tab_4" data-toggle="tab"><i class="fas fa-mail-bulk"></i>&nbsp; SMTPMail & WhatsApp API</a></li>
     <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
   </ul>
   <div class="tab-content">
@@ -61,6 +62,7 @@
                         <label for="varchar">Jenjang <span style="color:red;">*</span> <?php echo form_error('jenjang') ?></label>
                         <select type="text" class="form-control" name="jenjang" id="jenjang" placeholder="Jenjang" value="" required/>
                           <option value="<?php echo $pengaturan->jenjang; ?>"><?php echo $pengaturan->jenjang; ?></option>
+                          <option value="TK/PAUD">TK/PAUD</option>
                           <option value="SD/MI">SD/MI</option>
                           <option value="SMP/MTs">SMP/MTs</option>
                           <option value="SMA/MA">SMA/MA</option>
@@ -109,42 +111,80 @@
                         <label for="varchar">Kabupaten/Kota <span style="color:red;">*</span> <?php echo form_error('kabupaten') ?></label>
                         <input type="text" class="form-control" name="kabupaten" id="kabupaten" placeholder="Kabupaten" value="<?php echo $pengaturan->kabupaten; ?>" required/>
                       </div>
-                    </div>                     
+                    </div> 
+                    <div class="col-xs-12 col-md-6">                       
+                      <div class="form-group">
+                        <label for="varchar">Provinsi <span style="color:red;">*</span> <?php echo form_error('provinsi') ?></label>
+                        <input type="text" class="form-control" name="provinsi" id="provinsi" placeholder="Provinsi" value="<?php echo $pengaturan->provinsi; ?>" required/>
+                      </div>
+                    </div>                                                 
+                  </div>                       
+                  <div class="row">
                     <div class="col-xs-12 col-md-6">                   
                       <div class="form-group">
                         <label for="varchar">Kode Pos <span style="color:red;">*</span> <?php echo form_error('kode_pos') ?></label>
                         <input type="text" class="form-control" name="kode_pos" id="kode_pos" placeholder="Kode Pos" value="<?php echo $pengaturan->kode_pos; ?>" onkeypress="return Angkasaja(event)" required/>
                       </div>
-                    </div>          
-                  </div>                       
-                  <div class="row">
+                    </div>                     
                     <div class="col-xs-12 col-md-6">                        
                       <div class="form-group">
                         <label for="varchar">No Telepon <span style="color:red;">*</span> <?php echo form_error('no_telepon') ?></label>
                         <input type="text" class="form-control" name="no_telepon" id="no_telepon" placeholder="No Telepon" value="<?php echo $pengaturan->no_telepon; ?>" onkeypress="return Angkasaja(event)" required/>
                       </div>
-                    </div>                    
+                    </div>                          
+                  </div>
+                  <div class="row">
                     <div class="col-xs-12 col-md-6">
                       <div class="form-group">
                         <label for="varchar">Website <?php echo form_error('website') ?></label>
                         <input type="text" class="form-control" name="website" id="website" placeholder="Website" value="<?php echo $pengaturan->website; ?>" />
                       </div>
-                    </div>        
-                  </div>
-                  <div class="row">
+                    </div>                    
                     <div class="col-xs-12 col-md-6">                        
                       <div class="form-group">
                         <label for="varchar">Email <span style="color:red;">*</span> <?php echo form_error('email') ?></label>
                         <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $pengaturan->email; ?>" required/>
                       </div>
                     </div>                      
-                    <div class="col-xs-12 col-md-6"> 
-                      <div class="form-group">
-                        <label for="varchar">apiKey Maps <span style="color:red;">*</span> <?php echo form_error('apikey') ?></label>
-                        <input type="text" class="form-control" name="apikey" id="apikey" placeholder="apiKey" value="<?php echo $pengaturan->apikey; ?>" required/>
-                      </div>
-                    </div>
                   </div>
+
+            <?php
+            //buat fungsi untuk cek internet
+            function cek_internet(){
+               $connected = @fsockopen("www.google.com", 80);
+               if ($connected){
+                  $is_conn = true; //jika koneksi tersambung
+                  fclose($connected);
+               }else{
+                  $is_conn = false; //jika koneksi gagal
+               }
+               return $is_conn;
+            }
+            
+            if (cek_internet() == true) { 
+            ?>    
+                <?php if ($pengaturan->maps=='OpenStreetMap') { ?>  
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <div class="callout callout-info">
+                        <p>Drag marker ke lokasi yang diinginkan</p>
+                      </div>
+                    </div>    
+                  </div>                        
+                  <div id="map" style="width:100%;height:450px;"></div>                             
+                <?php } else { ?>                               
+                  <div id="googleMap" style="width:100%;height:450px;"></div>            
+                <?php } ?>    
+            <?php } else { ?>
+                  <div class="row">
+                    <div class="col-md-12 col-xs-12">
+                      <div class="callout callout-info">
+                        <p>Aktifkan koneksi internet untuk menampilkan PETA</p>
+                      </div>
+                    </div>    
+                  </div>      
+            <?php } ?>
+
                   <div class="row">                      
                     <div class="col-xs-12 col-md-6">
                       <div class="form-group">
@@ -158,17 +198,7 @@
                         <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Longitude" value="<?php echo $pengaturan->longitude; ?>" required/>
                       </div>
                     </div>          
-                  </div>
-                  <div class="row">                      
-                    <div class="col-xs-12 col-md-6">
-                      <div class="form-group">
-                        <!-- <label for="varchar">Koordinat Lokasi</label> -->
-                        <button type="button" class="btn bg-green btn-flat" data-toggle="modal" data-target="#myModalLokasi">
-                        <i class="fas fa-map-marker-alt"></i>&nbsp; Koordinat Lokasi Sekolah
-                        </button>
-                      </div>                   
-                    </div>
-                  </div>                      
+                  </div>                                  
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
                       <div class="form-group">
@@ -249,6 +279,60 @@
                       </div>
                     </div>                             
                   </div> 
+<!-- ------------------------------------------------------ -->                  
+                  <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                    <fieldset>
+                    <legend>Map dan Chat</legend> 
+                      <div class="row">
+                        <div class="col-xs-12 col-md-6"> 
+                          <div class="form-group">
+                            <label for="varchar">Map <span style="color:red;">*</span> <?php echo form_error('maps') ?></label>
+                            <select type="text" class="form-control" name="maps" id="maps" placeholder="Map" value="" required/>
+                              <option value="<?php echo $pengaturan->maps; ?>"><?php echo $pengaturan->maps; ?></option>
+                              <option value="OpenStreetMap">OpenStreetMap</option>
+                              <option value="GoogleMap">GoogleMap</option>
+                            </select>                             
+                          </div>
+                        </div>                        
+                        <div class="col-xs-12 col-md-6"> 
+                          <div class="form-group">
+                            <label for="varchar">Google Map Type <span style="color:red;">*</span> <?php echo form_error('maptype') ?></label>
+                            <select type="text" class="form-control" name="maptype" id="maptype" placeholder="Map Type" value="" required/>
+                              <option value="<?php echo $pengaturan->maptype; ?>"><?php echo $pengaturan->maptype; ?></option>
+                              <option value="HYBRID">HYBRID</option>
+                              <option value="ROADMAP">ROADMAP</option>
+                              <option value="SATELLITE">SATELLITE</option>
+                              <option value="TERRAIN">TERRAIN</option>
+                            </select>                             
+                          </div>
+                        </div>                     
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-6"> 
+                          <div class="form-group">
+                            <label for="varchar">apiKey Google Map <span style="color:red;">*</span> <?php echo form_error('apikey') ?></label>
+                            <input type="text" class="form-control" name="apikey" id="apikey" placeholder="apiKey" value="<?php echo $pengaturan->apikey; ?>" required/>
+                          </div>
+                        </div>                        
+                        <div class="col-xs-12 col-md-6">                        
+                          <div class="form-group">
+                            <label for="varchar">Radius <span style="color:red;">*</span> <?php echo form_error('radius') ?></label>
+                            <input type="text" class="form-control" name="radius" id="radius" placeholder="Radius diisi angka, contoh : 2000" value="<?php echo $pengaturan->radius; ?>" required/>
+                          </div>
+                        </div>                                                                                                   
+                      </div>  
+                      <div class="row">                      
+                        <div class="col-xs-12 col-md-6">
+                          <div class="form-group">
+                            <label for="varchar">Live Chat Telegram - @intergram ID <span style="color:red;">*</span> <?php echo form_error('intergramid') ?><span class="label bg-yellow" data-toggle="modal" data-target="#myModalInfo">klik baca panduan</span></label>
+                            <input type="text" class="form-control" name="intergramid" id="intergramid" placeholder="Intergram ID" value="<?php echo $pengaturan->intergramid; ?>" required/>
+                          </div>                   
+                        </div>                                                                              
+                      </div>                                                             
+                    </fieldset>                        
+                    </div>                             
+                  </div>                   
 <!-- ------------------------------------------------------ -->                  
                   <div class="row">
                     <div class="col-xs-12 col-md-12">
@@ -362,11 +446,23 @@
                           <label for="varchar"><span class="label bg-purple">Pilih Data Referensi</span></label>
                         </div>
                         <div class="form-group">                      
-                          <input type="checkbox" name="data[]" id="sekolah" value="sekolah"> Asal Sekolah
+                          <input type="checkbox" name="data[]" id="tahunpelajaran" value="tahunpelajaran"> Tahun Penerimaan
                         </div>                        
                         <div class="form-group">                      
-                          <input type="checkbox" name="data[]" id="pengumuman" value="pengumuman"> Pengumuman
+                          <input type="checkbox" name="data[]" id="sekolah" value="sekolah"> Asal Sekolah
+                        </div>
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="jarak" value="jarak"> Jarak
                         </div>                   
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="prestasi" value="prestasi"> Prestasi
+                        </div>                   
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="pengumuman" value="pengumuman"> Pengumuman
+                        </div> 
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="biaya" value="biaya"> Biaya
+                        </div>                                           
                       </div> 
                       <div class="col-xs-12 col-md-3">                    
                         <div class="form-group">
@@ -380,7 +476,27 @@
                         </div>
                         <div class="form-group">                      
                           <input type="checkbox" name="data[]" id="berkas" value="berkas"> Berkas Pendukung
+                        </div>
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="raporsemester" value="raporsemester"> Nilai Rapor Semester
+                        </div> 
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="tesdanwawancara" value="tesdanwawancara"> Nilai Tes dan Wawancara
+                        </div>                         
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="pembayaran" value="pembayaran"> Pembayaran
+                        </div>
+
+                        <div class="form-group">
+                          <label for="varchar"><span class="label bg-maroon">Pilih Data Wawancara</span></label>
+                        </div>
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="wawancara" value="wawancara"> Data Wawancara
+                        </div>
+                        <div class="form-group">                      
+                          <input type="checkbox" name="data[]" id="jawaban_wawancara" value="jawaban_wawancara"> Jawaban Wawancara
                         </div>                        
+
                         <?php if ($this->ion_auth->is_admin()) { ?>
                           <div class="form-group">
                             <label for="varchar"><span class="label bg-blue">Pilih Data Log</span></label>
@@ -399,7 +515,8 @@
                           <input type="password" class="form-control" name="password" id="password" placeholder="Masukkan Password" required />
                         </div>                         
                         <div class="form-group">                       
-                          <button type="submit" class="<?= $this->config->item('botton')?>"><span class="glyphicon glyphicon-trash"></span>&nbsp; Kosongkan</button>                          
+                          <button type="submit" class="<?= $this->config->item('botton')?>"><span class="glyphicon glyphicon-trash"></span>&nbsp; Kosongkan</button>
+                          <a href="pengaturan/deletefile" class="btn btn-flat bg-purple"><span class="fas fa-file-upload"></span>&nbsp; Hapus semua file</a>
                         </div>                         
                         <div class="form-group">                      
                           <label for="varchar" class='text-danger'>Mohon di ingat! Data yang telah dikosongkan tidak dapat dikembalikan.</label> 
@@ -412,45 +529,133 @@
           </div>        
       </div>                    
     </div>
+
+    <div class="tab-pane" id="tab_4">
+      <div class="row">
+        <div class="col-xs-12 col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">SMTPMail</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" onclick="location.reload()" title="Collapse">
+                <i class="fa fa-refresh"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="mail/update_mail" method="post">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">                    
+                    <div class="form-group">
+                      <label for="varchar">smtp_host <span style="color:red;">*</span> <?php echo form_error('host') ?></label>
+                      <input type="text" class="form-control" name="host" id="host" placeholder="Host" value="<?php echo $mail->host; ?>" required/>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">          
+                    <div class="form-group">
+                      <label for="varchar">smtp_user <span style="color:red;">*</span> <?php echo form_error('username') ?></label>
+                      <input type="text" class="form-control" name="username" id="username" placeholder="user, Contoh : ppdb@gmail.com" value="<?php echo $mail->username; ?>" required/>
+                    </div>
+                  </div>          
+                </div>
+                <div class="row">
+                  <div class="col-xs-12 col-md-6"> 
+                    <div class="form-group">
+                      <label for="varchar">smtp_password <span style="color:red;">*</span> <?php echo form_error('password') ?></label>
+                      <input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $mail->password; ?>" required/>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">                        
+                    <div class="form-group">
+                      <label for="varchar">smtp_secure <span style="color:red;">*</span> <?php echo form_error('smtpsecure') ?></label>
+                      <input type="text" class="form-control" name="smtpsecure" id="smtpsecure" placeholder="SMPTPSecure, Contoh : ssl/tls" value="<?php echo $mail->smtpsecure; ?>" required/>
+                    </div>
+                  </div>          
+                </div>                      
+                <div class="row">
+                  <div class="col-xs-12 col-md-6"> 
+                    <div class="form-group">
+                      <label for="varchar">smtp_port <span style="color:red;">*</span> <?php echo form_error('port') ?></label>
+                      <input type="text" class="form-control" name="port" id="port" placeholder="Port, Contoh : 465/587" value="<?php echo $mail->port; ?>" required/>
+                    </div>
+                  </div>       
+                </div> 
+                <input type="hidden" name="id_mail" id="id_mail" value="<?php echo $mail->id_mail; ?>" /> 
+                <button type="submit" class="<?= $this->config->item('botton')?>">Simpan Mail</button> 
+                <a href="<?php echo site_url('pengaturan') ?>" class="btn btn-default btn-flat">Batal</a>
+              </form><br>
+              <div class="callout callout-info">
+                <li>Fitur ini digunakan untuk mengirim pesan melalui email. </li>
+                <li>Peserta akan mendapatkan pesan ketika registrasi, cetak formulir (pendaftaran, daftar ulang, surat keterangan, maupun wawancara).</li>
+                <li>Username dapat menggunakan email atau NISN.</li>
+                <li>pastikan pada formulir email aktif.</li>
+                <li>buka file config\ion_uth.php ubah <b>$config['identity'] = 'username';</b> menjadi <b>$config['identity'] = 'email';</b></li>
+                <li>Panduan Mengaktifkan Google Security App password <a class="label bg-purple" style="text-decoration:none" href="<?php echo base_url('assets/uploads/files/PanduanMengaktifkanGoogleSecurityApppassword.pdf') ?>" target="blank">Baca panduan disini</a></li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">WhatsApp API</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" onclick="location.reload()" title="Collapse">
+                <i class="fa fa-refresh"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <form action="mail/update_api" method="post">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">                    
+                    <div class="form-group">
+                      <label for="varchar">url_server <span style="color:red;">*</span> <?php echo form_error('url_server') ?></label>
+                      <input type="text" class="form-control" name="url_server" id="url_server" placeholder="url_server" value="<?php echo $mail->url_server; ?>" required/>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-6">          
+                    <div class="form-group">
+                      <label for="varchar">token apikey <span style="color:red;">*</span> <?php echo form_error('token api') ?></label>
+                      <input type="text" class="form-control" name="token_api" id="token_api" placeholder="token api" value="<?php echo $mail->token_api; ?>" required/>
+                    </div>
+                  </div>          
+                </div>
+                <input type="hidden" name="id_mail" id="id_mail" value="<?php echo $mail->id_mail; ?>" /> 
+                <button type="submit" class="<?= $this->config->item('botton')?>">Simpan api</button> 
+                <a href="<?php echo site_url('pengaturan') ?>" class="btn btn-default btn-flat">Batal</a>
+              </form><br>
+              <div class="callout callout-info">
+                <li>Fitur ini digunakan untuk mengirim respon melalui pesan WhatsApp. </li>
+                <li>Peserta akan mendapatkan pesan ketika registrasi, mengisi formulir, info status verifikasi, dll.</li>
+                <li>Pastikan sudah memiliki/berlangganan WhatsApp API jika ingin menggunakan fitur ini.</li>
+                <li>Jangan aktifkan fitur ini jika tidak memiliki Token API karna akan menyebabkan error.</li>
+                <li>Fitur ini sementara dapat diaktifkan dengan cara mengedit file peserta_model.php pada baris 990.</li>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>    
   </div>
 </div>
 
-<!-- Modal Lokasi-->
-<div class="modal fade" id="myModalLokasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal Info Intergram-->
+<div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header <?= $this->config->item('header')?>">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><i class="fas fa-map-marker-alt"></i>&nbsp; Koordinat Lokasi</h4>
+        <h4 class="modal-title" id="myModalLabel">&nbsp; Intergram ID</h4>
       </div>
       <div class="modal-body">
-        <?php
-        //buat fungsi untuk cek internet
-        function cek_internet(){
-           $connected = @fsockopen("www.google.com", 80);
-           if ($connected){
-              $is_conn = true; //jika koneksi tersambung
-              fclose($connected);
-           }else{
-              $is_conn = false; //jika koneksi gagal
-           }
-           return $is_conn;
-        }
-        
-        if (cek_internet() == true) {
-
-        ?>    
-            <div id="googleMap" style="width:100%;height:450px;"></div>
-        <?php } else { ?>
-              <div class="row">
-                <div class="col-md-12 col-xs-12">
-                   <div class="callout callout-info">
-                        <h4>GIS Sekolah</h4>
-                        <p>Aktifkan koneksi internet untuk menampilkan PETA</p>
-                    </div>
-                </div>    
-              </div>      
-        <?php } ?>
+        <div class="callout callout-info">
+            <p>Cara Memperoleh Chat ID Intergram : Buka aplikasi Telegram. Kemudian, ketikkan Intergram di kolom pencarian. Pilih profil dengan username Intergram, kemudian tekan tombol START. Tunggu beberapa saat sampai Intergram mengirimkan pesan yang berisi kode unik (chat id). Salin Chat ID tersebut karena Chat ID adalah kode yang akan diinputkan. Ganti ID Intergram yang sudah ada dengan ID Intergram yang baru didapat milik admin atau panitia.</p>
+        </div>
       </div>
     </div>
   </div>

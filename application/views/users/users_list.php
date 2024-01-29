@@ -29,8 +29,7 @@
                         <th width=""></th>
                         <th width="10px">No</th>
             		    <!-- <th>IP Address</th> -->
-                        <th>First Name</th>
-                        <th>Last Name</th>                        
+                        <th>Full Name</th>                       
             		    <th>Username</th>
             		    <!-- <th>Password</th> -->
             		    <!-- <th>Salt</th> -->

@@ -16,7 +16,8 @@ class Pengumuman_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_pengumuman,type,judul,text,date');
         $this->datatables->from('pengumuman');
         //add this line for join
@@ -60,14 +61,32 @@ class Pengumuman_model extends CI_Model
         return $this->db->get($this->table)->result();
     }    
 
-    // get data by formulir
-    function get_by_formulir()
+    // get data by formulir PD
+    function get_by_formulirPD()
     {
-        $this->db->where('type', 'formulir');
+        $this->db->where('type', 'formulirPD');
         $this->db->order_by($this->id, $this->order);
         $this->db->limit(1);        
         return $this->db->get($this->table)->result();
-    } 
+    }
+
+    // get data by formulir DU
+    function get_by_formulirDU()
+    {
+        $this->db->where('type', 'formulirDU');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->limit(1);        
+        return $this->db->get($this->table)->result();
+    }    
+
+    // get data by formulir W
+    function get_by_formulirW()
+    {
+        $this->db->where('type', 'formulirW');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->limit(1);        
+        return $this->db->get($this->table)->result();
+    }       
 
     // get data by skl
     function get_by_skl()
@@ -76,10 +95,38 @@ class Pengumuman_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         $this->db->limit(1);        
         return $this->db->get($this->table)->result();
-    }              
+    }
+
+    // get data by raporsemeseter
+    function get_by_raporsemester()
+    {
+        $this->db->where('type', 'rapor');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->limit(1);        
+        return $this->db->get($this->table)->result();
+    }  
+
+    // get data by pembayaran
+    function get_by_pembayaran()
+    {
+        $this->db->where('type', 'pembayaran');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->limit(1);        
+        return $this->db->get($this->table)->result();
+    }                        
+
+    // get data by kartu
+    function get_by_kartu()
+    {
+        $this->db->where('type', 'kartutes');
+        $this->db->order_by($this->id, $this->order);
+        $this->db->limit(1);        
+        return $this->db->get($this->table)->result();
+    } 
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_pengumuman', $q);
     	$this->db->or_like('type', $q);
     	$this->db->or_like('judul', $q);
@@ -90,7 +137,8 @@ class Pengumuman_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_pengumuman', $q);
     	$this->db->or_like('type', $q);
@@ -122,7 +170,8 @@ class Pengumuman_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

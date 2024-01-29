@@ -20,16 +20,26 @@
                         <option value="">Pilih Type</option>
                         <option value="Member">Member</option>
                         <option value="Publik">Publik</option>
-                        <option value="Formulir">Formulir</option>
+                        <option value="FormulirPD">Formulir PD</option>
+                        <option value="FormulirDU">Formulir DU</option>
+                        <option value="FormulirW">Formulir W</option>
                         <option value="SKL">SKL</option>
+                        <option value="Rapor">Rapor</option>
+                        <option value="Pembayaran">Pembayaran</option>
+                        <option value="KartuTes">Kartu Tes</option>
                     </select>   
                 <?php } else { ?>
                     <select type="text" class="form-control" name="type" id="type" placeholder="Type" value="" />   
                         <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
                         <option value="Member">Member</option>
                         <option value="Publik">Publik</option>
-                        <option value="Formulir">Formulir</option>
-                        <option value="SKL">SKL</option>                        
+                        <option value="FormulirPD">Formulir PD</option>
+                        <option value="FormulirDU">Formulir DU</option>
+                        <option value="FormulirW">Formulir W</option>
+                        <option value="SKL">SKL</option>  
+                        <option value="Rapor">Rapor</option>
+                        <option value="Pembayaran">Pembayaran</option>
+                        <option value="KartuTes">Kartu Tes</option>                      
                     </select>                     
                 <?php } ?>                      
                 </div>

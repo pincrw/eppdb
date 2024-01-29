@@ -26,6 +26,7 @@ class Jurusan extends CI_Controller
             'bidang_keahlian' => set_value('bidang_keahlian'),
             'nama_jurusan' => set_value('nama_jurusan'),
             'kuota_jurusan' => set_value('kuota_jurusan'),
+            'status_jurusan' => set_value('status_jurusan'),
         );
 
         $data['title'] = 'Jurusan';
@@ -40,7 +41,8 @@ class Jurusan extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Jurusan_model->json();
     }
@@ -54,6 +56,7 @@ class Jurusan extends CI_Controller
             'bidang_keahlian' => $row->bidang_keahlian,
         	'nama_jurusan' => $row->nama_jurusan,
             'kuota_jurusan' => $row->kuota_jurusan,
+            'status_jurusan' => $row->status_jurusan,
     	);
 
         $data['title'] = 'Jurusan';
@@ -80,6 +83,7 @@ class Jurusan extends CI_Controller
             'bidang_keahlian' => set_value('bidang_keahlian'),
     	    'nama_jurusan' => set_value('nama_jurusan'),
             'kuota_jurusan' => set_value('kuota_jurusan'),
+            'status_jurusan' => set_value('status_jurusan'),
     	);
 
         $data['title'] = 'Jurusan';
@@ -102,7 +106,8 @@ class Jurusan extends CI_Controller
             $this->session->set_flashdata('message', 
                 form_error('bidang_keahlian').
                 form_error('nama_jurusan').
-                form_error('kuota_jurusan')
+                form_error('kuota_jurusan').
+                form_error('status_jurusan')
             );
             redirect(site_url('jurusan'));               
         } else {
@@ -110,10 +115,11 @@ class Jurusan extends CI_Controller
         		'bidang_keahlian' => $this->input->post('bidang_keahlian',TRUE),
                 'nama_jurusan' => $this->input->post('nama_jurusan',TRUE),
                 'kuota_jurusan' => $this->input->post('kuota_jurusan',TRUE),
+                'status_jurusan' => $this->input->post('status_jurusan',TRUE),
     	    );
         
             $this->Jurusan_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data jurusan ".$data['nama_jurusan']);                
             redirect(site_url('jurusan'));}
     }
@@ -130,6 +136,7 @@ class Jurusan extends CI_Controller
         	'bidang_keahlian' => set_value('bidang_keahlian', $row->bidang_keahlian),
             'nama_jurusan' => set_value('nama_jurusan', $row->nama_jurusan),
             'kuota_jurusan' => set_value('kuota_jurusan', $row->kuota_jurusan),
+            'status_jurusan' => set_value('status_jurusan', $row->status_jurusan),
     	);
         
         $data['title'] = 'Jurusan';
@@ -158,9 +165,10 @@ class Jurusan extends CI_Controller
 		    'bidang_keahlian' => $this->input->post('bidang_keahlian',TRUE),
             'nama_jurusan' => $this->input->post('nama_jurusan',TRUE),
             'kuota_jurusan' => $this->input->post('kuota_jurusan',TRUE),
+            'status_jurusan' => $this->input->post('status_jurusan',TRUE),
 	    );
             $this->Jurusan_model->update($this->input->post('id_jurusan', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data jurusan ".$data['nama_jurusan']);            
             redirect(site_url('jurusan'));
         }
@@ -171,45 +179,50 @@ class Jurusan extends CI_Controller
         $row = $this->Jurusan_model->get_by_id($id);
 
         if ($row->id_jurusan=='1') {
-            $this->session->set_flashdata('message', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message', 'Data tidak dapat dihapus');
             redirect(site_url('jurusan'));
         } else {
             $this->Jurusan_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data jurusan ".$row->nama_jurusan);
             redirect(site_url('jurusan'));
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Jurusan_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data jurusan");            
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-    $this->form_validation->set_rules('bidang_keahlian', 'bidang keahlian', 'trim|required',
-        array(
-                'required'      => 'Bidang Keahlian tidak boleh kosong '    
-        ));        
-	$this->form_validation->set_rules('nama_jurusan', 'nama jurusan', 'trim|required',
-        array(
-                'required'      => 'Nama Jurusan tidak boleh kosong '    
-        ));
-    $this->form_validation->set_rules('kuota_jurusan', 'kuota jurusan', 'trim|required|numeric',
-        array(
-                'required'      => 'Kuota Jurusan tidak boleh kosong ',
-                'numeric'     => 'Kuota hanya angka '                
-        ));
+        $this->form_validation->set_rules('bidang_keahlian', 'bidang keahlian', 'trim|required',
+            array(
+                    'required'      => 'Bidang Keahlian tidak boleh kosong '    
+            ));        
+    	$this->form_validation->set_rules('nama_jurusan', 'nama jurusan', 'trim|required',
+            array(
+                    'required'      => 'Nama Jurusan tidak boleh kosong '    
+            ));
+        $this->form_validation->set_rules('kuota_jurusan', 'kuota jurusan', 'trim|required|numeric',
+            array(
+                    'required'      => 'Kuota Jurusan tidak boleh kosong ',
+                    'numeric'     => 'Kuota hanya angka '                
+            ));
+        $this->form_validation->set_rules('status_jurusan', 'status jurusan', 'trim|required',
+            array(
+                    'required'      => 'Status Jurusan tidak boleh kosong '                
+            ));        
 
-	$this->form_validation->set_rules('id_jurusan', 'id_jurusan', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('id_jurusan', 'id_jurusan', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
@@ -237,6 +250,7 @@ class Jurusan extends CI_Controller
 	    xlsWriteLabel($tablehead, $kolomhead++, "Bidang");
         xlsWriteLabel($tablehead, $kolomhead++, "Nama Jurusan");
         xlsWriteLabel($tablehead, $kolomhead++, "Kuota Jurusan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Status Jurusan");
 
 	foreach ($this->Jurusan_model->get_all() as $data) {
         $kolombody = 0;
@@ -246,6 +260,7 @@ class Jurusan extends CI_Controller
         xlsWriteLabel($tablebody, $kolombody++, $data->bidang_keahlian);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->nama_jurusan);
         xlsWriteNumber($tablebody, $kolombody++, $data->kuota_jurusan);
+        xlsWriteLabel($tablebody, $kolombody++, $data->status_jurusan);
 
 	    $tablebody++;
         $nourut++;
@@ -267,7 +282,8 @@ class Jurusan extends CI_Controller
         $this->load->view('jurusan/Jurusan_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'jurusan_data' => $this->Jurusan_model->get_all(),
             'start' => 0

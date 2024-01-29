@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 /**
  * Class Auth
  * @property Ion_auth|Ion_auth_model $ion_auth        The ION Auth spark
@@ -16,9 +17,15 @@ class Auth extends CI_Controller
 		$this->load->model('Pengaturan_model'); 
 		$this->load->model('Pengumuman_model');
 		$this->load->model('Tahunpelajaran_model');
+		$this->load->model('Peserta_model');
+		$this->load->model('Mail_model');
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 		$this->lang->load('auth');
+
+	    require APPPATH.'libraries/phpmailer/src/Exception.php';
+	    require APPPATH.'libraries/phpmailer/src/PHPMailer.php';
+	    require APPPATH.'libraries/phpmailer/src/SMTP.php';  		
 		
 	}
 
@@ -55,12 +62,12 @@ class Auth extends CI_Controller
 	{
 		date_default_timezone_set('Asia/Jakarta');
 		$tgl_ppdb = $this->Tahunpelajaran_model->get_tahun_aktif();
-        $tanggal_mulai = date('d F Y 00:00:00',strtotime($tgl_ppdb->tanggal_mulai_pendaftaran));
-        $tanggal_selesai = date('d F Y 23:59:00',strtotime($tgl_ppdb->tanggal_selesai_pendaftaran));  
-        $tanggal_sekarang = date('d F Y H:i:s');
-        $mulai = new DateTime($tanggal_mulai);
-        $selesai = new DateTime($tanggal_selesai);
-        $today = new DateTime($tanggal_sekarang);	
+	        $tanggal_mulai = date('d F Y 08:00:00',strtotime($tgl_ppdb->tanggal_mulai_pendaftaran));
+	        $tanggal_selesai = date('d F Y 12:00:00',strtotime($tgl_ppdb->tanggal_selesai_pendaftaran));  
+	        $tanggal_sekarang = date('d F Y H:i:s');
+	        $mulai = new DateTime($tanggal_mulai);
+	        $selesai = new DateTime($tanggal_selesai);
+	        $today = new DateTime($tanggal_sekarang);	
 
 		if ($today < $mulai) {
 			$this->session->set_flashdata('register', 'Pendaftaran belum dibuka');
@@ -69,58 +76,118 @@ class Auth extends CI_Controller
 			$this->session->set_flashdata('register', 'Pendaftaran sudah ditutup');
 	    	redirect("login", 'refresh');			
 		} else {
-		$tables = $this->config->item('tables', 'ion_auth');
-		$identity_column = $this->config->item('identity', 'ion_auth');
-		$this->data['identity_column'] = $identity_column;
+			$tables = $this->config->item('tables', 'ion_auth');
+			$identity_column = $this->config->item('identity', 'ion_auth');
+			$this->data['identity_column'] = $identity_column;
 
-		// validate form input
-		//$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
-		//$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim|required');
-		$this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label1'), 'trim|required|numeric|exact_length[10]|is_unique[' . $tables['users'] . '.username]',
-        array(
-                'is_unique'     => 'NISN sudah terdaftar '                
-        ));
+			// validate form input
+			$this->form_validation->set_rules('full_name', $this->lang->line('create_user_validation_fname_label1'), 'trim|required');
+			$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|required|numeric');
 
-		// if ($identity_column !== 'email')
-		// {
-		// 	$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
-		// 	$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email');
-		// }
-		// else
-		// {
-// ------- hapus tanda komentar di bawah untuk validasi email		
-			// $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-		// }
-// ------- hapus tanda komentar di atas 		
-		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+			if ($identity_column !== 'email') {
+				$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_username_label1'), 'trim|required|numeric|exact_length[10]|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
+			} else {					
+				$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');			
+			}
+		
+			$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+			$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
-		if ($this->form_validation->run() === FALSE){		
-			$this->load->view('auth/registrasi');
-		} else {
-			$email = strtolower($this->input->post('username')."@gmail.com"); // email otomatis menggunakan username
-			// $email = strtolower($this->input->post('email')); // jika ingin email manual
-			$username = $this->input->post('username');
-			$identity = ($identity_column === 'email') ? $email : $this->input->post('identity');			
-			$password = $this->input->post('password');
-			$foto = $this->input->post('username');
-			$image =$foto.'.jpg';
-
-			$additional_data=[
-				'first_name'=>$this->input->post('username'),
-				'image'=>$image,
-			];
-
-			$insert=$this->ion_auth->registrasi($username, $identity, $password, $email, $additional_data);
-
-			if($insert)	{
-				$this->session->set_flashdata('success','Silahkan login, segera isi formulir'); 
-				redirect("login", 'refresh');
+			if ($this->form_validation->run() === FALSE) {		
+				$this->load->view('auth/registrasi');
 			} else {
-				//echo "Terjadi kesalahan...";
-				redirect("registrasi", 'refresh');
-			}			
-		}
+				if ($identity_column !== 'email') {
+				$email = strtolower($this->input->post('identity')."@gmail.com"); // email sementara menggunakan identity username
+				$identity = ($identity_column === 'email') ? $email : $this->input->post('identity');	
+				$foto = $this->input->post('identity');
+				} else {
+				$identity = $this->input->post('email');	
+				$email = strtolower($this->input->post('email')); // email manual	
+				$foto = $this->input->post('username');			
+				}
+									
+				$password = $this->input->post('password');
+				$image =$foto.'.jpg';
+
+				$additional_data=[
+					'full_name'=>$this->input->post('full_name'),
+					// 'company' => $this->input->post('company'),
+					'phone' => $this->input->post('phone'),				
+					'image'=>$image,
+				];
+
+				$insert=$this->ion_auth->registrasi($identity, $password, $email, $additional_data);
+
+				if($insert)	{
+					$this->session->set_flashdata('success','Silahkan login, segera isi formulir');
+					// kirim pesan WA ........................................................
+				    $phone=$this->input->post('phone');
+				    $msg="Selamat akun berhasil disimpan, silahkan segera login dan lengkapi formulir pendaftaran anda. Username : ".$identity.", Kata Sandi : ".$password;
+				    $this->Peserta_model->kirimpesan($phone,$msg);
+					// .......................................................................	
+
+				    // kirim akun ke email .....................................................
+					if ($identity_column == 'email') {    
+					 	$data['mailer'] = $this->Mail_model->get_by_id_1();
+
+						// PHPMailer object
+						$response = false;
+						$mail = new PHPMailer();
+
+						// Server settings
+						$mail->isSMTP();
+						$mail->Host     = $data['mailer']->host;
+						$mail->SMTPAuth = true;
+						$mail->Username = $data['mailer']->username; // user email anda
+						$mail->Password = $data['mailer']->password; // diisi dengan App Password yang sudah di generate dari akun gmail
+						$mail->SMTPSecure = $data['mailer']->smtpsecure;
+						$mail->Port     = $data['mailer']->port;
+
+						// Recipients
+						$mail->setFrom($data['mailer']->username, 'admin ppdb');
+						$mail->addReplyTo($data['mailer']->username, '');			// user email anda
+						$mail->addAddress($this->input->post('email'));             // email tujuan pengiriman email
+						// $mail->addCC('cc@example.com');
+						// $mail->addBCC('bcc@example.com');
+
+						// Content
+						$mail->isHTML(true);
+						$mail->Subject = 'akun ppdb'; //subject email
+						$mailContent = "<p>Hallo <b>".$this->input->post('full_name')."</b>, berikut ini adalah informasi akun Anda:</p>
+						<table>
+						<tr>
+							<td>Nama</td>
+							<td>:</td>
+							<td>".$this->input->post('full_name')."</td>
+						</tr>
+						<tr>
+							<td>Username</td>
+							<td>:</td>
+							<td>".$this->input->post('email')."</td>
+						</tr>
+						<tr>
+							<td>Kata sandi</td>
+							<td>:</td>
+							<td>".$this->input->post('password')."</td>
+						</tr>
+						</table>
+						<p>Terimakasih <b>".$this->input->post('full_name')."</b> telah membuat akun.</p>"; // isi email
+						$mail->Body = $mailContent;
+
+						// Send email
+						if(!$mail->send()) {
+							// $this->session->set_flashdata('message', 'Gagal terkirim ke email, silahkan login');
+							$this->session->set_flashdata('success','Silahkan login, segera isi formulir');
+						} else {
+							$this->session->set_flashdata('success', 'Akun berhasil terkirim ke email, silahkan login');
+						}
+					}	
+					// .......................................................................
+					redirect("login", 'refresh');	
+				} else {
+					redirect("registrasi", 'refresh');
+				}			
+			}
 		}
 	}
 
@@ -166,10 +233,10 @@ class Auth extends CI_Controller
 		}	
 
 		// validate form input
-		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('full_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
 		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
+		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim|numeric');
+		$this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'trim|valid_email');
 
 		if (isset($_POST) && !empty($_POST))
 		{
@@ -183,10 +250,10 @@ class Auth extends CI_Controller
 
 			if ($this->form_validation->run() === true) {
 				$data = array(
-					'first_name' => $this->input->post('first_name'),
-					'last_name' => $this->input->post('last_name'),
+					'full_name' => $this->input->post('full_name'),
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
 				);
 
 				// update the password if it was posted
@@ -638,38 +705,44 @@ class Auth extends CI_Controller
 		$this->data['identity_column'] = $identity_column;
 
 		// validate form input
-		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim');
-		// if ($identity_column !== 'email')
-		// {
-		// 	$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_username_label1'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
-		// 	$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email');
-		// }
-		// else
-		// {
-			$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-		// }
+		$this->form_validation->set_rules('full_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
+		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'trim');		
+		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim|numeric');
 
-		$this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
-		$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'trim');
-		$this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'trim');
+		if ($identity_column !== 'email')
+		{
+			$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');				
+		}
+		else
+		{
+			$this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');							
+		}
+
+		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');	
+
+
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
 		if ($this->form_validation->run() === TRUE)
 		{
-			$email = strtolower($this->input->post('email'));
+			if ($identity_column !== 'email') {
 			$identity = ($identity_column === 'email') ? $email : $this->input->post('identity');
+			$email = strtolower($this->input->post('email')); // email manual				
+			$foto = $this->input->post('identity');
+			} else {
+			$identity = $this->input->post('username');	
+			$email = strtolower($this->input->post('email')); // email manual	
+			$foto = $this->input->post('username');			
+			}
+
 			$password = $this->input->post('password');
-			$foto = $this->input->post('username');
 			$image =$foto.'.jpg';			
 
 			$additional_data = array(
-				'first_name' => $this->input->post('first_name'),
-				'last_name' => $this->input->post('last_name'),
+				'full_name' => $this->input->post('full_name'),
 				'company' => $this->input->post('company'),
 				'phone' => $this->input->post('phone'),
-				'username' => $this->input->post('username'),
 				'image' => $image,
 			);
 		}
@@ -678,7 +751,7 @@ class Auth extends CI_Controller
 			// check to see if we are creating the user
 			// redirect them back to the admin page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			helper_log("add", "Menambah Pengguna ".$additional_data['username']);		
+			helper_log("add", "Menambah Pengguna ".$additional_data['full_name']);		
 			redirect("user", 'refresh');
 		}
 		else
@@ -687,18 +760,11 @@ class Auth extends CI_Controller
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-			$this->data['first_name'] = array(
-				'name' => 'first_name',
-				'id' => 'first_name',
+			$this->data['full_name'] = array(
+				'name' => 'full_name',
+				'id' => 'full_name',
 				'type' => 'text',
-				'value' => $this->form_validation->set_value('first_name'),
-				'class' => 'form-control'
-			);
-			$this->data['last_name'] = array(
-				'name' => 'last_name',
-				'id' => 'last_name',
-				'type' => 'text',
-				'value' => $this->form_validation->set_value('last_name'),
+				'value' => $this->form_validation->set_value('full_name'),
 				'class' => 'form-control'
 			);
 			$this->data['foto'] = array(
@@ -797,10 +863,11 @@ class Auth extends CI_Controller
 		$currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
 		// validate form input
-		$this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
-		$this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim');
-		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+		$this->form_validation->set_rules('full_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required');
 		$this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
+		$this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim|numeric');
+		$this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'trim|valid_email');
+		
 
 		if (isset($_POST) && !empty($_POST))
 		{
@@ -815,10 +882,10 @@ class Auth extends CI_Controller
 			if ($this->form_validation->run() === TRUE)
 			{
 				$data = array(
-					'first_name' => $this->input->post('first_name'),
-					'last_name' => $this->input->post('last_name'),
+					'full_name' => $this->input->post('full_name'),
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
 				);
 
 				// update the password if it was posted
@@ -851,7 +918,7 @@ class Auth extends CI_Controller
 				{
 					// redirect them back to the admin page if admin, or to the base url if non admin
 					$this->session->set_flashdata('message', $this->ion_auth->messages());
-					helper_log("edit", "Update Pengguna ".$data['first_name']);		
+					helper_log("edit", "Update Pengguna ".$data['full_name']);		
 					$this->redirectUser();
 
 				}
@@ -877,19 +944,11 @@ class Auth extends CI_Controller
 		$this->data['groups'] = $groups;
 		$this->data['currentGroups'] = $currentGroups;
 
-		$this->data['first_name'] = array(
-			'name'  => 'first_name',
-			'id'    => 'first_name',
+		$this->data['full_name'] = array(
+			'name'  => 'full_name',
+			'id'    => 'full_name',
 			'type'  => 'text',
-			'value' => $this->form_validation->set_value('first_name', $user->first_name),
-			'class' => 'form-control'
-			
-		);
-		$this->data['last_name'] = array(
-			'name'  => 'last_name',
-			'id'    => 'last_name',
-			'type'  => 'text',
-			'value' => $this->form_validation->set_value('last_name', $user->last_name),
+			'value' => $this->form_validation->set_value('full_name', $user->full_name),
 			'class' => 'form-control'
 			
 		);
@@ -907,6 +966,13 @@ class Auth extends CI_Controller
 			'value' => $this->form_validation->set_value('phone', $user->phone),
 			'class' => 'form-control'
 		);
+		$this->data['email'] = array(
+			'name'  => 'email',
+			'id'    => 'email',
+			'type'  => 'text',
+			'value' => $this->form_validation->set_value('email', $user->email),
+			'class' => 'form-control'
+		);		
 		$this->data['password'] = array(
 			'name' => 'password',
 			'id'   => 'password',

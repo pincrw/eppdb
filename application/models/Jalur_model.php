@@ -16,7 +16,8 @@ class Jalur_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_jalur,jalur,persentase,status_jalur');
         $this->datatables->from('jalur');
         //add this line for join
@@ -72,7 +73,8 @@ class Jalur_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_jalur', $q);
     	$this->db->or_like('jalur', $q);
     	$this->db->or_like('persentase', $q);
@@ -82,7 +84,8 @@ class Jalur_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_jalur', $q);
     	$this->db->or_like('jalur', $q);
@@ -113,7 +116,8 @@ class Jalur_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

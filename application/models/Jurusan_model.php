@@ -16,8 +16,9 @@ class Jurusan_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('id_jurusan,bidang_keahlian,nama_jurusan,kuota_jurusan');
+    function json() 
+    {
+        $this->datatables->select('id_jurusan,bidang_keahlian,nama_jurusan,kuota_jurusan,status_jurusan');
         $this->datatables->from('jurusan');
         //add this line for join
         //$this->datatables->join('table2', 'jurusan.field = table2.field');
@@ -31,7 +32,8 @@ class Jurusan_model extends CI_Model
     // get all
     function get_all()
     {
-        $this->db->not_like('nama_jurusan','Umum');
+        // $this->db->not_like('nama_jurusan','Umum');
+        $this->db->where('status_jurusan','Aktif');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
@@ -44,22 +46,26 @@ class Jurusan_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_jurusan', $q);
         $this->db->or_like('bidang_keahlian', $q);
     	$this->db->or_like('nama_jurusan', $q);
         $this->db->or_like('kuota_jurusan', $q);
+        $this->db->or_like('status_jurusan', $q);
     	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_jurusan', $q);
         $this->db->or_like('bidang_keahlian', $q);
     	$this->db->or_like('nama_jurusan', $q);
         $this->db->or_like('kuota_jurusan', $q);
+        $this->db->or_like('status_jurusan', $q);
     	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
@@ -85,7 +91,8 @@ class Jurusan_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

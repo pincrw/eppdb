@@ -16,7 +16,7 @@ class Users_model extends CI_Model
 
     // datatables
     function json() {
-        $this->datatables->select('users.id,ip_address,username,password,salt,email,activation_code,forgotten_password_code,forgotten_password_time,remember_code,created_on,last_login,active,first_name,last_name,company,phone,group_id');
+        $this->datatables->select('users.id,ip_address,username,password,salt,email,activation_code,forgotten_password_code,forgotten_password_time,remember_code,created_on,last_login,active,full_name,company,phone,group_id');
         $this->datatables->from('users');
         //add this line for join
         // $this->datatables->join('table2', 'users.field = table2.field');
@@ -35,6 +35,17 @@ class Users_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }   
+
+    // get all
+    function get_all_member()
+    {
+        $this->db->select('users.id,full_name,name');
+        $this->db->join('users_groups', 'users.id = users_groups.user_id');   
+        $this->db->join('groups', 'groups.id = users_groups.group_id');          
+        $this->db->where('groups.id', '2');
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }       
 
     // get data by id
     function get_by_id($id)
@@ -58,8 +69,7 @@ class Users_model extends CI_Model
     	$this->db->or_like('created_on', $q);
     	$this->db->or_like('last_login', $q);
     	$this->db->or_like('active', $q);
-    	$this->db->or_like('first_name', $q);
-    	$this->db->or_like('last_name', $q);
+    	$this->db->or_like('full_name', $q);
     	$this->db->or_like('company', $q);
     	$this->db->or_like('phone', $q);
     	$this->db->from($this->table);
@@ -82,8 +92,7 @@ class Users_model extends CI_Model
     	$this->db->or_like('created_on', $q);
     	$this->db->or_like('last_login', $q);
     	$this->db->or_like('active', $q);
-    	$this->db->or_like('first_name', $q);
-    	$this->db->or_like('last_name', $q);
+    	$this->db->or_like('full_name', $q);
     	$this->db->or_like('company', $q);
     	$this->db->or_like('phone', $q);
     	$this->db->limit($limit, $start);
@@ -127,7 +136,7 @@ class Users_model extends CI_Model
 
     // get panitia
     function get_panitia() {
-        $this->db->select('users.id,username,first_name,last_name,phone,image,group_id');
+        $this->db->select('users.id,username,full_name,phone,image,group_id');
         $this->db->join('users_groups', 'users.id = users_groups.user_id');
         $this->db->where('group_id','3'); 
         $this->db->limit(5);  
@@ -136,7 +145,7 @@ class Users_model extends CI_Model
 
     // get member
     function get_member() {
-        $this->db->select('users.id,username,first_name,last_name,image,group_id');
+        $this->db->select('users.id,username,full_name,image,group_id');
         $this->db->from('users');
         $this->db->join('users_groups', 'users.id = users_groups.user_id');
         $this->db->where('group_id','2');  
@@ -147,7 +156,7 @@ class Users_model extends CI_Model
 
     // get operator
     function get_operator() {
-        $this->db->select('users.id,username,first_name,last_name,image,group_id');
+        $this->db->select('users.id,username,full_name,image,group_id');
         $this->db->from('users');
         $this->db->join('users_groups', 'users.id = users_groups.user_id');
         $this->db->where('group_id','3');  
@@ -175,7 +184,7 @@ class Users_model extends CI_Model
     public function GetUserData()
     {  
         $user = $this->ion_auth->user()->row();  
-        $this->db->select('id,username,first_name,last_name,email,image');
+        $this->db->select('id,username,full_name,email,image');
         $this->db->from('users');
         $this->db->where('id',$user->id);
         $this->db->limit(1);

@@ -16,7 +16,8 @@ class Jarak_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_jarak,jarak,skor_jarak');
         $this->datatables->from('jarak');
         //add this line for join
@@ -43,7 +44,8 @@ class Jarak_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_jarak', $q);
     	$this->db->or_like('jarak', $q);
     	$this->db->or_like('skor_jarak', $q);
@@ -52,7 +54,8 @@ class Jarak_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_jarak', $q);
     	$this->db->or_like('jarak', $q);
@@ -82,7 +85,8 @@ class Jarak_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

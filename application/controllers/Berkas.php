@@ -31,7 +31,8 @@ class Berkas extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Berkas_model->json();
     }
@@ -70,7 +71,7 @@ class Berkas extends CI_Controller
 
         if ($row) {
             $this->Berkas_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus berkas ".$row->keterangan_berkas." ".$row->nama_peserta);  
             redirect(site_url('berkas'));
         } else {
@@ -79,26 +80,27 @@ class Berkas extends CI_Controller
         }
     }     
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Berkas_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('nama_berkas', 'nama berkas', 'trim|required');
-	$this->form_validation->set_rules('keterangan_berkas', 'keterangan berkas', 'trim|required');
-	$this->form_validation->set_rules('tipe_berkas', 'tipe berkas', 'trim|required');
-	$this->form_validation->set_rules('ukuran_berkas', 'ukuran berkas', 'trim|required');
-	$this->form_validation->set_rules('id_peserta', 'id peserta', 'trim|required');
+    	$this->form_validation->set_rules('nama_berkas', 'nama berkas', 'trim|required');
+    	$this->form_validation->set_rules('keterangan_berkas', 'keterangan berkas', 'trim|required');
+    	$this->form_validation->set_rules('tipe_berkas', 'tipe berkas', 'trim|required');
+    	$this->form_validation->set_rules('ukuran_berkas', 'ukuran berkas', 'trim|required');
+    	$this->form_validation->set_rules('id_peserta', 'id peserta', 'trim|required');
 
-	$this->form_validation->set_rules('id_berkas', 'id_berkas', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('id_berkas', 'id_berkas', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
 }

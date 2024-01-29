@@ -16,7 +16,8 @@ class Sekolah_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_sekolah,npsn_sekolah,asal_sekolah,alamat_sekolah,kelurahan,status_sekolah,kecamatan');
         $this->datatables->from('sekolah');
         //add this line for join
@@ -43,7 +44,8 @@ class Sekolah_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_sekolah', $q);
     	$this->db->or_like('npsn_sekolah', $q);
     	$this->db->or_like('asal_sekolah', $q);
@@ -56,7 +58,8 @@ class Sekolah_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_sekolah', $q);
     	$this->db->or_like('npsn_sekolah', $q);
@@ -90,7 +93,8 @@ class Sekolah_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

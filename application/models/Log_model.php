@@ -15,17 +15,30 @@ class Log_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('id_log,log_time,log_user,log_tipe,log_ket');
+    function json() 
+    {
+        $this->datatables->select('id_log,log_time,log_user,log_tipe,log_ket,full_name');
         $this->datatables->from('log');
         //add this line for join
         //$this->datatables->join('table2', 'berkas.field = table2.field');
+        $this->datatables->join('users',$this->table.".log_user = users.username"); 
         $this->datatables->add_column('action', 
             anchor(site_url('log/delete/$1'),'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger btn-flat" onclick="return confirmdelete(\'log/delete/$1\')" data-toggle="tooltip" title="Delete"'), 'id_log');
         return $this->datatables->generate();
-    }    
+    } 
 
-// -------------------------------------------------- 
+    function json_() 
+    {
+        $this->datatables->select('id_log,log_time,log_user,log_tipe,log_ket,full_name');
+        $this->datatables->from('log');
+        //add this line for join
+        //$this->datatables->join('table2', 'berkas.field = table2.field');
+        $this->datatables->join('users',$this->table.".log_user = users.email");    
+        $this->datatables->add_column('action', 
+            anchor(site_url('log/delete/$1'),'<i class="fa fa-trash"></i>', 'class="btn btn-xs btn-danger btn-flat" onclick="return confirmdelete(\'log/delete/$1\')" data-toggle="tooltip" title="Delete"'), 'id_log');
+        return $this->datatables->generate();
+    }        
+
     public function save_log($param)
     {
         $sql        = $this->db->insert_string('log',$param);
@@ -36,9 +49,23 @@ class Log_model extends CI_Model
     // get log all
     public function get_log()
     {
-        $this->db->select('id_log,log_time,log_user,log_tipe,log_ket,username,email,image,groups.id');
-        // $this->db->join('users',$this->table.".log_user = users.email"); 
-        $this->db->join('users',$this->table.".log_user = users.username");     
+        $this->db->select('id_log,log_time,log_user,log_tipe,log_ket,username,full_name,email,image,groups.id');
+        $this->db->join('users',$this->table.".log_user = users.username");
+        // jika identity menggunakan email hapus tanda // pd baris 26
+        // $this->db->join('users',$this->table.".log_user = users.email");               
+        $this->db->join('users_groups','users.id = users_groups.user_id');
+        $this->db->join('groups','users_groups.group_id=groups.id');    
+        $this->db->like('groups.id','1'); 
+        $this->db->or_like('groups.id','2');          
+        $this->db->or_like('groups.id','3');               
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }     
+
+    public function get_log_user()
+    {
+        $this->db->select('id_log,log_time,log_user,log_tipe,log_ket,username,full_name,email,image,groups.id');
+        $this->db->join('users',$this->table.".log_user = users.username");             
         $this->db->join('users_groups','users.id = users_groups.user_id');
         $this->db->join('groups','users_groups.group_id=groups.id');    
         $this->db->like('groups.id','1'); 
@@ -47,7 +74,19 @@ class Log_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     } 
-// --------------------------------------------------      
+
+    public function get_log_email()
+    {
+        $this->db->select('id_log,log_time,log_user,log_tipe,log_ket,username,full_name,email,image,groups.id');
+        $this->db->join('users',$this->table.".log_user = users.email");               
+        $this->db->join('users_groups','users.id = users_groups.user_id');
+        $this->db->join('groups','users_groups.group_id=groups.id');    
+        $this->db->like('groups.id','1'); 
+        $this->db->or_like('groups.id','2');          
+        $this->db->or_like('groups.id','3');               
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }   
 
     // get data by id log
     function get_by_id($id)
@@ -73,7 +112,8 @@ class Log_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_log', $q);
         $this->db->or_like('log_time', $q);
         $this->db->or_like('log_user', $q);
@@ -84,7 +124,8 @@ class Log_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_log', $q);
         $this->db->or_like('log_time', $q);

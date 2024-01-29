@@ -29,7 +29,8 @@ class Groups extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Groups_model->json();
     }
@@ -161,7 +162,8 @@ class Groups extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $data = $_POST['msg_'];
         $dataid = explode(',', $data);
         foreach ($dataid as $key => $value) {
@@ -170,19 +172,22 @@ class Groups extends CI_Controller
         }
         echo true;
     }
-    public function printdoc(){
+
+    public function printdoc()
+    {
         $data = array(
             'groups_data' => $this->Groups_model->get_all(),
             'start' => 0
         );
         $this->load->view('groups/groups_print', $data);
     }
+    
     public function _rules()
     {
-	$this->form_validation->set_rules('name', 'name', 'trim|required');
-	$this->form_validation->set_rules('description', 'description', 'trim|required');
-	$this->form_validation->set_rules('id', 'id', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('name', 'name', 'trim|required');
+    	$this->form_validation->set_rules('description', 'description', 'trim|required');
+    	$this->form_validation->set_rules('id', 'id', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()

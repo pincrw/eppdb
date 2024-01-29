@@ -51,7 +51,7 @@
                         },{"data": "no_pendaftaran","className" : "text-center"},
                             {"data": "nama_peserta"},
                             {"data": "jenis"},
-                            // {"data": "nama_prestasi"},
+                            {"data": "nama_prestasi"},
                             // {"data": "tahun"},
                             // {"data": "penyelenggara"},
                             {"data": "tingkat"},

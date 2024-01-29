@@ -46,7 +46,7 @@
                                     <tr>
                                         <td style="text-align: center"><?php echo $no++;?></td>
                                         <td>
-                                            <?php if ($value->tipe_berkas==".gif" || $value->tipe_berkas==".jpg" || $value->tipe_berkas==".png" || $value->tipe_berkas==".PNG" || $value->tipe_berkas==".JPG" || $value->tipe_berkas==".GIF" ) { ?>
+                                            <?php if ($value->tipe_berkas==".gif" || $value->tipe_berkas==".jpg" || $value->tipe_berkas==".jpeg" || $value->tipe_berkas==".png" || $value->tipe_berkas==".JPG" || $value->tipe_berkas==".JPEG" || $value->tipe_berkas==".PNG" ) { ?>
                                                 <img src="<?php echo base_url('assets/uploads/attachment/'.$value->nama_berkas) ?>" width="50px">
                                             <?php } else if ($value->tipe_berkas==".pdf") { ?>
                                                 <a href="<?php echo base_url('assets/uploads/attachment/'.$value->nama_berkas) ?>" target="blank"><?php echo $value->keterangan_berkas;?></a>
@@ -90,7 +90,7 @@
             </div>  
           </div>   
         <?php } else {         
-          if ($formulir->foto=='Ya' || $formulir->foto_full=='Ya' || $formulir->rapor=='Ya' || $formulir->akte_kelahiran=='Ya' || $formulir->kartu_keluarga=='Ya' || $formulir->skl_skhu=='Ya' || $formulir->skd=='Ya' || $formulir->sktm=='Ya' || $formulir->ktp_ortu=='Ya' || $formulir->sptjm=='Ya' || $formulir->sp=='Ya' || $formulir->kartu_bantuan=='Ya' || $formulir->berkaslain=='Ya') { ?>            
+          if ($formulir->foto=='Ya' || $formulir->foto_full=='Ya' || $formulir->rapor=='Ya' || $formulir->akte_kelahiran=='Ya' || $formulir->kartu_keluarga=='Ya' || $formulir->skl_skhu=='Ya' || $formulir->skd=='Ya' || $formulir->sktm=='Ya' || $formulir->ktp_ortu=='Ya' || $formulir->sptjm=='Ya' || $formulir->sp=='Ya' || $formulir->kartu_bantuan=='Ya' || $formulir->prestasi_akademik_nonakademik=='Ya'|| $formulir->berkaslain=='Ya') { ?>            
             <form action="uploadberkas" method="post" enctype="multipart/form-data">
                 <div class="col-xs-12 col-md-12">
                   <?php if ($formulir->foto=='Ya'){ ?>
@@ -119,7 +119,7 @@
                   <?php } ?>
                   <?php if ($formulir->rapor=='Ya'){ ?>
                       <div class="form-group">
-                        <label for="varchar">Nilai Rapor Semester 1-5</label>
+                        <label for="varchar">Nilai Rapor Semester 1-5 (digabung jadi 1 file PDF)</label>
                         <input type="hidden" class="form-control" name="id_peserta[]" value="<?php echo $nomer->id_peserta; ?>"/>
                         <input type="file" class="form-control" name="berkas[]" />
                         <input type="hidden" class="form-control" name="keterangan_berkas[]" placeholder="Keterangan Berkas" value="Nilai Rapor/Semester"/>
@@ -188,12 +188,20 @@
                         <input type="file" class="form-control" name="berkas[]" />  
                         <input type="hidden" class="form-control" name="keterangan_berkas[]" placeholder="Keterangan Berkas" value="Kartu PKH/KPS/KIP" />                          
                       </div>                   
-                  <?php } ?>                                  
+                  <?php } ?> 
+                  <?php if ($formulir->prestasi_akademik_nonakademik=='Ya'){ ?>
+                      <div class="form-group">
+                        <label for="varchar">Prestasi Akademik/Non Akademik (digabung jadi 1 file PDF)</label>
+                        <input type="hidden" class="form-control" name="id_peserta[]" value="<?php echo $nomer->id_peserta; ?>"/>
+                        <input type="file" class="form-control" name="berkas[]" />  
+                        <input type="hidden" class="form-control" name="keterangan_berkas[]" placeholder="Keterangan Berkas" value="Prestasi Akademik/Non Akademik" />                          
+                      </div>                   
+                  <?php } ?>                                                     
                 </div>                    
                   <?php if ($formulir->berkaslain=='Ya'){ ?>
                     <div class="col-xs-12 col-md-6"> 
                       <div class="form-group">
-                        <label for="varchar">Berkas lainnya</label>
+                        <label for="varchar">Pilih Berkas</label>
                         <input type="hidden" class="form-control" name="id_peserta[]" value="<?php echo $nomer->id_peserta; ?>"/>
                         <input type="file" class="form-control" name="berkas[]" />
                       </div>
@@ -215,10 +223,16 @@
         </div> 
               <div class="callout callout-info">
                 Berkas yang akan diupload harus sesuai ketentuan
-                <li>format berkas : gif/jpg/png/pdf</li>
+                <li>format berkas : gif/jpg/jpeg/png/pdf</li>
                 <li>ukuran max : 500 kb</li>
+                <?php if ($formulir->rapor=='Ya'){ ?>
+                  <li>Nilai rapor semester 1 sd 5 di jadikan 1 file pdf jika lebih dari 1 halaman</li>
+                <?php } ?>
+                <?php if ($formulir->prestasi_akademik_nonakademik=='Ya'){ ?>
+                  <li>Piagam/Sertifikat prestasi akademik/non akademik di jadikan 1 file pdf jika lebih dari 1 halaman</li>
+                <?php } ?>                
                 <?php if ($formulir->berkaslain=='Ya'){ ?>
-                  <li>ulangi proses upload berkas lainnya jika masih ada berkas yang perlu di upload</li>
+                  <li>ulangi proses upload berkas jika masih ada berkas yang perlu di upload</li>
                 <?php } ?>                 
               </div>  
           <?php } else { ?>

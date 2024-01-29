@@ -8,7 +8,6 @@ class Prestasipeserta_model extends CI_Model
 
     public $table = 'prestasipeserta';
     public $id = 'id_prestasipeserta';
-    // public $id_peserta = 'id_peserta';
     public $order = 'DESC';
 
     function __construct()
@@ -17,13 +16,16 @@ class Prestasipeserta_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_prestasipeserta,jenis,nama_prestasi,tahun,penyelenggara,peserta.id_peserta,no_pendaftaran,nama_peserta,prestasi.id_prestasi,tingkat,kategori,juara,skor_prestasi');
         $this->datatables->from('prestasipeserta');
         //add this line for join
         //$this->datatables->join('table2', 'prestasipeserta.field = table2.field');
         $this->datatables->join('peserta', 'prestasipeserta.id_peserta = peserta.id_peserta');
-        $this->datatables->join('prestasi', 'prestasipeserta.id_prestasi = prestasi.id_prestasi');        
+        $this->datatables->join('prestasi', 'prestasipeserta.id_prestasi = prestasi.id_prestasi');
+        $this->datatables->join('tahunpelajaran', 'peserta.id_tahun = tahunpelajaran.id_tahun');
+        $this->datatables->where('status_tahun','Aktif');                    
         $this->datatables->add_column('action', 
             anchor(site_url('prestasipeserta/read/$1'),'<i class="fa fa-search"></i>', 'class="btn btn-xs btn-primary btn-flat"  data-toggle="tooltip" title="Detail"')."  ".
             anchor(site_url('prestasipeserta/update/$1'),'<i class="fa fa-edit"></i>', 'class="btn btn-xs btn-warning btn-flat" data-toggle="tooltip" title="Edit"')."  ".
@@ -53,10 +55,9 @@ class Prestasipeserta_model extends CI_Model
     // get all prestasi by id_peserta
     function get_all_prestasi($id_peserta)
     { 
-        $this->db->select('id_prestasipeserta,jenis,nama_prestasi,tahun,penyelenggara,id_peserta,prestasi.id_prestasi,tingkat,kategori,juara,skor_prestasi');      
+        $this->db->select('id_prestasipeserta,jenis,nama_prestasi,tahun,penyelenggara,id_peserta,prestasi.id_prestasi,tingkat,kategori,juara,skor_prestasi');
         $this->db->join('prestasi', 'prestasipeserta.id_prestasi = prestasi.id_prestasi');  
         $this->db->where('id_peserta', $id_peserta);       
-        // $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
 
@@ -81,7 +82,8 @@ class Prestasipeserta_model extends CI_Model
     }    
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_prestasipeserta', $q);
     	$this->db->or_like('jenis', $q);
     	$this->db->or_like('nama_prestasi', $q);
@@ -94,7 +96,8 @@ class Prestasipeserta_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_prestasipeserta', $q);
     	$this->db->or_like('jenis', $q);
@@ -128,7 +131,8 @@ class Prestasipeserta_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk() {
+    function deletebulk() 
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

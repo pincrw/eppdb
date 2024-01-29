@@ -17,6 +17,7 @@
                     <tr><td>Bidang Keahlian</td><td><?php echo $bidang_keahlian; ?></td></tr>
             	    <tr><td>Nama Jurusan</td><td><?php echo $nama_jurusan; ?></td></tr>
                     <tr><td>Kuota Jurusan</td><td><?php echo $kuota_jurusan; ?></td></tr>
+                    <tr><td>Status Jurusan</td><td><?php echo $status_jurusan; ?></td></tr>
             	    <tr><td><a href="<?php echo site_url('jurusan') ?>" class="<?= $this->config->item('botton')?>">Kembali</a></td></tr>
             	</table>
             </div>

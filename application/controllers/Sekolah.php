@@ -48,7 +48,8 @@ class Sekolah extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Sekolah_model->json();
     }
@@ -131,7 +132,7 @@ class Sekolah extends CI_Controller
 	    );
         
         $this->Sekolah_model->insert($data);
-        $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+        $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
         helper_log("add", "Menambah data sekolah ".$data['asal_sekolah']);         
         redirect(site_url('sekolah'));
         }
@@ -202,7 +203,7 @@ class Sekolah extends CI_Controller
 	    );
 
         $this->Sekolah_model->update($this->input->post('id_sekolah', TRUE), $data);
-        $this->session->set_flashdata('message', 'Data Berhasil diubah');
+        $this->session->set_flashdata('message', 'Data berhasil diubah');
         helper_log("edit", "Update data sekolah ".$data['asal_sekolah']);         
         redirect(site_url('sekolah'));
         }
@@ -214,7 +215,7 @@ class Sekolah extends CI_Controller
 
         if ($row) {
             $this->Sekolah_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data sekolah ".$row->asal_sekolah);             
             redirect(site_url('sekolah'));
         } else {
@@ -223,13 +224,14 @@ class Sekolah extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Sekolah_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data sekolah");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
@@ -321,7 +323,8 @@ class Sekolah extends CI_Controller
         $this->load->view('sekolah/Sekolah_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'sekolah_data' => $this->Sekolah_model->get_all(),
             'start' => 0
@@ -351,8 +354,10 @@ class Sekolah extends CI_Controller
             $arr_file = explode('.', $_FILES['file']['name']);
             $extension = end($arr_file);
          
-            if('csv' == $extension) {
+            if ('csv' == $extension) {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } elseif('xls' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();                
             } else {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             }
@@ -360,6 +365,7 @@ class Sekolah extends CI_Controller
             $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
              
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            $this->db->TRUNCATE('sekolah');
             for($i = 1;$i < count($sheetData);$i++)
             {
                 $npsn_sekolah = $sheetData[$i]['1'];
@@ -371,9 +377,12 @@ class Sekolah extends CI_Controller
 
                 $this->db->query("insert into sekolah (id_sekolah,npsn_sekolah,asal_sekolah,alamat_sekolah,kelurahan,status_sekolah,kecamatan) values ('','$npsn_sekolah','$asal_sekolah','$alamat_sekolah','$kelurahan','$status_sekolah','$kecamatan')");
             }
-                $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+                $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
                 helper_log("add", "Import data sekolah");                 
                 redirect(site_url('sekolah'));
+        } else {
+                $this->session->set_flashdata('message', 'Data tidak sesuai');               
+                redirect(site_url('sekolah'));            
         }
     }
 

@@ -19,12 +19,8 @@
               <?php } ?>
             <?php echo form_open("auth/create_user");?>
               <p>
-                <?php echo lang('create_user_fname_label', 'first_name');?> <span style="color:red;">*</span><br />
-                <?php echo form_input($first_name);?>
-              </p>
-              <p>
-                <?php echo lang('create_user_lname_label', 'last_name');?> <br />
-                <?php echo form_input($last_name);?>
+                <?php echo lang('create_user_fname_label', 'full_name');?> <span style="color:red;">*</span><br />
+                <?php echo form_input($full_name);?>
               </p>
               <p>
                 <?php echo lang('create_user_company_label', 'company');?> <br />
@@ -33,15 +29,22 @@
               <p>
                 <?php echo lang('create_user_phone_label', 'phone');?> <br />
                 <?php echo form_input($phone);?>
-              </p>                   
-              <p>
-                <?php echo lang('create_user_username_label1', 'username');?> <span style="color:red;">*</span><br />
-                <?php echo form_input($username);?>
-              </p>                                         
+              </p>    
               <p>
                 <?php echo lang('create_user_email_label', 'email');?> <span style="color:red;">*</span><br />
                 <?php echo form_input($email);?>
-              </p>              
+              </p>  
+            <?php if ($this->config->item('identity', 'ion_auth') !== 'email') { ?>                                              
+              <p>
+                <?php echo lang('create_user_username_label', 'username');?> <span style="color:red;">*</span><br />
+                <?php echo form_input($identity);?>
+              </p>
+            <?php } else { ?>
+              <p>
+                <?php echo lang('create_user_username_label', 'username');?> <span style="color:red;">*</span><br />
+                <?php echo form_input($username);?>
+              </p>
+            <?php } ?>                                                                
               <p>
                 <?php echo lang('create_user_password_label', 'password');?> <span style="color:red;">*</span><br />
                 <?php echo form_input($password);?>

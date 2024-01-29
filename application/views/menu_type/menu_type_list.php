@@ -2,7 +2,7 @@
   <div class="col-xs-12">
     <div class="box box-primary">
       <div class="box-header">
-        <h3 class="box-title">List Menu_type</h3>
+        <h3 class="box-title">List Menu type</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
@@ -20,7 +20,7 @@
             <button class="btn btn-danger btn-flat" type="submit"><i class="fa fa-trash"></i><span class="hidden-xs">&nbsp;&nbsp;Hapus Data Terpilih</span></button>
           </div>
           <div class="col-xs-6 col-md-6 text-right">
-            <?php echo anchor(site_url('menu_type/printdoc'), '<i class="fas fa-print"></i><span class="hidden-xs">&nbsp;&nbsp;Print</span>', 'class="btn bg-maroon btn-flat"'); ?>
+<!--             <?php echo anchor(site_url('menu_type/printdoc'), '<i class="fas fa-print"></i><span class="hidden-xs">&nbsp;&nbsp;Print</span>', 'class="btn bg-maroon btn-flat"'); ?> -->
           </div>
         </div>
         <div class="table-responsive">

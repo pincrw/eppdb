@@ -1,7 +1,7 @@
 <?php      
-  $pengaturan=$this->Pengaturan_model->get_by_id_1();
-  $infopublik=$this->Pengumuman_model->get_by_publik();
-  $infoppdb =  $this->Tahunpelajaran_model->get_tahun_aktif();  
+  $pengaturan = $this->Pengaturan_model->get_by_id_1();
+  $infopublik = $this->Pengumuman_model->get_by_publik();
+  $infoppdb = $this->Tahunpelajaran_model->get_tahun_aktif();  
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@
     padding-top: 0;
   }
   .login-logo{
-    padding-top: 5%;
+    padding-top: 0;
   }
   .logo {
     position: absolute;
@@ -95,8 +95,10 @@
   </div>
   <div class="col-md-4 col-xs-12 kanan">
     <div class="login-logo">
+        <center><img class='img img-responsive' style='max-width:200px;' src="<?= base_url('assets/dist/img/'.$pengaturan->logo) ?>" width='50px'></center>
         <h1><strong><?= $this->config->item('sitename')?></strong></h1>
-        <h5>version <?= $this->config->item('version')?></h>
+        <h5><strong><?= $pengaturan->nama_sekolah ?></strong></h5>
+        <h5>version <?= $this->config->item('version')?></h5>
     </div>
     <div class="container-login ">
     <?php if ($this->config->item('identity', 'ion_auth') != 'email') { ?>  
@@ -129,15 +131,13 @@
       <?php echo form_open("auth/login");?>
       <?php if ($this->config->item('identity', 'ion_auth') != 'email') { ?>
          <div class="form-group has-feedback">
-          <label>Username/NISN</label>
-          <input type="text" name="identity" class="form-control" placeholder="Username/NISN" autofocus required />
-          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          <label><?php echo lang('login_identity_label1') ?></label>
+          <input type="text" name="identity" class="form-control" placeholder="<?php echo lang('login_identity_label1') ?>" autofocus required />
         </div>
       <?php } else { ?>
          <div class="form-group has-feedback">
-          <label>Email</label>
-          <input type="text" name="identity" class="form-control" placeholder="Email" autofocus required />
-          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          <label><?php echo lang('login_identity_label') ?></label>
+          <input type="text" name="identity" class="form-control" placeholder="<?php echo lang('login_identity_label') ?>" autofocus required />
         </div>
       <?php } ?>  
         <div class="form-group has-feedback">
@@ -158,9 +158,9 @@
         </div>
         <?php echo form_close();?>
         <?php if ($this->config->item('identity', 'ion_auth') == 'email') { ?>
-        <a href="forgot_password"><?php echo lang('login_forgot_password');?></a><br/>
+        <!-- <a href="forgot_password"><?php echo lang('login_forgot_password');?></a><br/> -->
         <?php } ?>
-        <a href="registrasi"><?php echo lang('register_a_new_membership');?></a>
+        Belum punya akun? <a href="registrasi"><?php echo lang('register_a_new_membership');?></a>
     </div>
   </div>
 <!-- /.login-box -->
@@ -181,6 +181,22 @@
     });
   });
 </script>
+
+<!-- live chat telegram -->
+<script>
+window.intergramId="<?php echo $pengaturan->intergramid ?>";
+window.intergramCustomizations={
+  titleClosed:'Chat Admin',
+  titleOpen:'Sedang Chat...',
+  introMessage:'Halo selamat datang, ada yang bisa kami bantu',
+  autoResponse:'Silahkan tunggu',
+  autoNoResponse:'Pesan anda akan kami jawab, silahkan tunggu',
+  maincolor:"#1a73c8",
+  alwaysUseFloatingButton: false
+};
+</script>
+<script id="intergram" type="text/javascript" src="https://www.intergram.xyz/js/widget.js"></script>
+<!-- end chat -->
 </body>
 </html>  
 
@@ -198,8 +214,8 @@
         <div class="col-md-12 col-xs-12">
           <?php if ($infoppdb) { 
             date_default_timezone_set('Asia/Jakarta');
-            $tanggal_mulai = date('d F Y 00:00:00',strtotime($infoppdb->tanggal_mulai_pendaftaran));
-            $tanggal_selesai = date('d F Y 23:59:00',strtotime($infoppdb->tanggal_selesai_pendaftaran)); 
+            $tanggal_mulai = date('d F Y 08:00:00',strtotime($infoppdb->tanggal_mulai_pendaftaran));
+            $tanggal_selesai = date('d F Y 12:00:00',strtotime($infoppdb->tanggal_selesai_pendaftaran)); 
             $tanggal_sekarang = date('d F Y H:i:s');
             $mulai = new DateTime($tanggal_mulai);
             $selesai = new DateTime($tanggal_selesai);
@@ -207,7 +223,8 @@
           ?> 
           
           <div class="callout callout-info">
-            Jadwal PPDB, Pembukaan : <?php echo date('d F Y', strtotime($infoppdb->tanggal_mulai_pendaftaran)) ?> s.d. <?php echo date('d F Y', strtotime($infoppdb->tanggal_selesai_pendaftaran)) ?>, Pengumuman : <?php echo date('d F Y', strtotime($infoppdb->tanggal_pengumuman)) ?>, Daftar Ulang : <?php echo date('d F Y', strtotime($infoppdb->tanggal_mulai_daftar_ulang)) ?> s.d. <?php echo date('d F Y', strtotime($infoppdb->tanggal_selesai_daftar_ulang)) ?>
+            Jadwal PPDB <?php echo $infoppdb->ket ?><br>
+            Pendaftaran : <?php echo format_indo(date('Y-m-d', strtotime($infoppdb->tanggal_mulai_pendaftaran))) ?> s.d. <?php echo format_indo(date('Y-m-d', strtotime($infoppdb->tanggal_selesai_pendaftaran))) ?>, Pengumuman : <?php echo format_indo(date('Y-m-d', strtotime($infoppdb->tanggal_pengumuman))) ?>, Daftar Ulang : <?php echo format_indo(date('Y-m-d', strtotime($infoppdb->tanggal_mulai_daftar_ulang))) ?> s.d. <?php echo format_indo(date('Y-m-d', strtotime($infoppdb->tanggal_selesai_daftar_ulang))) ?>
           </div>
 
           <?php if ($today < $mulai) { ?>
@@ -224,9 +241,9 @@
               <img src="<?php echo base_url('assets/dist/img/alur.png') ?>" width="100%">
             <?php } ?>                                         
           <?php } else if ($today > $selesai) { ?>
-            <h3 style="text-align: center">Pendaftaran sudah ditutup</h3>
+            <h3 style="text-align: center">Pendaftaran <?php echo $infoppdb->ket ?> sudah ditutup</h3>
           <?php } else { ?>
-            <h3 style="text-align: center">Pendaftaran sudah dibuka</h3>
+            <h3 style="text-align: center">Pendaftaran <?php echo $infoppdb->ket ?> sudah dibuka</h3>
             <?php if (file_exists('assets/dist/img/alur.png')) { ?>
               <img src="<?php echo base_url('assets/dist/img/alur.png') ?>" width="100%">
             <?php } ?>                                    
@@ -298,8 +315,7 @@
             var menit   = document.getElementById("minutes");
             var detik   = document.getElementById("seconds");
                
-            // var deadline    = new Date("june 29, 2020 00:00:00");
-            var deadline    = new Date("<?php echo date('F d, Y 00:00:00', strtotime($infoppdb->tanggal_mulai_pendaftaran)) ?>");  
+            var deadline    = new Date("<?php echo date('F d, Y 08:00:00', strtotime($infoppdb->tanggal_mulai_pendaftaran)) ?>");  
             var waktu       = new Date();
             var distance    = deadline - waktu;
                
@@ -337,7 +353,5 @@
  
          }, 1000);
      }
- 
      Countdown();
- 
 </script>

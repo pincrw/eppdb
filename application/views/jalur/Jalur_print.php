@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tittle</title>
+    <title>Data Jalur</title>
     <style type="text/css" media="print">
     @page {
         margin: 0;  /* this affects the margin in the printer settings */

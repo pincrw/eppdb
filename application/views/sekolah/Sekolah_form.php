@@ -39,6 +39,7 @@
                     <label for="varchar">Status Sekolah <span style="color:red;">*</span> <?php echo form_error('status_sekolah') ?></label>
                     <select type="text" class="form-control" name="status_sekolah" id="status_sekolah" placeholder="Status Sekolah" value="" required/>
                         <option value="<?php echo $status_sekolah; ?>"><?php echo $status_sekolah; ?></option>
+                        <option value="-">-</option>
                         <option value="NEGERI">NEGERI</option>
                         <option value="SWASTA">SWASTA</option>
                     </select>

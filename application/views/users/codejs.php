@@ -58,8 +58,7 @@
                             "orderable": false
                         },
                             // {"data": "ip_address"},
-                            {"data": "first_name"},
-                            // {"data": "last_name"},                            
+                            {"data": "full_name"},                          
                             {"data": "username"},
                             // {"data": "password"},
                             // {"data": "salt"},

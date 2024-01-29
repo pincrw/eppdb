@@ -16,7 +16,8 @@ class Menu_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_menu,parent_id,icon,label,link,id,menu.id_menu_type,menu_type.type');
         $this->datatables->from('menu');
         //add this line for join
@@ -40,29 +41,31 @@ class Menu_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_menu', $q);
-	$this->db->or_like('parent_id', $q);
-	$this->db->or_like('icon', $q);
-	$this->db->or_like('label', $q);
-	$this->db->or_like('link', $q);
-	$this->db->or_like('id', $q);
-	$this->db->or_like('id_menu_type', $q);
-	$this->db->from($this->table);
+    	$this->db->or_like('parent_id', $q);
+    	$this->db->or_like('icon', $q);
+    	$this->db->or_like('label', $q);
+    	$this->db->or_like('link', $q);
+    	$this->db->or_like('id', $q);
+    	$this->db->or_like('id_menu_type', $q);
+    	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_menu', $q);
-	$this->db->or_like('parent_id', $q);
-	$this->db->or_like('icon', $q);
-	$this->db->or_like('label', $q);
-	$this->db->or_like('link', $q);
-	$this->db->or_like('id', $q);
-	$this->db->or_like('id_menu_type', $q);
-	$this->db->limit($limit, $start);
+    	$this->db->or_like('parent_id', $q);
+    	$this->db->or_like('icon', $q);
+    	$this->db->or_like('label', $q);
+    	$this->db->or_like('link', $q);
+    	$this->db->or_like('id', $q);
+    	$this->db->or_like('id_menu_type', $q);
+    	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 

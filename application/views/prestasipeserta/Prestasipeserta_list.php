@@ -37,8 +37,8 @@
                                     <th>No Pendaftaran</th>
                                     <th>Nama</th>
                         		    <th>Jenis</th>
-<!--                         		    <th>Prestasi</th>
-                        		    <th>Tahun</th>
+                        		    <th>Prestasi</th>
+<!--                         		    <th>Tahun</th>
                         		    <th>Penyelenggara</th> -->
                         		    <th>Tingkat</th>
                         		    <th>Kategori</th>

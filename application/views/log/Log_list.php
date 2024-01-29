@@ -27,11 +27,12 @@
                                     <th width=""></th>
                                     <th width="10px">No</th>
                                     <th>Log Time</th>
-                                    <th>Username</th>                                    
+                                    <th>Username</th>
+                                    <th>Nama</th>                                    
                         		    <th>Keterangan</th>
                                     <th width="80px">Action</th>
                                 </tr>
-                            </thead>
+                            </thead>                         
                         </table>
                     </div>
                 </form>

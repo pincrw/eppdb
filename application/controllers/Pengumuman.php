@@ -31,7 +31,8 @@ class Pengumuman extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Pengumuman_model->json();
     }
@@ -101,9 +102,10 @@ class Pengumuman extends CI_Controller
         		// 'date' => date('Y-m-d H:i:s'),
     	    );
             $this->Pengumuman_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data pengumuman ".$data['type']);             
-            redirect(site_url('pengumuman'));}
+            redirect(site_url('pengumuman'));
+        }
     }
 
     public function update($id)
@@ -151,7 +153,7 @@ class Pengumuman extends CI_Controller
         		// 'date' => date('Y-m-d H:i:s'),
     	    );
             $this->Pengumuman_model->update($this->input->post('id_pengumuman', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data pengumuman ".$data['type']); 
             redirect(site_url('pengumuman'));
         }
@@ -163,7 +165,7 @@ class Pengumuman extends CI_Controller
 
         if ($row) {
             $this->Pengumuman_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data pengumuman ".$row->type);             
             redirect(site_url('pengumuman'));
         } else {
@@ -172,13 +174,14 @@ class Pengumuman extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Pengumuman_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data pengumuman");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
@@ -221,8 +224,8 @@ class Pengumuman extends CI_Controller
     	// xlsWriteLabel($tablehead, $kolomhead++, "Informasi Pengumuman");
     	xlsWriteLabel($tablehead, $kolomhead++, "Date");
 
-	foreach ($this->Pengumuman_model->get_all() as $data) {
-        $kolombody = 0;
+    	foreach ($this->Pengumuman_model->get_all() as $data) {
+            $kolombody = 0;
 
         //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
         xlsWriteNumber($tablebody, $kolombody++, $nourut);
@@ -251,7 +254,8 @@ class Pengumuman extends CI_Controller
         $this->load->view('pengumuman/Pengumuman_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'pengumuman_data' => $this->Pengumuman_model->get_all(),
             'start' => 0

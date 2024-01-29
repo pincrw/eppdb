@@ -43,6 +43,7 @@
                         },{"data": "bidang_keahlian"},
                             {"data": "nama_jurusan"},
                             {"data": "kuota_jurusan","className" : "text-center"},
+                            {"data": "status_jurusan","className" : "text-center"},
                         {
                             "data" : "action",
                             "orderable": false,
@@ -69,6 +70,12 @@
                         var length = info.iLength;
                         var index = page * length + (iDisplayIndex + 1);
                         $('td:eq(1)', row).html(index);
+                        var stt = data.status_jurusan;
+                        if (stt=="Aktif"){
+                            $('td:eq(5)', row).html('<span class="label label-success">AKTIF</span>');
+                        } else if (stt=="Tidak Aktif"){
+                            $('td:eq(5)', row).html('<span class="label label-warning">TIDAK AKTIF</span>');
+                        }
                     }
                 });
                 $('#myform').keypress(function(e){

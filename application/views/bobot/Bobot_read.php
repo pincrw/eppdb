@@ -18,6 +18,8 @@
             	    <tr><td>Bobot Jarak</td><td><?php echo $bobot_jarak; ?></td></tr>
             	    <tr><td>Bobot Nilai</td><td><?php echo $bobot_nilai; ?></td></tr>
             	    <tr><td>Bobot Prestasi</td><td><?php echo $bobot_prestasi; ?></td></tr>
+                    <tr><td>Bobot Tes</td><td><?php echo $bobot_tes; ?></td></tr>
+                    <tr><td>Bobot Wawancara</td><td><?php echo $bobot_wawancara; ?></td></tr>                    
             	    <tr><td><a href="<?php echo site_url('bobot') ?>" class="<?= $this->config->item('botton')?>">Kembali</a></td></tr>
 	            </table>
             </div>

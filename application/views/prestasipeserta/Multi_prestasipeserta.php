@@ -16,12 +16,12 @@
                 <table class="table table-bordered table-striped" id="mytablexx" style="width:100%">
                     <thead>
                         <tr>
-                            <th width="10px">No</th>
-                    		<th width="100px">Jenis</th>
-                    		<th>Nama Prestasi</th>
-                    		<th width="70px">Tahun</th>
-                    		<th>Penyelenggara</th>
-                    		<th width="390px">Detail</th>
+                            <th style="width:10px">No</th>
+                    		<th style="width:200px">Jenis</th>
+                    		<th style="width:450px">Nama Prestasi</th>
+                    		<th style="width:70px">Tahun</th>
+                    		<th style="width:450px">Penyelenggara</th>
+                            <th style="width:350px">Detail</th>
                         </tr>
                     </thead>
 					<tbody>						
@@ -31,22 +31,21 @@
 							<tr>  
 								<td style="text-align: center"><?= $no++ ?></td>
 					            <td>
-					            	<input type="hidden" class="form-control" name="id_peserta[]" id="id_peserta" value="<?php echo $nomer->id_peserta; ?>" />
-					            	<input type="text" class="form-control" name="jenis[]" id="jenis" required />
-                                </td>
-					            <td><input type="text" class="form-control" name="nama_prestasi[]" id="nama_prestasi" required/></td>
-					            <td><input type="text" class="form-control" name="tahun[]" id="tahun" maxlength="4" onkeypress="return Angkasaja(event)" required/></td>
-					            <td><input type="text" class="form-control" name="penyelenggara[]" id="penyelenggara" required/></td>
-					            <td>
-				                    <select type="text" class="select2 form-control" name="id_prestasi[]" id="id_prestasi" value="" required/>
-				                        <option value="">Pilih Detail Prestasi</option>
-				                        <?php foreach ($prestasi as $key => $value) { ?>
-				                            <option value="<?= $value->id_prestasi;?>">
-				                                Tingkat <?= $value->tingkat;?> | Kategori <?= $value->kategori;?> | Peringkat <?= $value->juara;?>
-				                            </option>
-				                        <?php } ?>
-				                    </select>
-					            </td>
+                                    <input type="hidden" class="form-control" name="id_peserta[]" id="id_peserta" value="<?php echo $nomer->id_peserta; ?>" />
+                                    <input type="text" style="width:200px" class="form-control" name="jenis[]" id="jenis" required /></td>
+					            <td><input type="text" style="width:450px" class="form-control" name="nama_prestasi[]" id="nama_prestasi" required/></td>
+					            <td><input type="text" style="width:70px" class="form-control" name="tahun[]" id="tahun" maxlength="4" onkeypress="return Angkasaja(event)" required/></td>
+					            <td><input type="text" style="width:450px" class="form-control" name="penyelenggara[]" id="penyelenggara" required/></td>
+                                <td>
+                                    <select type="text" style="width:350px" class="select2 form-control" name="id_prestasi[]" id="id_prestasi" value="" required/>
+                                        <option value="">Pilih Detail Prestasi</option>
+                                        <?php foreach ($prestasi as $key => $value) { ?>
+                                            <option value="<?= $value->id_prestasi;?>">
+                                                Tingkat <?= $value->tingkat;?> | <?= $value->kategori;?> | Peringkat <?= $value->juara;?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </td>                                
 							</tr>
 						<?php } ?>
 					</tbody>						                  
@@ -60,7 +59,7 @@
             <div class="callout callout-info">
             <p>    
                 <ul>    
-                    <li>Jenis Prestasi : Jenis prestasi yang pernah diraih oleh peserta didik (OSN, O2SN, FLS2N, lain-lain).</li>
+                    <li>Jenis Prestasi : Jenis prestasi yang pernah diraih oleh peserta didik (Sains, Seni, Olahraga, lain-lain).</li>
                     <li>Nama Prestasi : Nama kegiatan/acara dari prestasi yang pernah diraih oleh peserta didik. Contoh: Lomba Cerdas Cermat Bahasa Indonesia Tingkat SD. Sesuaikan menurut piagam yang diperoleh.</li>
                     <li>Tahun Prestasi : Tahun prestasi yang pernah diraih oleh peserta didik.</li>
                     <li>Penyelenggara : Nama penyelenggara/panitia kegiatan dari prestasi yang pernah diraih oleh peserta didik. Contoh: Panitia O2SN dan FLS2N Kab. TUBABA. Sesuaikan menurut piagam yang diperoleh.</li>

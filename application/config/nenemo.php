@@ -6,15 +6,16 @@ $config['sitename_mini'] = '<i class="fab fa-gg"></i>';
 $config['title'] = 'e-PPDB';
 $config['botton'] = 'btn btn-success btn-flat';
 $config['header'] = 'bg-blue';
-// ====> mohon jangan di ganti
-$config['tahun'] = '2020';
+// ====> mohon dengan kerendahan hati jangan di hapus/ganti identitas developer tanpa izin
+$config['tahun'] = '2023';
 $config['copyright'] = 'Nenemo Project';
-// ====> dev
 $config['developer'] = 'Hairul Azmi';
 $config['email'] = 'ilung82@gmail.com';
 $config['contact'] = '082184032134';
-$config['workplace'] = 'SMP Negeri 1 Tumijajar';
+$config['workplace'] = 'www.spotipost.com';
 $config['project'] = 'e-PPDB';
-$config['codename'] = 'Raya';
-$config['version'] = '1.5.3';
-$config['license'] = '...';
+$config['codename'] = 'SpotiPost';
+$config['version'] = '2.2.3';
+$config['lastupdate'] = '1 April 2023';
+$config['license'] = 'Gratis, jangan diperjualbelikan';
+// ====> dev

@@ -15,16 +15,16 @@
             <form action="<?php echo $action; ?>" method="post">
                 <div class="form-group">
                     <label for="varchar">Jalur Pendaftaran <span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" name="jalur" id="jalur" placeholder="Jalur Pendaftaran" value="<?php echo $jalur; ?>" required/>
+                    <input type="text" class="form-control" name="jalur" id="jalur" placeholder="Jalur Pendaftaran" value="<?= set_value('jalur') ?>" required/>
                 </div>
                 <div class="form-group">
                     <label for="int">Persentase <span style="color:red;">*</span></label>
-                    <input type="text" class="form-control" name="persentase" id="persentase" placeholder="Persentase" value="<?php echo $persentase; ?>" required/>
+                    <input type="text" class="form-control" name="persentase" id="persentase" placeholder="Persentase" value="<?= set_value('persentase') ?>" required/>
                 </div>
                 <div class="form-group">
                     <label for="enum">Status Jalur <span style="color:red;">*</span></label>
                     <select type="text" class="form-control" name="status_jalur" id="status_jalur" placeholder="Status Jalur" value="" required/>
-                        <option value="">Pilih Status Jalur</option>
+                        <option value="<?= set_value('status_jalur') ?>"><?= set_value('status_jalur') ?></option>
                         <option value="Aktif">Aktif</option>
                         <option value="Tidak Aktif">Tidak Aktif</option>
                     </select>

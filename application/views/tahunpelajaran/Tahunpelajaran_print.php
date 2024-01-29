@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tittle</title>
+    <title>Tahun Pelajaran</title>
     <style type="text/css" media="print">
     @page {
         margin: 0;  /* this affects the margin in the printer settings */
@@ -38,7 +38,8 @@
     		<th>Tanggal Pengumuman</th>
     		<th>Tanggal Mulai Daftar Ulang</th>
     		<th>Tanggal Selesai Daftar Ulang</th>
-    		<th>Status Tahun</th>
+    		<th>Status</th>
+        <th>Keterangan</th>
 		  </tr>
       <?php
             foreach ($tahunpelajaran_data as $tahunpelajaran)
@@ -54,7 +55,8 @@
 		    <td><?php echo $tahunpelajaran->tanggal_pengumuman ?></td>
 		    <td><?php echo $tahunpelajaran->tanggal_mulai_daftar_ulang ?></td>
 		    <td><?php echo $tahunpelajaran->tanggal_selesai_daftar_ulang ?></td>
-		    <td><?php echo $tahunpelajaran->status_tahun ?></td>	
+		    <td><?php echo $tahunpelajaran->status_tahun ?></td>
+        <td><?php echo $tahunpelajaran->ket ?></td>  
       </tr>
       <?php } ?>
     </table>

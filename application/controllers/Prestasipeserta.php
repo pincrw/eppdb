@@ -37,7 +37,8 @@ class Prestasipeserta extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Prestasipeserta_model->json();
     }
@@ -120,7 +121,7 @@ class Prestasipeserta extends CI_Controller
         		'id_prestasi' => $this->input->post('id_prestasi',TRUE),
         	);
             $this->Prestasipeserta_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data prestasi ".$data['jenis']);            
             redirect(site_url('prestasipeserta'));}
     }
@@ -178,7 +179,7 @@ class Prestasipeserta extends CI_Controller
         		'id_prestasi' => $this->input->post('id_prestasi',TRUE),
     	    );
             $this->Prestasipeserta_model->update($this->input->post('id_prestasipeserta', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data prestasi ".$data['jenis']);             
             redirect(site_url('prestasipeserta'));
         }
@@ -190,7 +191,7 @@ class Prestasipeserta extends CI_Controller
 
         if ($row) {
             $this->Prestasipeserta_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data prestasi ".$row->nama_peserta);             
             redirect(site_url('prestasipeserta'));
         } else {
@@ -199,28 +200,29 @@ class Prestasipeserta extends CI_Controller
         }
     }
 
-    public function deletebulk() {
+    public function deletebulk() 
+    {
         $delete = $this->Prestasipeserta_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data prestasi");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('jenis', 'jenis', 'trim|required');
-	$this->form_validation->set_rules('nama_prestasi', 'nama prestasi', 'trim|required');
-	$this->form_validation->set_rules('tahun', 'tahun', 'trim|required|numeric|exact_length[4]');
-	$this->form_validation->set_rules('penyelenggara', 'penyelenggara', 'trim|required');
-	$this->form_validation->set_rules('id_peserta', 'id peserta', 'trim|required');
-	$this->form_validation->set_rules('id_prestasi', 'id prestasi', 'trim|required');
+    	$this->form_validation->set_rules('jenis', 'jenis', 'trim|required');
+    	$this->form_validation->set_rules('nama_prestasi', 'nama prestasi', 'trim|required');
+    	$this->form_validation->set_rules('tahun', 'tahun', 'trim|required|numeric|exact_length[4]');
+    	$this->form_validation->set_rules('penyelenggara', 'penyelenggara', 'trim|required');
+    	$this->form_validation->set_rules('id_peserta', 'id peserta', 'trim|required');
+    	$this->form_validation->set_rules('id_prestasi', 'id prestasi', 'trim|required');
 
-	$this->form_validation->set_rules('id_prestasipeserta', 'id_prestasipeserta', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('id_prestasipeserta', 'id_prestasipeserta', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
@@ -292,7 +294,8 @@ class Prestasipeserta extends CI_Controller
         $this->load->view('prestasipeserta/Prestasipeserta_doc',$data);
     }
 
-    public function printdoc() {
+    public function printdoc() 
+    {
         $data = array(
             'prestasipeserta_data' => $this->Prestasipeserta_model->get_all(),
             'start' => 0

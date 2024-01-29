@@ -1,0 +1,90 @@
+eppdb v.2.2.0 - 27 nov 2022
+- pembaharuan formulir pendaftaran, cetak formulir pendaftaran, tahun penerimaan, asal sekolah, bobot jalur, dashboard, pengumuman, generate hasil, rekap nilai, daftar ulang, etc.
+- penambahan field tahun lulus, pilihan sekolah lain, kabupaten/kota, provinsi, no hp ayah, no hp ibu, no hp wali, wawancara pada tabel formulir.
+- penambahan field ket pada tabel tahunpelajaran.
+- penambahan tabel wawancara, jawaban_wawancara, tesdanwawancara.
+- penambahan menu formulir wawancara, wawancara peserta, nilai tes dan wawancara, cetak daftar ulang, cetak wawancara.
+- perbaikan generate hasil, rekap nilai, formulirpendafatarn.
+- etc.
+
+eppdb v.2.2.0 - 21 des 2022
+- pembaharuan index dashboard daftar ulang, footer, list users, statistik_list, peserta, berkas_member, peserta_model, auth_lang, etc.
+- perbaikan controllers member bug formulir wawancara.
+- etc
+
+eppdb v.2.2.1 - 31 des 2022
+- penambahan tabel biaya, pembayaran.
+- penambahan field biaya pada tabel formulir.
+- penambahan dashboard bendahara.
+- pembaharuan view index dashboard, pengaturan, berkas_member, prestasi, etc.
+- pembaharuan controllers member, dashboard,etc.
+- etc
+
+eppdb v.2.2.1 - 13 jan 2023
+- penambahan info jarak pada formulir
+- perubahan panjang field no_kip tabel peserta.
+- pembaharuan view index dashboard, pembayaran_member, pengaturan, form_peserta, form_peserta_general, form_peserta_wizard, peserta_form, etc.
+- pembaharuan controllers member, peserta,etc.
+- pembaharuan peserta_model, etc
+- etc
+
+ppdb v.2.2.1 - 15 jan 2023
+- pembaharuan autorespon kirim pesan WA controllers member, peserta, etc.
+- pembaharuan peserta_model, etc
+- etc
+
+ppdb v.2.2.1 - 16 jan 2023
+- penambahan validasi bukti bayar controllres member, pembayaran.
+- pembaharuan pembayaran_member, peserta, etc.
+- pembaharuan kirim pesan peserta_model, etc
+- etc
+
+ppdb v.2.2.2 - 28 februari 2023
+- perubahan encoding ke UTF-8 pada semua struktur tabel.
+- penambahan helper tanggal indonesia.
+- penambahan tabel mail.
+- penambahan field status_jurusan pada tabel jurusan.
+- penambahan field kartu_tes pada tabel formulir.
+- penambahan field no_kk, lingkar_kepala, waktu_tempuh pada tabel formulir dan peserta.
+- perubahan field first_name menjadi full_name pada tabel users.
+- penghapusan field last_name pada tabel users. 
+- penambahan library instascan.
+- penambahan library phpmailer.
+- penambahan cetak kartu tes.
+- penambahan fitur Pindai QRCode melalui kamera untuk memeriksa formulir pendaftaran.
+- penambahan view SMTPMail, peserta_search, peserta_pindai hasil Pindai QRCode melalui kamera, etc.
+- pembaharuan data QRCode.
+- penambahan function pindai, pindaiQRCode(), printformulir pada controllers peserta.
+- penambahan validasi bukti bayar controllres member, pembayaran.
+- penambahan controllers dan model mail.
+- pembaharuan controllers auth, member, peserta untuk kirim pesan melalui email maupun WA.
+- pembaharuan controllers auth, member, pembayaran, peserta, jurusan, formulir, users, etc.
+- pembaharuan model peserta_model, jurusan_model, log_model, etc.
+- pembaharuan views auth, formulir, berkas, dashboard, pembayaran, pengaturan, peserta, template, etc.
+- perbaikan view input prestasi peserta member melalui handphone.
+- pembaharuan language, assets.
+- etc
+
+ppdb v.2.2.2 - 4 maret 2023`
+- penambahan cetak kartu tes melalui akun admin.
+- perbaikan defaultViewDate pada inputan tanggal.
+- pembaharuan controllers Log.php dan model Log_model.php
+- perbaikan bug nilai kosong pada nilai tes atau nilai wawancara.
+- pembaharuan controllers Tesdanwawancara.php dan views Tesdanwawancara_form.php
+- perbaikan views Print_wawancara melalui akun admin.
+- pembaharuan inputan angka.
+- penambahan verifikasi status pendaftaran melalui detail peserta
+- penambahan fitur hapus file yang terupload
+- perubahan model cetak formulir
+- etc
+
+ppdb v.2.2.3 - 1 April 2023
+- penambahan helper terbilang.
+- penambahan field id_tahun pada tabel biaya.
+- penambahan relasi antara tabel biaya dan tahunpelajaran.
+- penambahan biaya berdasar tahun.
+- penambahan cetak kwitansi pembayaran.
+- pembaharuan controllers tahunpelajaran, biaya, member, pembayaran, etc.
+- pembaharuan models biaya_model, pembayaran_model, etc.
+- pembaharuan views tahunpelajaran, pembayaran_member, etc.
+- etc

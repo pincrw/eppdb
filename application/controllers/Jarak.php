@@ -39,7 +39,8 @@ class Jarak extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Jarak_model->json();
     }
@@ -108,7 +109,7 @@ class Jarak extends CI_Controller
 	        );
 
             $this->Jarak_model->insert($data);
-            $this->session->set_flashdata('message', 'Data Berhasil ditambahkan');
+            $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
             helper_log("add", "Menambah data jarak ".$data['jarak']);             
             redirect(site_url('jarak'));
         }
@@ -163,7 +164,7 @@ class Jarak extends CI_Controller
     	    );
 
             $this->Jarak_model->update($this->input->post('id_jarak', TRUE), $data);
-            $this->session->set_flashdata('message', 'Data Berhasil diubah');
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
             helper_log("edit", "Update data poin jarak ".$data['jarak']);                
             redirect(site_url('jarak'));
         }
@@ -175,7 +176,7 @@ class Jarak extends CI_Controller
 
         if ($row) {
             $this->Jarak_model->delete($id);
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus data jarak ".$row->jarak);                
             redirect(site_url('jarak'));
         } else {
@@ -184,32 +185,33 @@ class Jarak extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Jarak_model->deletebulk();
         if($delete){
-            $this->session->set_flashdata('message', 'Data Berhasil dihapus');
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
             helper_log("delete", "Menghapus multi data poin jarak");             
         }else{
-            $this->session->set_flashdata('message_error', 'Data Gagal dihapus');
+            $this->session->set_flashdata('message_error', 'Data gagal dihapus');
         }
         echo $delete;
     }
 
     public function _rules()
     {
-	$this->form_validation->set_rules('jarak', 'jarak', 'trim|required|is_unique[jarak.jarak]',
-        array(
-                'required'      => 'Jarak ke sekolah tidak boleh kosong ',
-                'is_unique'     => 'Jarak ke sekolah sudah ada '
-        ));
-	$this->form_validation->set_rules('skor_jarak', 'skor jarak', 'trim|required|numeric',
-        array(
-                'required'      => 'Poin Jarak tidak boleh kosong ',
-                'numeric'       => 'Poin Jarak hanya angka '
-        ));
+    	$this->form_validation->set_rules('jarak', 'jarak', 'trim|required|is_unique[jarak.jarak]',
+            array(
+                    'required'      => 'Jarak ke sekolah tidak boleh kosong ',
+                    'is_unique'     => 'Jarak ke sekolah sudah ada '
+            ));
+    	$this->form_validation->set_rules('skor_jarak', 'skor jarak', 'trim|required|numeric',
+            array(
+                    'required'      => 'Poin Jarak tidak boleh kosong ',
+                    'numeric'       => 'Poin Jarak hanya angka '
+            ));
 
-	$this->form_validation->set_rules('id_jarak', 'id_jarak', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
+    	$this->form_validation->set_rules('id_jarak', 'id_jarak', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text">', '</span>');
     }
 
     public function excel()
@@ -265,12 +267,63 @@ class Jarak extends CI_Controller
         $this->load->view('jarak/Jarak_doc',$data);
     }
 
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'jarak_data' => $this->Jarak_model->get_all(),
             'start' => 0
         );
         $this->load->view('jarak/Jarak_print', $data);
+    }
+
+    public function upload()
+    {
+
+        $file_mimes = array('text/x-comma-separated-values',
+            'text/comma-separated-values',
+            'application/octet-stream',
+            'application/vnd.ms-excel',
+            'application/x-csv',
+            'text/x-csv',
+            'text/csv',
+            'application/csv',
+            'application/excel',
+            'application/vnd.msexcel',
+            'text/plain',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+
+        if(isset($_FILES['file']['name']) && in_array($_FILES['file']['type'], $file_mimes)) {
+         
+            $arr_file = explode('.', $_FILES['file']['name']);
+            $extension = end($arr_file);
+         
+            if ('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } elseif('xls' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();                
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+         
+            $spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+             
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            $this->db->TRUNCATE('jarak');
+            for($i = 1;$i < count($sheetData);$i++)
+            {
+                $jarak = $sheetData[$i]['1'];
+                $skor_jarak = $sheetData[$i]['2'];
+
+                $this->db->query("insert into jarak (id_jarak,jarak,skor_jarak) values ('','$jarak','$skor_jarak')");
+            }
+                $this->session->set_flashdata('message', 'Data berhasil ditambahkan');
+                helper_log("add", "Import data jarak");                 
+                redirect(site_url('jarak'));
+        } else {
+                $this->session->set_flashdata('message', 'Data tidak sesuai');               
+                redirect(site_url('jarak'));            
+        }
     }
 
 }

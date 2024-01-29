@@ -38,7 +38,7 @@
     padding-top: 0;
   }
   .login-logo{
-    padding-top: 5%;
+    padding-top: 0;
   }
   .logo {
     position: absolute;
@@ -59,8 +59,10 @@
   </div>
   <div class="col-md-4 col-xs-12 kanan">
     <div class="login-logo">
+        <center><img class='img img-responsive' style='max-width:200px;' src="<?= base_url('assets/dist/img/'.$pengaturan->logo) ?>" width='50px'></center>
         <h1><strong><?= $this->config->item('sitename')?></strong></h1>
-        <h5>version <?= $this->config->item('version')?></h>
+        <h5><strong><?= $pengaturan->nama_sekolah ?></strong></h5>
+        <h5>version <?= $this->config->item('version')?></h5>
     </div>
     <div class="container-login ">
        <p class="login-box-msg"><?php echo sprintf(lang('forgot_password_subheading'), $identity_label);?></p>

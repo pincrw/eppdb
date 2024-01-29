@@ -1,3 +1,11 @@
+<!-- select2 -->
+<script src="<?= base_url('assets/bower_components/select2/dist/js/select2.full.min.js'); ?>"></script>
+
+<script type="text/javascript">
+//select2
+    $('.select2').select2();
+</script>   
+
 <script type="text/javascript">
     $(document).ready(function() {
         $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -44,6 +52,8 @@
                             {"data": "bobot_jarak","className" : "text-center"},
                             {"data": "bobot_nilai","className" : "text-center"},
                             {"data": "bobot_prestasi","className" : "text-center"},
+                            {"data": "bobot_tes","className" : "text-center"},
+                            {"data": "bobot_wawancara","className" : "text-center"},
                         {
                             "data" : "action",
                             "orderable": false,

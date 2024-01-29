@@ -30,9 +30,17 @@ class Log extends CI_Controller
         $this->load->view('template/backend', $data);
     }
 
-    public function json() {
-        header('Content-Type: application/json');
-        echo $this->Log_model->json();
+    public function json() 
+    {
+        $identity_column = $this->config->item('identity', 'ion_auth');
+        $this->data['identity_column'] = $identity_column;
+        if ($identity_column !== 'email') {        
+            header('Content-Type: application/json');
+            echo $this->Log_model->json();
+        } else {    
+            header('Content-Type: application/json');
+            echo $this->Log_model->json_();
+        }         
     }
 
     public function delete($id)
@@ -50,7 +58,8 @@ class Log extends CI_Controller
         }
     }     
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $delete = $this->Log_model->deletebulk();
         if($delete){
             $this->session->set_flashdata('message', 'Data Berhasil dihapus');

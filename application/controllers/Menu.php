@@ -22,7 +22,8 @@ class Menu extends CI_Controller
             redirect('dashboard', 'refresh');
     }
 
-    public function json() {
+    public function json() 
+    {
         header('Content-Type: application/json');
         echo $this->Menu_model->json();
     }
@@ -207,7 +208,8 @@ class Menu extends CI_Controller
         }
     }
 
-    public function deletebulk(){
+    public function deletebulk()
+    {
         $data = $_POST['msg_'];
         $dataid = explode(',', $data);
         foreach ($dataid as $key => $value) {
@@ -217,7 +219,8 @@ class Menu extends CI_Controller
         echo true;
     }
  
-    public function printdoc(){
+    public function printdoc()
+    {
         $data = array(
             'menu_data' => $this->Menu_model->get_all(),
             'start' => 0
@@ -227,16 +230,16 @@ class Menu extends CI_Controller
  
     public function _rules()
     {
-	$this->form_validation->set_rules('sort', 'sort', 'trim|required');
-	$this->form_validation->set_rules('level', 'level', 'trim|required');
-	$this->form_validation->set_rules('parent_id', 'parent id', 'trim|required');
-	$this->form_validation->set_rules('icon', 'icon', 'trim|required');
-	$this->form_validation->set_rules('label', 'label', 'trim|required');
-	$this->form_validation->set_rules('link', 'link', 'trim|required');
-	$this->form_validation->set_rules('id', 'id', 'trim|required');
-	$this->form_validation->set_rules('id_menu_type', 'id menu type', 'trim|required');
-	$this->form_validation->set_rules('id_menu', 'id_menu', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    	$this->form_validation->set_rules('sort', 'sort', 'trim|required');
+    	$this->form_validation->set_rules('level', 'level', 'trim|required');
+    	$this->form_validation->set_rules('parent_id', 'parent id', 'trim|required');
+    	$this->form_validation->set_rules('icon', 'icon', 'trim|required');
+    	$this->form_validation->set_rules('label', 'label', 'trim|required');
+    	$this->form_validation->set_rules('link', 'link', 'trim|required');
+    	$this->form_validation->set_rules('id', 'id', 'trim|required');
+    	$this->form_validation->set_rules('id_menu_type', 'id menu type', 'trim|required');
+    	$this->form_validation->set_rules('id_menu', 'id_menu', 'trim');
+    	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
 

@@ -23,7 +23,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <div class="description-block">
-                    <h5 class="description-header"><?= $user->first_name; ?> <?= $user->last_name; ?></h5>
+                    <h5 class="description-header"><?= $user->full_name; ?></h5>
                     <span><?= $user->company; ?></span>
                   </div>
                   <!-- /.description-block -->
@@ -90,11 +90,7 @@
           <?php echo form_open_multipart("auth/edit_profile");?>
             <div class="form-group">
               <label><?php echo lang('edit_user_fname_label') ?> <span style="color:red;">*</span></label>
-              <input type="text" class="form-control" id="first_name" name="first_name" placeholder="<?php echo lang('edit_user_fname_label') ?>" value="<?= $user->first_name; ?>">
-            </div> 
-            <div class="form-group">
-              <label><?php echo lang('edit_user_lname_label') ?></label>
-              <input type="text" class="form-control" id="last_name" name="last_name" placeholder="<?php echo lang('edit_user_lname_label') ?>" value="<?= $user->last_name; ?>">
+              <input type="text" class="form-control" id="full_name" name="full_name" placeholder="<?php echo lang('edit_user_fname_label') ?>" value="<?= $user->full_name; ?>">
             </div>          
             <div class="form-group">
               <label><?php echo lang('edit_user_company_label') ?></label>
@@ -104,6 +100,12 @@
               <label><?php echo lang('edit_user_phone_label') ?></label>
               <input type="text" class="form-control" id="phone" name="phone" placeholder="<?php echo lang('edit_user_phone_label') ?>" value="<?= $user->phone; ?>">
             </div>
+
+            <div class="form-group">
+              <label><?php echo lang('edit_user_email_label') ?></label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="<?php echo lang('edit_user_email_label') ?>" value="<?= $user->email; ?>">
+            </div>
+
             <div class="form-group">
               <label><?php echo lang('edit_user_password_label') ?></label>
               <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo lang('edit_user_password_label') ?>" >

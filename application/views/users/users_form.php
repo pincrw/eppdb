@@ -63,12 +63,8 @@
                     <input type="text" class="form-control" name="active" id="active" placeholder="Active" value="<?php echo $active; ?>" />
                 </div>
         	    <div class="form-group">
-                    <label for="varchar">First Name <?php echo form_error('first_name') ?></label>
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $first_name; ?>" />
-                </div>
-        	    <div class="form-group">
-                    <label for="varchar">Last Name <?php echo form_error('last_name') ?></label>
-                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" />
+                    <label for="varchar">First Name <?php echo form_error('full_name') ?></label>
+                    <input type="text" class="form-control" name="full_name" id="full_name" placeholder="Full Name" value="<?php echo $full_name; ?>" />
                 </div>
         	    <div class="form-group">
                     <label for="varchar">Company <?php echo form_error('company') ?></label>

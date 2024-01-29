@@ -16,7 +16,8 @@ class Berkas_model extends CI_Model
     }
 
     // datatables
-    function json() {
+    function json() 
+    {
         $this->datatables->select('id_berkas,nama_berkas,keterangan_berkas,tipe_berkas,ukuran_berkas,peserta.id_peserta,nisn,no_pendaftaran,nama_peserta');
         $this->datatables->from('berkas');
         //add this line for join
@@ -44,7 +45,7 @@ class Berkas_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
-    // get all by id peserta
+    // get limit by id peserta
     function get_berkas($id)
     {
         $this->db->select('id_berkas,nama_berkas,keterangan_berkas,tipe_berkas,ukuran_berkas,peserta.id_peserta,nisn,no_pendaftaran,nama_peserta');
@@ -74,7 +75,8 @@ class Berkas_model extends CI_Model
     }           
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_berkas', $q);
     	$this->db->or_like('nama_berkas', $q);
     	$this->db->or_like('keterangan_berkas', $q);
@@ -86,7 +88,8 @@ class Berkas_model extends CI_Model
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_berkas', $q);
     	$this->db->or_like('nama_berkas', $q);

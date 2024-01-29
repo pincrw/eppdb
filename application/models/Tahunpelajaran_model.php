@@ -16,8 +16,9 @@ class Tahunpelajaran_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('id_tahun,tahun_pelajaran,kuota,tanggal_mulai_pendaftaran,tanggal_selesai_pendaftaran,tanggal_mulai_seleksi,tanggal_selesai_seleksi,tanggal_pengumuman,tanggal_mulai_daftar_ulang,tanggal_selesai_daftar_ulang,status_tahun');
+    function json() 
+    {
+        $this->datatables->select('id_tahun,tahun_pelajaran,kuota,tanggal_mulai_pendaftaran,tanggal_selesai_pendaftaran,tanggal_mulai_seleksi,tanggal_selesai_seleksi,tanggal_pengumuman,tanggal_mulai_daftar_ulang,tanggal_selesai_daftar_ulang,status_tahun,ket');
         $this->datatables->from('tahunpelajaran');
         //add this line for join
         //$this->datatables->join('table2', 'tahunpelajaran.field = table2.field');
@@ -38,7 +39,15 @@ class Tahunpelajaran_model extends CI_Model
         $this->db->where('status_tahun','Aktif');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->row();
-    }    
+    } 
+
+    // get tahun aktif
+    function get_tahun_on()
+    {
+        $this->db->where('status_tahun','Aktif');
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }        
 
     // get data by id
     function get_by_id($id)
@@ -48,7 +57,8 @@ class Tahunpelajaran_model extends CI_Model
     }
 
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL) 
+    {
         $this->db->like('id_tahun', $q);
     	$this->db->or_like('tahun_pelajaran', $q);
     	$this->db->or_like('kuota', $q);
@@ -60,12 +70,14 @@ class Tahunpelajaran_model extends CI_Model
     	$this->db->or_like('tanggal_mulai_daftar_ulang', $q);
     	$this->db->or_like('tanggal_selesai_daftar_ulang', $q);
     	$this->db->or_like('status_tahun', $q);
+        $this->db->or_like('ket', $q);
     	$this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL) 
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('id_tahun', $q);
     	$this->db->or_like('tahun_pelajaran', $q);
@@ -78,6 +90,7 @@ class Tahunpelajaran_model extends CI_Model
     	$this->db->or_like('tanggal_mulai_daftar_ulang', $q);
     	$this->db->or_like('tanggal_selesai_daftar_ulang', $q);
     	$this->db->or_like('status_tahun', $q);
+        $this->db->or_like('ket', $q);
     	$this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
@@ -103,7 +116,8 @@ class Tahunpelajaran_model extends CI_Model
     }
 
     // delete bulkdata
-    function deletebulk(){
+    function deletebulk()
+    {
         $data = $this->input->post('msg_', TRUE);
         $arr_id = explode(",", $data);
         $this->db->where_in($this->id, $arr_id);

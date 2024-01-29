@@ -43,8 +43,8 @@
                     <label for="varchar">Status Daftar Ulang</label>
                     <select type="text" class="form-control" name="status_daftar_ulang" id="status_daftar_ulang" placeholder="Status Hasil" value="" />
                         <option value="<?php echo $status_daftar_ulang; ?>"><?php echo $status_daftar_ulang; ?></option>
-                        <option value="Menunggu">Menunggu</option>
                         <option value="Belum daftar ulang">Belum daftar ulang</option>
+                        <option value="Menunggu">Menunggu</option>
                         <option value="Sudah daftar ulang">Sudah daftar ulang</option>
                         <option value="Tidak daftar ulang">Tidak daftar ulang</option>
                     </select>                      
@@ -52,10 +52,20 @@
                 <div class="form-group">
                     <label for="longtext">Catatan <?php echo form_error('catatan') ?></label>
                     <textarea id="catatan" class="form-control" name="catatan" style="height: 50px;"><?php echo $catatan; ?></textarea>
-                </div>                
+                </div>
+                <div class="callout callout-danger">
+                <p> Mohon di baca penting :
+                  <ul>
+                    <li>catatan dapat dikosongkan.</li>
+                    <li>catatan digunakan untuk memberi catatan hasil verifikasi pendaftaran, contoh jika terdapat data yang tidak sesuai atau berkas ada yang kurang</li>
+                    <li>catatan tidak digunakan untuk memberi informasi hasil seleksi, seperti diterima/tidak diterima.</li>
+                  </ul> 
+                </p>                               
+                </div>                                 
                 <input type="hidden" class="form-control" name="nama_peserta" id="nama_peserta" value="<?= $nama_peserta; ?>" />
                 <input type="hidden" class="form-control" name="id_users" id="id_users" value="<?= $id_users; ?>" />
-                <input type="hidden" name="id_peserta" value="<?php echo $id_peserta; ?>" /> 
+                <input type="hidden" class="form-control" name="id_peserta" value="<?php echo $id_peserta; ?>" /> 
+                <input type="hidden" class="form-control" name="nomor_hp" value="<?php echo $nomor_hp; ?>" /> 
                 <button type="submit" class="<?= $this->config->item('botton')?>"><?php echo $button ?></button>
                 <a href="<?php echo site_url('peserta') ?>" class="btn btn-default btn-flat">Batal</a>  
             </form>

@@ -18,21 +18,21 @@
             <div id="infoMessage" class="callout callout-danger"><?php echo $message;?></div> <?php } ?>
             <?php echo form_open(uri_string());?>
               <div class="form-group">
-                <?php echo lang('edit_user_fname_label', 'first_name');?> <span style="color:red;">*</span><br />
-                <?php echo form_input($first_name);?>
-              </div>
-              <div class="form-group">
-                <?php echo lang('edit_user_lname_label', 'last_name');?> <br />
-                <?php echo form_input($last_name);?>
+                <?php echo lang('edit_user_fname_label', 'full_name');?> <span style="color:red;">*</span><br />
+                <?php echo form_input($full_name);?>
               </div>
               <div class="form-group">
                 <?php echo lang('edit_user_company_label', 'company');?> <br />
                 <?php echo form_input($company);?>
-              </div>
+              </div>            
               <div class="form-group">
                 <?php echo lang('edit_user_phone_label', 'phone');?> <br />
                 <?php echo form_input($phone);?>
               </div>
+              <div class="form-group">
+                <?php echo lang('edit_user_email_label', 'email');?> <br />
+                <?php echo form_input($email);?>
+              </div>                
               <div class="form-group">
                 <?php echo lang('edit_user_password_label', 'password');?> <br />
                 <?php echo form_input($password);?>

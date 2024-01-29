@@ -24,7 +24,7 @@
                 	</table>
                 </div> 
                 <div class="col-xs-12 col-md-6">     
-                    <?php if ($tipe_berkas==".gif" || $tipe_berkas==".jpg" || $tipe_berkas==".png" || $tipe_berkas==".PNG" || $tipe_berkas==".JPG" || $tipe_berkas==".GIF" ) { ?>
+                    <?php if ($tipe_berkas==".gif" || $tipe_berkas==".jpg" || $tipe_berkas==".jpeg" || $tipe_berkas==".png" || $tipe_berkas==".JPG" || $tipe_berkas==".JPEG" || $tipe_berkas==".PNG" ) { ?>
                         <img src="<?php echo base_url('assets/uploads/attachment/'.$nama_berkas) ?>" width="100%">
                     <?php } else if ($tipe_berkas==".pdf") { ?>
                         <embed src="<?php echo base_url('assets/uploads/attachment/'.$nama_berkas) ?>" width="100%" height="500px" type="application/pdf">

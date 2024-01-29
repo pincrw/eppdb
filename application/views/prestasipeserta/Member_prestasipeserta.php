@@ -5,7 +5,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">List Prestasi Peserta</h3>
+                <h3 class="box-title">List Prestasi Akademik/Non Akademik</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                             title="Collapse">
@@ -16,11 +16,8 @@
             </div>
             <div class="box-body">
                 <div class="row" style="margin-bottom: 10px">
-                    <div class="col-xs-4 col-md-4">                      
-                        <button class="btn btn-success btn-flat" data-toggle="modal" data-target="#myModalPrestasi"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Prestasi</button>
-                    </div>
-                    <div class="col-xs-8 col-md-8 text-right">
-
+                    <div class="col-xs-12 col-md-12">                      
+                        <button class="btn btn-success btn-flat" data-toggle="modal" data-target="#myModalPrestasi"><i class="fa fa-plus"></i>&nbsp;&nbsp;Prestasi <span class="hidden-xs">Akademik/Non Akademik</span></button> <span class="label bg-yellow" style="color:red;">* khusus jalur prestasi</span>                        
                     </div>
                 </div>
                     <div class="table-responsive">
@@ -77,10 +74,10 @@
           <?php if ($nomer->status=='Sudah diverifikasi') { ?> 
             <div class="col-xs-12 col-md-12">
               <div class="callout callout-info">
-                Pendaftaran sudah diverifikasi Panitia, tidak dapat input prestasi lagi
+                Pendaftaran sudah diverifikasi Panitia, tidak dapat input atau hapus prestasi lagi
               </div>  
             </div>
-          <?php } else { ?>             
+          <?php } else { ?>
             <form action="multiprestasi" method="post">
                 <div class="col-xs-12 col-md-12">
                     <div class="form-group">
@@ -92,7 +89,7 @@
                     </div>
                 </div>
             </form>
-          <?php } ?>
+        <?php } ?>
         <?php } else { ?>
           <div class="col-xs-12 col-md-12">  
             <div class="callout callout-info">

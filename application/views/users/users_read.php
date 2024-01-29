@@ -26,8 +26,7 @@
 			    <tr><td>Created On</td><td><?php echo $created_on; ?></td></tr>
 			    <tr><td>Last Login</td><td><?php echo $last_login; ?></td></tr>
 			    <tr><td>Active</td><td><?php echo $active; ?></td></tr>
-			    <tr><td>First Name</td><td><?php echo $first_name; ?></td></tr>
-			    <tr><td>Last Name</td><td><?php echo $last_name; ?></td></tr>
+			    <tr><td>Full Name</td><td><?php echo $full_name; ?></td></tr>
 			    <tr><td>Company</td><td><?php echo $company; ?></td></tr>
 			    <tr><td>Phone</td><td><?php echo $phone; ?></td></tr>
 			    <tr><td><a href="<?php echo site_url('users') ?>" class="<?= $this->config->item('botton')?>">Batal</a></td></tr>

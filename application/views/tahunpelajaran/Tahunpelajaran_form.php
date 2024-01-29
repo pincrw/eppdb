@@ -32,13 +32,13 @@
                     <div class="col-xs-12 col-md-6">                   
                         <div class="form-group">
                             <label for="date">Tanggal Mulai Pendaftaran <span style="color:red;">*</span> <?php echo form_error('tanggal_mulai_pendaftaran') ?></label>
-                            <input type="text" class="form-control" name="tanggal_mulai_pendaftaran" id="tanggal_mulai_pendaftaran" placeholder="Tanggal Mulai Pendaftaran" value="<?php echo $tanggal_mulai_pendaftaran; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_mulai_pendaftaran" id="tanggal_mulai_pendaftaran" placeholder="Tanggal Mulai Pendaftaran" value="<?php echo date('m/d/Y', strtotime($tanggal_mulai_pendaftaran)); ?>" required/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6"> 
                         <div class="form-group">
                             <label for="date">Tanggal Selesai Pendaftaran <span style="color:red;">*</span> <?php echo form_error('tanggal_selesai_pendaftaran') ?></label>
-                            <input type="text" class="form-control" name="tanggal_selesai_pendaftaran" id="tanggal_selesai_pendaftaran" placeholder="Tanggal Selesai Pendaftaran" value="<?php echo $tanggal_selesai_pendaftaran; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_selesai_pendaftaran" id="tanggal_selesai_pendaftaran" placeholder="Tanggal Selesai Pendaftaran" value="<?php echo date('m/d/Y', strtotime($tanggal_selesai_pendaftaran)); ?>" required/>
                         </div>
                     </div>
                 </div>
@@ -46,42 +46,53 @@
                     <div class="col-xs-12 col-md-6">                                           
                         <div class="form-group">
                             <label for="date">Tanggal Mulai Seleksi <span style="color:red;">*</span> <?php echo form_error('tanggal_mulai_seleksi') ?></label>
-                            <input type="text" class="form-control" name="tanggal_mulai_seleksi" id="tanggal_mulai_seleksi" placeholder="Tanggal Mulai Seleksi" value="<?php echo $tanggal_mulai_seleksi; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_mulai_seleksi" id="tanggal_mulai_seleksi" placeholder="Tanggal Mulai Seleksi" value="<?php echo date('m/d/Y', strtotime($tanggal_mulai_seleksi)); ?>" required/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6">                         
                         <div class="form-group">
                             <label for="date">Tanggal Selesai Seleksi <span style="color:red;">*</span> <?php echo form_error('tanggal_selesai_seleksi') ?></label>
-                            <input type="text" class="form-control" name="tanggal_selesai_seleksi" id="tanggal_selesai_seleksi" placeholder="Tanggal Selesai Seleksi" value="<?php echo $tanggal_selesai_seleksi; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_selesai_seleksi" id="tanggal_selesai_seleksi" placeholder="Tanggal Selesai Seleksi" value="<?php echo date('m/d/Y', strtotime($tanggal_selesai_seleksi)); ?>" required/>
                         </div>
                     </div>
                 </div>                         
                 <div class="form-group">
                     <label for="date">Tanggal Pengumuman <span style="color:red;">*</span> <?php echo form_error('tanggal_pengumuman') ?></label>
-                    <input type="text" class="form-control" name="tanggal_pengumuman" id="tanggal_pengumuman" placeholder="Tanggal Pengumuman" value="<?php echo $tanggal_pengumuman; ?>" required/>
+                    <input type="text" class="form-control" name="tanggal_pengumuman" id="tanggal_pengumuman" placeholder="Tanggal Pengumuman" value="<?php echo date('m/d/Y', strtotime($tanggal_pengumuman)); ?>" required/>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-6">                   
                         <div class="form-group">
                             <label for="date">Tanggal Mulai Daftar Ulang <span style="color:red;">*</span> <?php echo form_error('tanggal_mulai_daftar_ulang') ?></label>
-                            <input type="text" class="form-control" name="tanggal_mulai_daftar_ulang" id="tanggal_mulai_daftar_ulang" placeholder="Tanggal Mulai Daftar Ulang" value="<?php echo $tanggal_mulai_daftar_ulang; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_mulai_daftar_ulang" id="tanggal_mulai_daftar_ulang" placeholder="Tanggal Mulai Daftar Ulang" value="<?php echo date('m/d/Y', strtotime($tanggal_mulai_daftar_ulang)); ?>" required/>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6">                          
                         <div class="form-group">
                             <label for="date">Tanggal Selesai Daftar Ulang <span style="color:red;">*</span> <?php echo form_error('tanggal_selesai_daftar_ulang') ?></label>
-                            <input type="text" class="form-control" name="tanggal_selesai_daftar_ulang" id="tanggal_selesai_daftar_ulang" placeholder="Tanggal Selesai Daftar Ulang" value="<?php echo $tanggal_selesai_daftar_ulang; ?>" required/>
+                            <input type="text" class="form-control" name="tanggal_selesai_daftar_ulang" id="tanggal_selesai_daftar_ulang" placeholder="Tanggal Selesai Daftar Ulang" value="<?php echo date('m/d/Y', strtotime($tanggal_selesai_daftar_ulang)); ?>" required/>
                         </div>
                     </div>
                 </div>  
                 <div class="form-group">
-                    <label for="enum">Status Tahun <span style="color:red;">*</span> <?php echo form_error('status_tahun') ?></label>
-                    <select type="text" class="form-control" name="status_tahun" id="status_tahun" placeholder="Status Tahun" value="" required/>
+                    <label for="enum">Status <span style="color:red;">*</span> <?php echo form_error('status_tahun') ?></label>
+                    <select type="text" class="form-control" name="status_tahun" id="status_tahun" placeholder="Status" value="" required/>
                         <option value="<?php echo $status_tahun; ?>"><?php echo $status_tahun; ?></option>
                         <option value="Aktif">Aktif</option>
                         <option value="Tidak Aktif">Tidak Aktif</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="varchar">Keterangan <?php echo form_error('ket') ?></label>
+                    <select type="text" class="form-control" name="ket" id="ket" placeholder="Keterangan" value="" />
+                        <option value="<?php echo $ket; ?>"><?php echo $ket; ?></option>
+                        <option value="">Tanpa Gelombang</option>
+                        <option value="Uji Coba">Uji Coba</option>
+                        <option value="Gelombang 1">Gelombang 1</option>
+                        <option value="Gelombang 2">Gelombang 2</option>
+                        <option value="Gelombang 3">Gelombang 3</option>
+                    </select>   
+                </div>                    
                 <input type="hidden" name="id_tahun" value="<?php echo $id_tahun; ?>" />
                 <button type="submit" class="<?= $this->config->item('botton')?>"><?php echo $button ?></button>
                 <a href="<?php echo site_url('tahunpelajaran') ?>" class="btn btn-default btn-flat">Batal</a>

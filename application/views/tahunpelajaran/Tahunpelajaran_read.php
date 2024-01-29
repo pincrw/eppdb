@@ -23,7 +23,7 @@
         	    <tr><td>Tanggal Pengumuman</td><td><?php echo date('d F Y', strtotime($tanggal_pengumuman)); ?></td></tr>
         	    <tr><td>Tanggal Mulai Daftar Ulang</td><td><?php echo date('d F Y', strtotime($tanggal_mulai_daftar_ulang)); ?></td></tr>
         	    <tr><td>Tanggal Selesai Daftar Ulang</td><td><?php echo date('d F Y', strtotime($tanggal_selesai_daftar_ulang)); ?></td></tr>
-        	    <tr><td>Status Tahun</td>
+        	    <tr><td>Status</td>
                     <td>
                         <?php if ($status_tahun=="Aktif"){?>
                             <span class="label label-success"><?php echo $status_tahun; ?></span>
@@ -32,6 +32,7 @@
                         <?php } ?>                          
                     </td>
                 </tr>
+                <tr><td>Keterangan</td><td><?php echo $ket; ?></td></tr>
         	    <tr><td><a href="<?php echo site_url('tahunpelajaran') ?>" class="<?= $this->config->item('botton')?>">Kembali</a></td></tr>
     	    </table>
             </div>
